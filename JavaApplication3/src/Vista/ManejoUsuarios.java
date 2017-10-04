@@ -29,6 +29,7 @@ public class ManejoUsuarios extends javax.swing.JFrame {
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(false);
+        cbUsers.setEnabled(true);
     }
     
     public void estadoNuevo(){
@@ -38,6 +39,7 @@ public class ManejoUsuarios extends javax.swing.JFrame {
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(true);
+        cbUsers.setEnabled(false);
     }
     
     public void estadoBuscar(){
