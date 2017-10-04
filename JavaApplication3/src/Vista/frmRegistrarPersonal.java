@@ -10,12 +10,12 @@ package Vista;
  *
  * @author rcamarena
  */
-public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
+public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form frmRegistrarAdmin
+     * Creates new form frmRegistrarPersonal
      */
-    public frmRegistrarAdmin() {
+    public frmRegistrarPersonal() {
         initComponents();
         setSize(740,840);
     }
@@ -43,7 +43,7 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(" Datos Administrador"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(" Datos Personal"));
 
         jLabel1.setText("Nro. Entidad:");
 
@@ -67,7 +67,7 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +138,7 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
