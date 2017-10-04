@@ -5,14 +5,15 @@
  */
 package Modelo;
 
-import java.util.Date;
-
 /**
  *
- * @author Oscar
+ * @author USER
  */
-public class MovimientoAuditoria {
-    private int id;
-    private Date fecha;
-    private String accion;
+public class Usuario {
+    private int nEntidad;
+    private String nombre;
+    private String aPaterno;
+    private String aMaterno;
+    private String email;
+    private Boolean habilitado;
 }

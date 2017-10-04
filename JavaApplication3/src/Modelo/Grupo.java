@@ -5,14 +5,15 @@
  */
 package Modelo;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
- * @author Oscar
+ * @author USER
  */
-public class MovimientoAuditoria {
+public class Grupo {
     private int id;
-    private Date fecha;
-    private String accion;
+    private String nombre;
+    private String permisos;
+    private ArrayList<Usuario> listaUsuarios;
 }

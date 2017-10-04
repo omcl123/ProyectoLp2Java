@@ -9,10 +9,12 @@ import java.util.Date;
 
 /**
  *
- * @author Oscar
+ * @author USER
  */
-public class MovimientoAuditoria {
+public class Documento {
     private int id;
-    private Date fecha;
-    private String accion;
+    private Date fechaCreacion;
+    private String nombre;
+    private String descripcion;
+    private Date fechaMod;
 }
