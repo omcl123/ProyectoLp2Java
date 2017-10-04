@@ -61,8 +61,8 @@
                   <Component id="jLabel2" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="CBoxCursos" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="222" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="175" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="BtnExportar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
