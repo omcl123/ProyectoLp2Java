@@ -49,6 +49,7 @@ public class ManejoUsuarios extends javax.swing.JFrame {
         btnModificar.setEnabled(true);
         btnEliminar.setEnabled(true);
         btnCancelar.setEnabled(true);
+        cbUsers.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -227,6 +228,9 @@ public class ManejoUsuarios extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         estadoBuscar();
+        frmBusqueda f = new frmBusqueda();
+        jdpContenedor.add(f);
+        f.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
