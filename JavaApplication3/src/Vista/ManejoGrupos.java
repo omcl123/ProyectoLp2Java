@@ -37,7 +37,7 @@ public class ManejoGrupos extends javax.swing.JFrame {
                 bttnAgregar.setEnabled(false);
                 bttnEliminar.setEnabled(false);
                 tableUsuarios.setEnabled(false);
-                bttnModificar.setEnabled(false);
+                bttnModificar.setEnabled(true);
                 bttnGuardar.setEnabled(false);
                 break;
             case Modificar:
