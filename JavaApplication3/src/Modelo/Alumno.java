@@ -9,6 +9,25 @@ package Modelo;
  *
  * @author Oscar
  */
-public class Alumno {
+public class Alumno extends Usuario{
+
+    private int integer;
+    private String especialidad;
+    
+    public int getInteger() {
+        return integer;
+    }
+
+    public void setInteger(int integer) {
+        this.integer = integer;
+    }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
     
 }
