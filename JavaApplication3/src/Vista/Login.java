@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import java.awt.Dialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author alulab14
@@ -54,6 +57,11 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         pnl_bg.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -116,6 +124,11 @@ public class Login extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Vijaya", 0, 16)); // NOI18N
         jButton2.setText("Cerrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
         login.setLayout(loginLayout);
@@ -265,12 +278,27 @@ public class Login extends javax.swing.JFrame {
             f.setVisible(true);
             this.setVisible(false);
         }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Nombre de usuario y/o contraseña equivocados","Error",HIDE_ON_CLOSE);
+            this.login.setVisible(true);
+            this.loader.setVisible(false);
+            return;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void pswUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pswUsuarioMouseClicked
         // TODO add your handling code here:
         this.pswUsuario.setText("");
     }//GEN-LAST:event_pswUsuarioMouseClicked
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
