@@ -10,13 +10,31 @@ package Vista;
  * @author alulab14
  */
 public class frmPrincipal extends javax.swing.JFrame {
+    private String UserName;
+
+    /**
+     * @return the UserName
+     */
+    public String getUserName() {
+        return UserName;
+    }
+
+    /**
+     * @param UserName the UserName to set
+     */
+    public void setUserName(String UserName) {
+        this.UserName = UserName;
+    }
 
     /**
      * Creates new form frmPrincipal
      */
     public frmPrincipal() {
         initComponents();
-        nameLabel.setText("USUARIO");
+    }
+    
+    public void setNombreUsuario(){
+        nameLabel.setText(UserName);        
     }
 
     /**
@@ -33,11 +51,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         nameLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         PrincDesktopPane = new javax.swing.JDesktopPane();
-        jPanel2 = new javax.swing.JPanel();
-        ManAudButton = new javax.swing.JButton();
-        ManGrupoButton = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jmAuditorias = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jmGrupos = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jmUsuarios = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        jmSitio = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,25 +86,21 @@ public class frmPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(38, 38, 38)
                 .addComponent(nameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 654, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 626, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(nameLabel)
-                        .addGap(35, 35, 35))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nameLabel)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout PrincDesktopPaneLayout = new javax.swing.GroupLayout(PrincDesktopPane);
@@ -94,72 +111,68 @@ public class frmPrincipal extends javax.swing.JFrame {
         );
         PrincDesktopPaneLayout.setVerticalGroup(
             PrincDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 557, Short.MAX_VALUE)
         );
 
-        ManAudButton.setText("Manejo de auditorias");
-        ManAudButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ManAudButtonActionPerformed(evt);
+        jmAuditorias.setText("Manejo auditorias");
+        jmAuditorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmAuditoriasMouseClicked(evt);
             }
         });
+        jMenuBar1.add(jmAuditorias);
 
-        ManGrupoButton.setText("Manejo de grupos");
-        ManGrupoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ManGrupoButtonActionPerformed(evt);
+        jMenu2.setForeground(new java.awt.Color(153, 153, 153));
+        jMenu2.setText("|");
+        jMenuBar1.add(jMenu2);
+
+        jmGrupos.setText("Manejo Grupos");
+        jmGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmGruposMouseClicked(evt);
             }
         });
+        jMenuBar1.add(jmGrupos);
 
-        jButton4.setText("jButton4");
+        jMenu4.setForeground(new java.awt.Color(153, 153, 153));
+        jMenu4.setText("|");
+        jMenuBar1.add(jMenu4);
 
-        jButton5.setText("jButton5");
+        jmUsuarios.setText("Manejo Usuarios");
+        jmUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmUsuariosMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jmUsuarios);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ManAudButton)
-                    .addComponent(ManGrupoButton)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(ManAudButton)
-                .addGap(18, 18, 18)
-                .addComponent(ManGrupoButton)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5)
-                .addContainerGap(421, Short.MAX_VALUE))
-        );
+        jMenu6.setForeground(new java.awt.Color(153, 153, 153));
+        jMenu6.setText("|");
+        jMenuBar1.add(jMenu6);
+
+        jmSitio.setText("Manejo Sitio");
+        jmSitio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmSitioMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jmSitio);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PrincDesktopPane))
+            .addComponent(PrincDesktopPane, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PrincDesktopPane)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(PrincDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -170,19 +183,33 @@ public class frmPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void ManAudButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManAudButtonActionPerformed
-        // TODO add your handling code here:
+    private void jmAuditoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmAuditoriasMouseClicked
+        PrincDesktopPane.removeAll();
         ManejoAuditorias f = new ManejoAuditorias();
         PrincDesktopPane.add(f);
         f.setVisible(true);
-    }//GEN-LAST:event_ManAudButtonActionPerformed
+    }//GEN-LAST:event_jmAuditoriasMouseClicked
 
-    private void ManGrupoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManGrupoButtonActionPerformed
-        // TODO add your handling code here:
+    private void jmGruposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmGruposMouseClicked
+        PrincDesktopPane.removeAll();
         ManejoGrupos f = new ManejoGrupos();
         PrincDesktopPane.add(f);
         f.setVisible(true);
-    }//GEN-LAST:event_ManGrupoButtonActionPerformed
+    }//GEN-LAST:event_jmGruposMouseClicked
+
+    private void jmUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmUsuariosMouseClicked
+        PrincDesktopPane.removeAll();
+        ManejoUsuarios f = new ManejoUsuarios();
+        PrincDesktopPane.add(f);
+        f.setVisible(true);
+    }//GEN-LAST:event_jmUsuariosMouseClicked
+
+    private void jmSitioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSitioMouseClicked
+        PrincDesktopPane.removeAll();
+        ManejoSitio f = new ManejoSitio();
+        PrincDesktopPane.add(f);
+        f.setVisible(true);
+    }//GEN-LAST:event_jmSitioMouseClicked
 
     /**
      * @param args the command line arguments
@@ -220,15 +247,18 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ManAudButton;
-    private javax.swing.JButton ManGrupoButton;
     private javax.swing.JDesktopPane PrincDesktopPane;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenu jmAuditorias;
+    private javax.swing.JMenu jmGrupos;
+    private javax.swing.JMenu jmSitio;
+    private javax.swing.JMenu jmUsuarios;
     private javax.swing.JLabel nameLabel;
     // End of variables declaration//GEN-END:variables
 }

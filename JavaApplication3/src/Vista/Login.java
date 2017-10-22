@@ -11,6 +11,9 @@ package Vista;
  */
 public class Login extends javax.swing.JFrame {
 
+    private String nombre = "FreddyPaz";
+    private String password = "123456";
+
     /**
      * Creates new form Login
      */
@@ -18,7 +21,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.login.setVisible(true);
         this.loader.setVisible(false);
-        
+
     }
 
     /**
@@ -253,6 +256,15 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.login.setVisible(false);
         this.loader.setVisible(true);
+        char[] pass = pswUsuario.getPassword();
+        String passString = new String(pass);
+        if (txtUsuario.getText().equals(nombre) && passString.equals(password)) {
+            frmPrincipal f = new frmPrincipal();
+            f.setUserName(nombre);
+            f.setNombreUsuario();
+            f.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void pswUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pswUsuarioMouseClicked

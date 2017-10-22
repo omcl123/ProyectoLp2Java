@@ -20,6 +20,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
      */
     public ManejoAuditorias() {
         initComponents();
+        setSize(1000,700);
         CBoxTipoReporte.setModel(new javax.swing.DefaultComboBoxModel<>
         (new String[] { "Lista de Documentos","Lista de Movimientos","Usuarios más activos"}));
         CBoxCursos.setModel(new javax.swing.DefaultComboBoxModel<>
