@@ -7,6 +7,7 @@
 package Vista;
 
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -16,7 +17,9 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
 
     /** Creates new form ManejoUsuarios */
     public ManejoUsuarios() {
+        
         initComponents();
+        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         setSize(1000,700);
         estadoIni();
     }
