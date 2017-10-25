@@ -25,7 +25,7 @@
           <Group type="102" attributes="0">
               <Component id="jPanel2" min="-2" pref="166" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jdpContenedor" pref="481" max="32767" attributes="0"/>
+              <Component id="jdpContenedor" pref="643" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,7 +59,6 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jButton2" max="32767" attributes="0"/>
               <Component id="jButton3" alignment="0" pref="162" max="32767" attributes="0"/>
-              <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
               <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
@@ -70,10 +69,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="405" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="434" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -89,15 +86,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Actualizar"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar"/>
+            <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton5">
@@ -120,7 +112,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="481" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="643" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
