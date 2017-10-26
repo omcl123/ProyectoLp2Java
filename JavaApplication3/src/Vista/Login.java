@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
+    private int primLogin=0;
     private String nombre = "FreddyPaz";
     private String password = "123456";
 
@@ -80,17 +81,17 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(199, 199, 199)
                 .addComponent(jLabel2)
-                .addGap(115, 115, 115))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         txtUsuario.setFont(new java.awt.Font("Vijaya", 0, 16)); // NOI18N
@@ -208,7 +209,7 @@ public class Login extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(150, Short.MAX_VALUE)
+                .addContainerGap(324, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(106, 106, 106))
         );
@@ -246,7 +247,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblCargando)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         jPanel1.add(loader, "card3");
@@ -277,7 +278,9 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMouseClicked
-        this.txtUsuario.setText("");
+        if(this.txtUsuario.getText().equals("Usuario")){
+            this.txtUsuario.setText("");
+        }
     }//GEN-LAST:event_txtUsuarioMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -313,7 +316,10 @@ public class Login extends javax.swing.JFrame {
 
     private void pswUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pswUsuarioMouseClicked
         // TODO add your handling code here:
-        this.pswUsuario.setText("");
+        if(primLogin==0){
+            this.pswUsuario.setText("");
+            primLogin=1;
+        }
     }//GEN-LAST:event_pswUsuarioMouseClicked
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed

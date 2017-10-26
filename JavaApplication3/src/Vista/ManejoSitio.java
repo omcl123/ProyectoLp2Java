@@ -37,6 +37,7 @@ public class ManejoSitio extends javax.swing.JInternalFrame {
         jButton5 = new javax.swing.JButton();
         jdpContenedor = new javax.swing.JDesktopPane();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -79,7 +80,7 @@ public class ManejoSitio extends javax.swing.JInternalFrame {
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addGap(0, 434, Short.MAX_VALUE))
+                .addGap(0, 410, Short.MAX_VALUE))
         );
 
         jdpContenedor.setPreferredSize(new java.awt.Dimension(510, 380));

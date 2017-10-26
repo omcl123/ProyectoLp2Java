@@ -108,6 +108,7 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         bttnGuardar = new javax.swing.JButton();
         bttnModificar = new javax.swing.JButton();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel3.setText("Buscar:");
