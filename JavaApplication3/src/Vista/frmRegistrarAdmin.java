@@ -6,6 +6,8 @@
 
 package Vista;
 
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 /**
  *
  * @author rcamarena
@@ -17,7 +19,8 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
      */
     public frmRegistrarAdmin() {
         initComponents();
-        setSize(740,840);
+        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+        setSize(730,840);
     }
 
     /**

@@ -19,8 +19,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
     public ManejoUsuarios() {
         
         initComponents();
-        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-        setSize(1000,700);
+        setSize(990,700);
         estadoIni();
     }
     
