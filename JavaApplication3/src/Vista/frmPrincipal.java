@@ -32,6 +32,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() {
         initComponents();
         setResizable(false);
+        setTitle("Gestor de documentos PUCP");
     }
     
     public void setNombreUsuario(){

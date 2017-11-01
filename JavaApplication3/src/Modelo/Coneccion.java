@@ -21,4 +21,15 @@ public class Coneccion {
                 "inf282g5", "reFuKUxhUijfr8np");
         }catch(Exception e){}
     }
+    public void closeConexion(){
+        try{
+            con.close();
+        }catch (Exception e){}
+    }
+    public Statement createStatement(){
+        try{
+            return con.createStatement();
+        }catch (Exception e);
+        
+    }
 }
