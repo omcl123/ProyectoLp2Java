@@ -26,10 +26,7 @@ public class Coneccion {
             con.close();
         }catch (Exception e){}
     }
-    public Statement createStatement(){
-        try{
-            return con.createStatement();
-        }catch (Exception e);
-        
+    public Statement createStatement()throws Exception{
+        return con.createStatement();
     }
 }
