@@ -8,7 +8,9 @@ package Vista;
 import java.awt.Dialog;
 import java.util.TimerTask;
 import javax.swing.JOptionPane;
-
+import Modelo.Coneccion;
+import java.sql.ResultSet;
+import java.sql.Statement;
 /**
  *
  * @author alulab14
@@ -16,13 +18,14 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private int primLogin=0;
-    private String nombre = "FreddyPaz";
-    private String password = "123456";
-
+    private String nombre ;
+    private String password ;
+    private Coneccion con;
     /**
      * Creates new form Login
      */
     public Login() {
+        
         initComponents();
         this.login.setVisible(true);
         this.loader.setVisible(false);
@@ -286,10 +289,22 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.login.setVisible(false);
         this.loader.setVisible(true);
+        boolean exitoso=false;
         char[] pass = pswUsuario.getPassword();
         String passString = new String(pass);
-        
-        if (txtUsuario.getText().equals(nombre) && passString.equals(password)) {
+        con= new Coneccion();
+        int i=0;
+        try{
+            Statement sentencia = con.createStatement();i++;
+            String instruccion = "SELECT d.Codigo, u.Password as contrasenha FROM Docente d, Usuario u "
+                    + "WHERE d.Usuario_IdUsuario=u.IdUsuario and d.Codigo="+txtUsuario.getText();i++;
+            ResultSet rs = sentencia.executeQuery(instruccion);i++;
+            System.out.println(rs.getString("contrasenha"));i++;
+            String ps=rs.getString("contrasenha");i++;
+            if(ps.equals(passString))exitoso=true;
+            else{System.out.println("Contraseña equivocada");}
+        }catch (Exception e){System.out.println("fallo en query "+i);}
+        if (exitoso) {
             new java.util.Timer().schedule(new TimerTask(){
             @Override
             public void run(){
@@ -300,6 +315,7 @@ public class Login extends javax.swing.JFrame {
                 setVisible(false);
             }
             },1000*2);
+            con.closeConexion();
         }
         else{
             new java.util.Timer().schedule(new TimerTask(){
@@ -310,7 +326,7 @@ public class Login extends javax.swing.JFrame {
                 lblMensaje.setVisible(true);
             }
             },1000*3);
-            
+            con.closeConexion();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
