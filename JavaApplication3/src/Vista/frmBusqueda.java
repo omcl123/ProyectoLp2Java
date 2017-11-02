@@ -5,6 +5,12 @@
  */
 package Vista;
 
+import Controlador.*;
+import Modelo.Administrador;
+import java.util.ArrayList;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ruben
@@ -14,8 +20,29 @@ public class frmBusqueda extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmBusqueda
      */
-    public frmBusqueda() {
+    public frmBusqueda(String userType) {
         initComponents();
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setSize(730, 840);
+        DefaultTableModel modelo;
+        switch (userType) {
+            case ("Administrador"):
+                tAdminBL accesoAdmin = new tAdminBL();
+                modelo = accesoAdmin.modeloAdmin(tablaUsuarios);
+                break;
+            case ("Docente"):
+                tDocenteBL accesoDocente = new tDocenteBL();
+                modelo = accesoDocente.modeloDocente(tablaUsuarios);
+                break;
+            case ("Alumno"):
+                tAlumnoBL accesoAlumno = new tAlumnoBL();
+                modelo = accesoAlumno.modeloAlumno(tablaUsuarios);
+                break;
+            case ("Personal"):
+                tPersonalBL accesoPersonal = new tPersonalBL();
+                modelo = accesoPersonal.modeloPersonal(tablaUsuarios);
+                break;
+        }
     }
 
     /**
@@ -29,51 +56,59 @@ public class frmBusqueda extends javax.swing.JInternalFrame {
 
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaUsuarios = new javax.swing.JTable();
 
         jButton1.setText("Selecionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Nombre", "APaterno", "AMaterno", "email"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaUsuarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaUsuarios;
     // End of variables declaration//GEN-END:variables
 }

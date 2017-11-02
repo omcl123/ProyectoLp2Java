@@ -17,9 +17,9 @@ public class Coneccion {
     public Coneccion(){
         try{
         Class.forName("com.mysql.jdbc.Driver");
-        con = (Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282", 
-                "inf282g5", "reFuKUxhUijfr8np");
-        }catch(Exception e){}
+        con = (Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
     }
     public void closeConexion(){
         try{

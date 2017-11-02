@@ -215,9 +215,23 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         estadoBuscar();
-        frmBusqueda f = new frmBusqueda();
-        jdpContenedor.add(f);
-        f.setVisible(true);
+        if (cbUsers.getSelectedItem().toString() == "Administrador") {
+            frmBusqueda f = new frmBusqueda("Administrador");
+            jdpContenedor.add(f);
+            f.setVisible(true);
+        } else if (cbUsers.getSelectedItem().toString() == "Docente") {
+            frmBusqueda f = new frmBusqueda("Docente");
+            jdpContenedor.add(f);
+            f.setVisible(true);
+        } else if (cbUsers.getSelectedItem().toString() == "Alumno") {
+            frmBusqueda f = new frmBusqueda("Alumno");
+            jdpContenedor.add(f);
+            f.setVisible(true);
+        } else if (cbUsers.getSelectedItem().toString() == "Personal") {
+            frmBusqueda f = new frmBusqueda("Personal");
+            jdpContenedor.add(f);
+            f.setVisible(true);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
