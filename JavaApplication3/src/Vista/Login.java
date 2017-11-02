@@ -311,6 +311,7 @@ public class Login extends javax.swing.JFrame {
             String ps=rs.getString("Password");i++;
             nombre=rs.getString("Name");
             userID=rs.getInt("user");
+            frmPrincipal.codUsuario=userID;
             con.closeConexion();
             if(ps.equals(passString)){
                 con= new Coneccion();

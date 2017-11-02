@@ -43,7 +43,6 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         txtNombre.setEnabled(false);
         txtNombre.setText(rs2.getString("Nombre")+" "+rs2.getString("APaterno")+" "+rs2.getString("AMaterno"));
         BtnCancelar.setEnabled(false);
-        BtnCambiarPassword.setEnabled(true);
         BtnEditUsuario.setEnabled(true);
         BtnGuardar.setEnabled(false);
         con.closeConexion();
@@ -74,7 +73,6 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         BtnEditUsuario = new javax.swing.JButton();
         BtnGuardar = new javax.swing.JButton();
         BtnCancelar = new javax.swing.JButton();
-        BtnCambiarPassword = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -121,11 +119,9 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         });
 
         BtnCancelar.setText("Cancelar");
-
-        BtnCambiarPassword.setText("Cambiar Contraseña");
-        BtnCambiarPassword.addActionListener(new java.awt.event.ActionListener() {
+        BtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCambiarPasswordActionPerformed(evt);
+                BtnCancelarActionPerformed(evt);
             }
         });
 
@@ -147,9 +143,16 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4))
                                 .addGap(50, 50, 50)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(TxtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(BtnEditUsuario)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(BtnGuardar)
+                                        .addGap(146, 146, 146)
+                                        .addComponent(BtnCancelar)
+                                        .addGap(124, 124, 124))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -162,18 +165,8 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(TxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 27, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(BtnEditUsuario)
-                        .addGap(79, 79, 79)
-                        .addComponent(BtnGuardar)
-                        .addGap(63, 63, 63)
-                        .addComponent(BtnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnCambiarPassword)
-                        .addGap(95, 95, 95)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 12, Short.MAX_VALUE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,13 +195,12 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(TxtTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnEditUsuario)
                     .addComponent(BtnGuardar)
-                    .addComponent(BtnCancelar)
-                    .addComponent(BtnCambiarPassword))
-                .addGap(28, 28, 28))
+                    .addComponent(BtnCancelar))
+                .addGap(62, 62, 62))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -217,15 +209,15 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -244,7 +236,6 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         txtEmail2.setEnabled(true);
         TxtTel.setEnabled(true);
         txtDir.setEnabled(true);
-        BtnCambiarPassword.setEnabled(false);
         BtnCancelar.setEnabled(true);
         BtnGuardar.setEnabled(true);
         BtnEditUsuario.setEnabled(false);
@@ -270,17 +261,22 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         txtEmail2.setEnabled(false);
         txtNombre.setEnabled(false);
         BtnCancelar.setEnabled(false);
-        BtnCambiarPassword.setEnabled(true);
         BtnEditUsuario.setEnabled(true);
         BtnGuardar.setEnabled(false);
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
-    private void BtnCambiarPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCambiarPasswordActionPerformed
+    private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
         // TODO add your handling code here:
-        FrmCambiarPassword cP=new FrmCambiarPassword();
-        cP.setVisible(true);
-        
-    }//GEN-LAST:event_BtnCambiarPasswordActionPerformed
+       TxtCodigo.setEnabled(false);
+        TxtTel.setEnabled(false);
+        txtDir.setEnabled(false);
+        txtEmail.setEnabled(false);
+        txtEmail2.setEnabled(false);
+        txtNombre.setEnabled(false);
+        BtnCancelar.setEnabled(false);
+        BtnEditUsuario.setEnabled(true);
+        BtnGuardar.setEnabled(false); 
+    }//GEN-LAST:event_BtnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,7 +318,6 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnCambiarPassword;
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnEditUsuario;
     private javax.swing.JButton BtnGuardar;

@@ -5,13 +5,16 @@
  */
 package Vista;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author alulab14
  */
 public class frmPrincipal extends javax.swing.JFrame {
     private String UserName;
-
+    public static int codUsuario;
     /**
      * @return the UserName
      */
@@ -229,9 +232,14 @@ public class frmPrincipal extends javax.swing.JFrame {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         PrincDesktopPane.removeAll();
-        ModificacionUsuario f = new ModificacionUsuario();
-        PrincDesktopPane.add(f);
-        f.setVisible(true);
+        ModificacionUsuario f;
+        try {
+            f = new ModificacionUsuario();
+            PrincDesktopPane.add(f);
+            f.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel2MouseClicked
 
 //    /**
