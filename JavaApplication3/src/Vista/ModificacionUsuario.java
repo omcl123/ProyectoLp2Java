@@ -5,7 +5,11 @@
  */
 
 package Vista;
-
+import Modelo.Coneccion;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -17,20 +21,32 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
     /**
      * Creates new form ModificacionUsuario
      */
-    public ModificacionUsuario() {
+    private Coneccion con;
+    public ModificacionUsuario() throws Exception {
+        con = new Coneccion();
+        Statement s2= con.createStatement();
+        String i2 = "SELECT * from Usuario where idUsuario="+frmPrincipal.codUsuario;
+        ResultSet rs2=s2.executeQuery(i2);
+        rs2.next();
         initComponents();
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         setSize(1000,700);
         TxtCodigo.setEnabled(false);
         TxtTel.setEnabled(false);
+        TxtTel.setText(rs2.getString("Telefono"));
         txtDir.setEnabled(false);
+        txtDir.setText(rs2.getString("Direccion"));
         txtEmail.setEnabled(false);
+        txtEmail.setText(rs2.getString("Email"));
         txtEmail2.setEnabled(false);
+        txtEmail2.setText(rs2.getString("EmailAlternativo"));
         txtNombre.setEnabled(false);
+        txtNombre.setText(rs2.getString("Nombre")+" "+rs2.getString("APaterno")+" "+rs2.getString("AMaterno"));
         BtnCancelar.setEnabled(false);
         BtnCambiarPassword.setEnabled(true);
         BtnEditUsuario.setEnabled(true);
         BtnGuardar.setEnabled(false);
+        con.closeConexion();
     }
 
     /**
@@ -237,6 +253,16 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
         // TODO add your handling code here:
+        con = new Coneccion();
+        try {
+            Statement s2= con.createStatement();
+            String i2 = "UPDATE Usuario SET EmailAlternativo='"+txtEmail2.getText()+"',Direccion='"+txtDir.getText()+"',Telefono="+TxtTel.getText()
+                    + " WHERE IdUsuario="+frmPrincipal.codUsuario;
+            s2.executeUpdate(i2);
+            con.closeConexion();
+        } catch (Exception ex) {
+            Logger.getLogger(ModificacionUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         TxtCodigo.setEnabled(false);
         TxtTel.setEnabled(false);
         txtDir.setEnabled(false);
@@ -286,7 +312,11 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModificacionUsuario().setVisible(true);
+                try {
+                    new ModificacionUsuario().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(ModificacionUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
