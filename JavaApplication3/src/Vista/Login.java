@@ -21,6 +21,7 @@ public class Login extends javax.swing.JFrame {
     private String nombre ;
     private String password ;
     private Coneccion con;
+    private int  userID=0;
     /**
      * Creates new form Login
      */
@@ -295,19 +296,42 @@ public class Login extends javax.swing.JFrame {
         con= new Coneccion();
         int i=0;
         try{
+            System.out.println(txtUsuario.getText());
             Statement sentencia = con.createStatement();i++;
-            String instruccion = "SELECT d.Codigo, u.Password as contrasenha FROM Docente d, Usuario u "
+            String instruccion = "SELECT d.Codigo, u.Password,concat(u.Nombre,' ',u.APaterno,' ',u.AMaterno) as Name, u.IdUsuario as user"
+                    + "  FROM Docente d, Usuario u "
                     + "WHERE d.Usuario_IdUsuario=u.IdUsuario and d.Codigo="+txtUsuario.getText();i++;
             ResultSet rs = sentencia.executeQuery(instruccion);i++;
-            System.out.println(rs.getString("contrasenha"));i++;
-            String ps=rs.getString("contrasenha");i++;
-            if(ps.equals(passString))exitoso=true;
+            rs.next();
+            //System.out.println(rs.getString("Password"));i++;
+            String ps=rs.getString("Password");i++;
+            nombre=rs.getString("Name");
+            userID=rs.getInt("user");
+            con.closeConexion();
+            if(ps.equals(passString)){
+                con= new Coneccion();
+                exitoso=true;
+                Statement s3 = con.createStatement();
+                String i2= "select Max(idRegistroLogin) as next from RegistroLogin";
+                ResultSet rs2 = s3.executeQuery(i2);
+                rs2.next();  
+                int nextLog=rs2.getInt("next")+1;
+                System.out.println(nextLog);
+                 con.closeConexion();
+                con= new Coneccion();
+                Statement s4 = con.createStatement();
+                String i4= "INSERT INTO RegistroLogin VALUES ("+nextLog+","+userID+",sysdate())";
+                s4.executeUpdate(i4);
+            }
             else{System.out.println("Contraseña equivocada");}
         }catch (Exception e){System.out.println("fallo en query "+i);}
         if (exitoso) {
             new java.util.Timer().schedule(new TimerTask(){
             @Override
             public void run(){
+                try{
+                  
+                }catch (Exception e){}
                 frmPrincipal f = new frmPrincipal();
                 f.setUserName(nombre);
                 f.setNombreUsuario();
