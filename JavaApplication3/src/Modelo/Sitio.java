@@ -17,10 +17,20 @@ public class Sitio {
     private String nombre;
     private String descripcion;
     private ArrayList<Carpeta> listaCarpetas;
-    private ArrayList<MovimientoAuditoria> listaAuditorias;
     private ArrayList<Grupo> listGrupos;
-    private ArrayList<Usuario> listUsuarios;
     
+    public Sitio(){
+        listaCarpetas = new ArrayList<Carpeta>();
+        listGrupos = new ArrayList<Grupo>();
+    }
+    
+    public Sitio(int id, String nombre, String descripcion){
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        listaCarpetas = new ArrayList<Carpeta>();
+        listGrupos = new ArrayList<Grupo>();
+    }
     public int getId() {
         return id;
     }
@@ -53,14 +63,6 @@ public class Sitio {
         this.listaCarpetas = listaCarpetas;
     }
 
-    public ArrayList<MovimientoAuditoria> getListaAuditorias() {
-        return listaAuditorias;
-    }
-
-    public void setListaAuditorias(ArrayList<MovimientoAuditoria> listaAuditorias) {
-        this.listaAuditorias = listaAuditorias;
-    }
-
     public ArrayList<Grupo> getListGrupos() {
         return listGrupos;
     }
@@ -69,12 +71,5 @@ public class Sitio {
         this.listGrupos = listGrupos;
     }
 
-    public ArrayList<Usuario> getListUsuarios() {
-        return listUsuarios;
-    }
-
-    public void setListUsuarios(ArrayList<Usuario> listUsuarios) {
-        this.listUsuarios = listUsuarios;
-    }
-   
+    
 }
