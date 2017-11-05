@@ -355,6 +355,9 @@ public class Login extends javax.swing.JFrame {
                 lblMensaje.setVisible(true);
             }
             },1000*3);
+            txtUsuario.setText("Usuario");
+            this.pswUsuario.setText("******");
+            primLogin = 0;
             con.closeConexion();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
