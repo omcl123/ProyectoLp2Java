@@ -5,12 +5,19 @@
  */
 package Vista;
 
+import Controlador.SitioBL;
+import Modelo.Sitio;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USER
  */
 public class frmEliminaSitio extends javax.swing.JInternalFrame {
-
+    private Sitio sitioSeleccionado;
+    private SitioBL logicaNegocio;
+    private ArrayList<Sitio> lista;
     /**
      * Creates new form frmEliminaSitio
      */
@@ -18,8 +25,31 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
         initComponents();
         this.BuscarSitio.setVisible(true);
         this.pnlSitio.setVisible(false);
+        sitioSeleccionado = new Sitio();
+        logicaNegocio = new SitioBL();
+        lista = new ArrayList();
+        lista = logicaNegocio.lecturaSitio();
+        actualizarTabla();
+    }
+    
+    private void Clear_Table(){
+        DefaultTableModel model = (DefaultTableModel)tblSitio.getModel();
+        for (int i = 0; i < tblSitio.getRowCount(); i++) {
+            model.removeRow(i);
+            i-=1;
+        }
     }
 
+    private void actualizarTabla(){
+        DefaultTableModel model = (DefaultTableModel)tblSitio.getModel();
+        Object[] fila = new Object[3];
+        for(int i=0;i<lista.size();i++){
+            fila[0] = lista.get(i).getId();
+            fila[1] = lista.get(i).getNombre();
+            fila[2] = lista.get(i).getDescripcion();
+            model.addRow(fila);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +61,7 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         BuscarSitio = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        lblNombreBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSitio = new javax.swing.JTable();
@@ -39,9 +69,9 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
         pnlSitio = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lblDescrip = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         pnlAdmin = new javax.swing.JPanel();
@@ -57,6 +87,11 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
         BuscarSitio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         tblSitio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,7 +119,7 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
                 .addGroup(BuscarSitioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
                     .addGroup(BuscarSitioLayout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnBuscar)))
                 .addContainerGap())
@@ -98,7 +133,7 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
             .addGroup(BuscarSitioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BuscarSitioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -111,11 +146,13 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nombre:");
 
-        jLabel4.setText("Motivo:");
+        lblNombre.setEnabled(false);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel4.setText("Descripcion:");
+
+        lblDescrip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                lblDescripActionPerformed(evt);
             }
         });
 
@@ -129,8 +166,8 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                    .addComponent(lblDescrip))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -139,7 +176,7 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -147,7 +184,7 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                        .addComponent(lblDescrip, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -237,7 +274,7 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar)
                         .addGap(65, 65, 65)
                         .addComponent(btnEliminar)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(369, Short.MAX_VALUE))
         );
         pnlSitioLayout.setVerticalGroup(
             pnlSitioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,17 +326,21 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void lblDescripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDescripActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_lblDescripActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         // TODO add your handling code here:
+        int index = tblSitio.getSelectedRow();
+        sitioSeleccionado = lista.get(index);
         this.BuscarSitio.setVisible(false);
         this.pnlSitio.setVisible(true);
         this.pnlAdmin.setVisible(false);
         this.btnGuardar.setVisible(false);
         this.btnEliminar.setEnabled(false);
+        this.lblNombre.setText(sitioSeleccionado.getNombre());
+        this.lblDescrip.setText(sitioSeleccionado.getDescripcion());
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -318,6 +359,13 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        lista = logicaNegocio.busquedaXNombre(this.lblNombreBuscar.getText());
+        this.pnlSitio.removeAll();
+        Clear_Table();
+        actualizarTabla();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BuscarSitio;
@@ -334,9 +382,9 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField lblDescrip;
+    private javax.swing.JTextField lblNombre;
+    private javax.swing.JTextField lblNombreBuscar;
     private javax.swing.JPanel pnlAdmin;
     private javax.swing.JPanel pnlSitio;
     private javax.swing.JTable tblAdmin;
