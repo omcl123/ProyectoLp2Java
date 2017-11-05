@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Vista;
-
+import Controlador.auditoriaBL;
 import java.awt.Color;
 import java.awt.List;
 import java.util.ArrayList;
@@ -95,6 +95,11 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         CBoxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnGeneraReporte.setText("Generar Reporte");
+        btnGeneraReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGeneraReporteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,10 +121,9 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                             .addGap(47, 47, 47)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnGeneraReporte, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CBoxCursos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(CBoxTipoReporte, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(CBoxPeriodo, 0, 196, Short.MAX_VALUE))))))
+                                .addComponent(CBoxCursos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CBoxTipoReporte, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CBoxPeriodo, 0, 196, Short.MAX_VALUE)))))
                 .addGap(98, 98, 98))
         );
         layout.setVerticalGroup(
@@ -183,6 +187,21 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
             ));
         }
     }//GEN-LAST:event_CBoxTipoReporteItemStateChanged
+
+    private void btnGeneraReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeneraReporteActionPerformed
+        // TODO add your handling code here:
+        auditoriaBL aBL=new auditoriaBL();
+        System.out.println(CBoxTipoReporte.getSelectedItem().toString());
+         if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
+            TableAudit.setModel(aBL.listaMov("Lenguajes de Progamacion 2", CBoxPeriodo.getSelectedItem().toString()));
+        }
+        else if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Movimientos")){
+            
+        }
+        else if(CBoxTipoReporte.getSelectedItem().toString().equals("Usuarios más activos")){
+            
+        }
+    }//GEN-LAST:event_btnGeneraReporteActionPerformed
 
 //    /**
 //     * @param args the command line arguments

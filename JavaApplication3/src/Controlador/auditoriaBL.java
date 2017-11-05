@@ -4,11 +4,19 @@
  * and open the template in the editor.
  */
 package Controlador;
-
+import AccesoDatos.auditoriaDA;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Oscar
  */
 public class auditoriaBL {
-    
+    private auditoriaDA aDA;
+    public auditoriaBL(){
+        aDA=new auditoriaDA();
+    }
+    public DefaultTableModel listaMov(String nomCur, String fecha){
+        System.out.println("Generando Reporte");
+        return aDA.listaDoc(nomCur, fecha);
+    }
 }

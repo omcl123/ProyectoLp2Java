@@ -41,11 +41,9 @@
                           <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="btnGeneraReporte" pref="196" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="CBoxCursos" max="32767" attributes="0"/>
-                                  <Component id="CBoxTipoReporte" max="32767" attributes="0"/>
-                                  <Component id="CBoxPeriodo" alignment="0" pref="196" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="CBoxCursos" max="32767" attributes="0"/>
+                              <Component id="CBoxTipoReporte" max="32767" attributes="0"/>
+                              <Component id="CBoxPeriodo" alignment="0" pref="196" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -207,6 +205,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Generar Reporte"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGeneraReporteActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
