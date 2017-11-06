@@ -21,4 +21,10 @@ public class CarpetaBL {
     public ArrayList<Carpeta> lecturaCurso(int numPadre){
         return dDA.listaCarpetas(numPadre);
     }
+     public void registraCarpeta(Carpeta c,int opcion){
+         dDA.registraCarpeta(c, opcion);
+     }
+     public void eliminarCarpeta(Carpeta c){
+         dDA.eliminarCarpeta(c);
+     }     
 }
