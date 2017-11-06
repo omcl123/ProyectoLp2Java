@@ -19,4 +19,7 @@ public class CursoBL {
     public ArrayList<String> lecturaCurso(){
         return dDA.lecturaCurso();
     }
+    public int obtieneIdCurso(String nomCur){
+        return dDA.obtieneIdCurso(nomCur);
+    }
 }
