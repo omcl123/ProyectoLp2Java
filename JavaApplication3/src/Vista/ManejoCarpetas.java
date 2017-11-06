@@ -9,6 +9,7 @@ import Controlador.PermisoBL;
 import Modelo.Carpeta;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
     private int nivelActual=0;
+    private int profundidad=0;
     private ArrayList<Integer> buffNivel=new ArrayList<Integer>();
     private ArrayList<Carpeta> nivelCarpetaActual=new ArrayList<Carpeta>();
     private ImageIcon icon = new ImageIcon("/Imagenes/carpeta.png");
@@ -28,11 +30,12 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
      * Creates new form ManejoCarpetas
      */
     public ManejoCarpetas() {
-        
         setSize(990,700);
         buffNivel.add(0);
         setClosable(true);
         initComponents();
+        if(nivelActual==0)BtnAnterior.setEnabled(false);
+        
         PermisoBL pBL=new PermisoBL();
         CBoxNomGrupo.removeAllItems();
         ArrayList<String>listaPermiso=pBL.lecturaPermiso();
@@ -81,7 +84,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         jTextField2 = new javax.swing.JTextField();
         CBoxNomGrupo = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        BtnAnterior = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
         setClosable(true);
@@ -178,7 +181,12 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton4.setText("Anterior");
+        BtnAnterior.setText("Anterior");
+        BtnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAnteriorActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Siguiente");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -200,7 +208,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(BtnAnterior)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton5)))
                 .addContainerGap())
@@ -216,7 +224,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
+                    .addComponent(BtnAnterior)
                     .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -227,8 +235,35 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        buffNivel.add(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId());
-        nivelActual=nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId();
+        int nivelAux=nivelActual=nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId();
+        ArrayList<Carpeta> nivelCarpetaAux=cBL.lecturaCurso(nivelAux);
+        if(nivelCarpetaAux.size()==0){
+            JOptionPane.showMessageDialog(null, "No hay carpetas dentro de esta carpeta","Error",DISPOSE_ON_CLOSE);
+        }else{
+            buffNivel.add(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId());
+            nivelActual=nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId();
+            if(nivelActual==0)BtnAnterior.setEnabled(false);
+            else BtnAnterior.setEnabled(true);
+            nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
+            DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+
+            for(int i=0;i<nivelCarpetaActual.size();i++){
+                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                tableModel.addRow(data);
+            }
+            TableCarpeta.setModel(tableModel);
+            profundidad++;
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void BtnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAnteriorActionPerformed
+        // TODO add your handling code here:
+        buffNivel.remove(profundidad);
+        profundidad--;
+        nivelActual=buffNivel.get(profundidad);
+        if(nivelActual==0)BtnAnterior.setEnabled(false);
+        else BtnAnterior.setEnabled(true);
+        System.out.println(nivelActual);
         nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         
@@ -237,16 +272,16 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             tableModel.addRow(data);
         }
         TableCarpeta.setModel(tableModel);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_BtnAnteriorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAnterior;
     private javax.swing.JComboBox<String> CBoxNomGrupo;
     private javax.swing.JTable TableCarpeta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
