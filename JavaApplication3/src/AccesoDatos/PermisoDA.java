@@ -36,4 +36,24 @@ public class PermisoDA {
         }
         return lista;
     }
+    public int devuelveIDPermiso(String nomPermiso){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            Statement sentencia = con.createStatement();
+            String instruccion = "select idPermiso from Permiso where Nombre like'"+nomPermiso+"';";
+            ResultSet rs=sentencia.executeQuery(instruccion);
+            rs.next();
+            int nextId=rs.getInt("idPermiso");
+            System.out.println(nextId);
+            return nextId;
+        }catch(Exception e){
+           
+        }
+        return -1;
+    }
 }
