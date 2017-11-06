@@ -7,6 +7,7 @@ package AccesoDatos;
 import Modelo.Coneccion;
 import com.mysql.jdbc.Connection;
 import java.sql.CallableStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
@@ -20,8 +21,13 @@ public class auditoriaDA {
     public auditoriaDA(){
     }
     
-    public DefaultTableModel listaDoc(String nomCur, String fecha){
+    public DefaultTableModel listaMov(String nomCur, String fecha){
         DefaultTableModel modelo=new DefaultTableModel();
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
         try{
             Statement sentencia = con.createStatement();
             String instruccion = "SELECT * FROM EMPLEADO";
@@ -33,7 +39,12 @@ public class auditoriaDA {
         }catch (Exception e){}
         return modelo;
     }
-    public DefaultTableModel listaMov(String nomCur, String fecha){
+    public DefaultTableModel listaDoc(String nomCur, String fecha){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
         DefaultTableModel modelo=new DefaultTableModel(new Object [][] {
                 },
                 new String [] {
@@ -42,15 +53,18 @@ public class auditoriaDA {
         try{
             CallableStatement cs = null;
             cs = this.con.prepareCall("{call BUSCAR_ID_CURSO(?,?)}");
+            System.out.println(nomCur);
             cs.setString(1, nomCur);
             cs.registerOutParameter(2, Types.INTEGER);
             cs.execute();
             int numCur=cs.getInt(2);
+            System.out.println(numCur);
             cs=this.con.prepareCall("{call BUSCAR_CURSO_CARPETA(?,?)}");
             cs.setInt(1, numCur);
             cs.registerOutParameter(2, Types.INTEGER);
             cs.execute();
             int numCarpeta=cs.getInt(2);
+            System.out.println(numCarpeta);
             cs=this.con.prepareCall("{call LISTA_DOCUMENTOS(?,?)}");
             cs.setInt(1, numCur);
             cs.setInt(2, numCarpeta);

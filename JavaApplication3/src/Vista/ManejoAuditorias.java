@@ -5,6 +5,7 @@
  */
 package Vista;
 import Controlador.auditoriaBL;
+import Controlador.CursoBL;
 import java.awt.Color;
 import java.awt.List;
 import java.util.ArrayList;
@@ -22,10 +23,16 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         initComponents();
         setSize(990,700);
         setClosable(true);
+        CursoBL cBL=new CursoBL();
+        ArrayList<String>listaCurso=cBL.lecturaCurso();
+        CBoxCursos.removeAllItems();
+        for(int i=0;i<listaCurso.size();i++){
+            CBoxCursos.addItem(listaCurso.get(i));
+        }
         CBoxTipoReporte.setModel(new javax.swing.DefaultComboBoxModel<>
         (new String[] { "Lista de Documentos","Lista de Movimientos","Usuarios más activos"}));
-        CBoxCursos.setModel(new javax.swing.DefaultComboBoxModel<>
-        (new String[] { "Curso 1","Curso 2","Curso 3"}));
+        //CBoxCursos.setModel(new javax.swing.DefaultComboBoxModel<>
+        //(new String[] { "Curso 1","Curso 2","Curso 3"}));
         CBoxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>
         (new String[] { "El dia anterior", "Semana pasada", "Mes Pasado","Comienzo del ciclo"}));
         TableAudit.setModel(new javax.swing.table.DefaultTableModel(
@@ -193,7 +200,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         auditoriaBL aBL=new auditoriaBL();
         System.out.println(CBoxTipoReporte.getSelectedItem().toString());
          if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
-            TableAudit.setModel(aBL.listaMov("Lenguajes de Progamacion 2", CBoxPeriodo.getSelectedItem().toString()));
+            TableAudit.setModel(aBL.listaMov(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
         }
         else if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Movimientos")){
             

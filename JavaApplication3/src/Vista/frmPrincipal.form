@@ -60,6 +60,14 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmSitioMouseClicked"/>
           </Events>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="MenuCarpetas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Manejo Carpetas"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuCarpetasMouseClicked"/>
+          </Events>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>

@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -18,6 +19,35 @@ public class Carpeta {
     private String descripcion;
     private ArrayList<Grupo> grupos;
     private ArrayList<Documento> documentos;
+    private Date fechaCreacion;
+    private int carpetaPadre;
+    private int sitioId;
+    
+    public int getsitioId() {
+        return sitioId;
+    }
+
+    public void setsitioId(int sitioId) {
+        this.sitioId = sitioId;
+    }
+    
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+    
+    
+    public int getCarpetaPadre() {
+        return carpetaPadre;
+    }
+
+    public void setCarpetaPadre(int carpetaPadre) {
+        this.carpetaPadre = carpetaPadre;
+    }
+    
     
     public int getId() {
         return id;

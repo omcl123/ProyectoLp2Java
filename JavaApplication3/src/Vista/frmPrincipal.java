@@ -65,6 +65,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jmUsuarios = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jmSitio = new javax.swing.JMenu();
+        MenuCarpetas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -176,6 +177,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmSitio);
 
+        MenuCarpetas.setText("Manejo Carpetas");
+        MenuCarpetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuCarpetasMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(MenuCarpetas);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -242,6 +251,17 @@ public class frmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void MenuCarpetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuCarpetasMouseClicked
+        // TODO add your handling code here:
+        PrincDesktopPane.removeAll();
+        ManejoCarpetas f;
+        try{
+            f= new ManejoCarpetas();
+            PrincDesktopPane.add(f);
+            f.setVisible(true);
+        }catch (Exception ex){}
+    }//GEN-LAST:event_MenuCarpetasMouseClicked
+
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -278,6 +298,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MenuCarpetas;
     private javax.swing.JDesktopPane PrincDesktopPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
