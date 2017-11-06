@@ -37,4 +37,46 @@ public class CursoDA {
         }
         return lista;
     }
+    public int obtieneIdCurso(String nomCur){
+        int idCurso;
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            Statement sentencia = con.createStatement();
+            String instruccion = "SELECT idCurso FROM Curso where Nombre like '"+nomCur+"'";
+            ResultSet rs = sentencia.executeQuery(instruccion);
+            rs.next();
+            idCurso=rs.getInt("idCurso");
+            con.close();
+            return idCurso;
+        }catch(Exception e){
+           
+        }
+        return -1;
+    }
+    
+    public int getNextId(){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            Statement sentencia = con.createStatement();
+            String instruccion = "select MAX(id) as next from Carpeta;";
+            ResultSet rs=sentencia.executeQuery(instruccion);
+            rs.next();
+            int nextId=rs.getInt("next")+1;
+            System.out.println(nextId);
+            return nextId;
+        }catch(Exception e){
+           
+        }
+        return -1;
+    }
 }
