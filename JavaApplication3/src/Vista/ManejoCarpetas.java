@@ -5,6 +5,7 @@
  */
 package Vista;
 import Controlador.CarpetaBL;
+import Controlador.CursoBL;
 import Controlador.PermisoBL;
 import Modelo.Carpeta;
 import java.util.ArrayList;
@@ -35,7 +36,18 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         setClosable(true);
         initComponents();
         if(nivelActual==0)BtnAnterior.setEnabled(false);
-        
+        BtnEliminar.setEnabled(false);
+        TableCarpeta.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                BtnEliminar.setEnabled(true);
+                if(nivelActual==0)BtnAnterior.setEnabled(false);
+                if(nivelCarpetaActual.size()==0){
+                BtnSiguiente.setEnabled(false);
+                }
+            }
+         });
         PermisoBL pBL=new PermisoBL();
         CBoxNomGrupo.removeAllItems();
         ArrayList<String>listaPermiso=pBL.lecturaPermiso();
@@ -76,16 +88,20 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         TableCarpeta = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        TxtNombre = new javax.swing.JTextField();
+        BtnNuevaCarpeta = new javax.swing.JButton();
+        BtnEliminar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TxtADescripcion = new javax.swing.JTextArea();
+        CheckCurso = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         CBoxNomGrupo = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         BtnAnterior = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        BtnSiguiente = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -106,9 +122,27 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nombre:");
 
-        jButton1.setText("Nueva Carpeta");
+        BtnNuevaCarpeta.setText("Nueva Carpeta");
+        BtnNuevaCarpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNuevaCarpetaActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Eliminar Carpeta");
+        BtnEliminar.setText("Eliminar Carpeta");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Descripcion:");
+
+        TxtADescripcion.setColumns(20);
+        TxtADescripcion.setRows(5);
+        jScrollPane2.setViewportView(TxtADescripcion);
+
+        CheckCurso.setText("Carpeta de Curso");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,16 +151,23 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TxtNombre))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(BtnEliminar)
+                                    .addComponent(BtnNuevaCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(CheckCurso)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,12 +175,18 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                    .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(CheckCurso)
+                .addGap(18, 18, 18)
+                .addComponent(BtnNuevaCarpeta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnEliminar)
+                .addGap(9, 9, 9))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Grupo"));
@@ -188,10 +235,10 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton5.setText("Siguiente");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        BtnSiguiente.setText("Siguiente");
+        BtnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                BtnSiguienteActionPerformed(evt);
             }
         });
 
@@ -201,31 +248,31 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BtnAnterior)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5)))
+                        .addComponent(BtnSiguiente)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAnterior)
-                    .addComponent(jButton5))
+                    .addComponent(BtnSiguiente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -233,13 +280,13 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void BtnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSiguienteActionPerformed
         // TODO add your handling code here:
-        int nivelAux=nivelActual=nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId();
-        ArrayList<Carpeta> nivelCarpetaAux=cBL.lecturaCurso(nivelAux);
-        if(nivelCarpetaAux.size()==0){
-            JOptionPane.showMessageDialog(null, "No hay carpetas dentro de esta carpeta","Error",DISPOSE_ON_CLOSE);
-        }else{
+//        int nivelAux=nivelActual=nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId();
+//        ArrayList<Carpeta> nivelCarpetaAux=cBL.lecturaCurso(nivelAux);
+//        if(nivelCarpetaAux.size()==0){
+//            JOptionPane.showMessageDialog(null, "No hay carpetas dentro de esta carpeta","Error",DISPOSE_ON_CLOSE);
+//        }else{
             buffNivel.add(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId());
             nivelActual=nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId();
             if(nivelActual==0)BtnAnterior.setEnabled(false);
@@ -253,8 +300,12 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             }
             TableCarpeta.setModel(tableModel);
             profundidad++;
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
+            if(nivelCarpetaActual.size()==0){
+                BtnSiguiente.setEnabled(false);
+            }
+            
+//        }
+    }//GEN-LAST:event_BtnSiguienteActionPerformed
 
     private void BtnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAnteriorActionPerformed
         // TODO add your handling code here:
@@ -272,23 +323,77 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             tableModel.addRow(data);
         }
         TableCarpeta.setModel(tableModel);
+        BtnSiguiente.setEnabled(true);
+        BtnEliminar.setEnabled(false);
     }//GEN-LAST:event_BtnAnteriorActionPerformed
 
+    private void BtnNuevaCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevaCarpetaActionPerformed
+        // TODO add your handling code here:
+        Carpeta c=new Carpeta();
+        CarpetaBL caBL=new CarpetaBL();
+        c.setNombre(TxtNombre.getText());
+        c.setDescripcion(TxtADescripcion.getText());
+        c.setCarpetaPadre(nivelActual);
+        if(CheckCurso.isSelected()){
+            CursoBL cBL=new CursoBL();
+            c.setCurso(cBL.obtieneIdCurso(TxtNombre.getText()));
+            System.out.println(c.getCurso());
+            caBL.registraCarpeta(c, 1);
+        }else{
+            caBL.registraCarpeta(c, 0);
+        }
+        nivelCarpetaActual.add(c);
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        
+        for(int i=0;i<nivelCarpetaActual.size();i++){
+            Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+            tableModel.addRow(data);
+        }
+        TableCarpeta.setModel(tableModel);
+        BtnEliminar.setEnabled(false);
+    }//GEN-LAST:event_BtnNuevaCarpetaActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta carpeta?", "Aviso", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+          System.out.println("SI");
+          CarpetaBL cBL=new CarpetaBL();
+          cBL.eliminarCarpeta(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()));
+          nivelCarpetaActual.remove(nivelCarpetaActual.size()-1);
+          DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        
+            for(int i=0;i<nivelCarpetaActual.size();i++){
+                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                tableModel.addRow(data);
+            }
+            TableCarpeta.setModel(tableModel);
+        }
+        else {
+           System.out.println("NO");
+        }
+        BtnEliminar.setEnabled(false);
+    }//GEN-LAST:event_BtnEliminarActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAnterior;
+    private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnNuevaCarpeta;
+    private javax.swing.JButton BtnSiguiente;
     private javax.swing.JComboBox<String> CBoxNomGrupo;
+    private javax.swing.JCheckBox CheckCurso;
     private javax.swing.JTable TableCarpeta;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTextArea TxtADescripcion;
+    private javax.swing.JTextField TxtNombre;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
