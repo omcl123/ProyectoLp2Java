@@ -6,6 +6,7 @@
 package Vista;
 import Controlador.CarpetaBL;
 import Controlador.CursoBL;
+import Controlador.GrupoBL;
 import Controlador.PermisoBL;
 import Modelo.Carpeta;
 import java.util.ArrayList;
@@ -97,9 +98,9 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         CheckCurso = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        TxtNomGrupo = new javax.swing.JTextField();
         CBoxNomGrupo = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        BtnNuevoGrupo = new javax.swing.JButton();
         BtnAnterior = new javax.swing.JButton();
         BtnSiguiente = new javax.swing.JButton();
 
@@ -195,7 +196,12 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
         CBoxNomGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton3.setText("Nuevo Grupo");
+        BtnNuevoGrupo.setText("Nuevo Grupo");
+        BtnNuevoGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNuevoGrupoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -208,9 +214,9 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(TxtNomGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(BtnNuevoGrupo)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -220,11 +226,11 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TxtNomGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(CBoxNomGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(BtnNuevoGrupo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -329,28 +335,33 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
     private void BtnNuevaCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevaCarpetaActionPerformed
         // TODO add your handling code here:
-        Carpeta c=new Carpeta();
-        CarpetaBL caBL=new CarpetaBL();
-        c.setNombre(TxtNombre.getText());
-        c.setDescripcion(TxtADescripcion.getText());
-        c.setCarpetaPadre(nivelActual);
-        if(CheckCurso.isSelected()){
-            CursoBL cBL=new CursoBL();
-            c.setCurso(cBL.obtieneIdCurso(TxtNombre.getText()));
-            System.out.println(c.getCurso());
-            caBL.registraCarpeta(c, 1);
+        if(TxtNombre.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "No ha escrito un nombre para la carpeta","Error",DISPOSE_ON_CLOSE);
         }else{
-            caBL.registraCarpeta(c, 0);
+            Carpeta c=new Carpeta();
+            CarpetaBL caBL=new CarpetaBL();
+            c.setNombre(TxtNombre.getText());
+            c.setDescripcion(TxtADescripcion.getText());
+            c.setCarpetaPadre(nivelActual);
+            if(CheckCurso.isSelected()){
+                CursoBL cBL=new CursoBL();
+                c.setCurso(cBL.obtieneIdCurso(TxtNombre.getText()));
+                System.out.println(c.getCurso());
+                caBL.registraCarpeta(c, 1);
+            }else{
+                caBL.registraCarpeta(c, 0);
+            }
+            nivelCarpetaActual.add(c);
+            DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+
+            for(int i=0;i<nivelCarpetaActual.size();i++){
+                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                tableModel.addRow(data);
+            }
+            TableCarpeta.setModel(tableModel);
+            BtnEliminar.setEnabled(false);
         }
-        nivelCarpetaActual.add(c);
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         
-        for(int i=0;i<nivelCarpetaActual.size();i++){
-            Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-            tableModel.addRow(data);
-        }
-        TableCarpeta.setModel(tableModel);
-        BtnEliminar.setEnabled(false);
     }//GEN-LAST:event_BtnNuevaCarpetaActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
@@ -374,19 +385,26 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         }
         BtnEliminar.setEnabled(false);
     }//GEN-LAST:event_BtnEliminarActionPerformed
+
+    private void BtnNuevoGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoGrupoActionPerformed
+        // TODO add your handling code here:
+        GrupoBL gBL=new GrupoBL();
+        gBL.creaGrupo(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId(), TxtNomGrupo.getText(), CBoxNomGrupo.getSelectedItem().toString());
+    }//GEN-LAST:event_BtnNuevoGrupoActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAnterior;
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnNuevaCarpeta;
+    private javax.swing.JButton BtnNuevoGrupo;
     private javax.swing.JButton BtnSiguiente;
     private javax.swing.JComboBox<String> CBoxNomGrupo;
     private javax.swing.JCheckBox CheckCurso;
     private javax.swing.JTable TableCarpeta;
     private javax.swing.JTextArea TxtADescripcion;
+    private javax.swing.JTextField TxtNomGrupo;
     private javax.swing.JTextField TxtNombre;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -394,6 +412,5 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
