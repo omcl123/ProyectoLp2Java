@@ -15,8 +15,9 @@ public class Grupo {
 
     private int id;
     private String nombre;
-    private String permisos;
-    private ArrayList<Usuario> listaUsuarios;
+    private int permiso;
+    private int idCarpeta;
+    
     
     public int getId() {
         return id;
@@ -34,20 +35,13 @@ public class Grupo {
         this.nombre = nombre;
     }
 
-    public String getPermisos() {
-        return permisos;
+    public int getPermiso() {
+        return permiso;
     }
 
-    public void setPermisos(String permisos) {
-        this.permisos = permisos;
+    public void setPermiso(int permiso) {
+        this.permiso = permiso;
     }
 
-    public ArrayList<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
     
 }
