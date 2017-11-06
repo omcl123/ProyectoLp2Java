@@ -22,6 +22,24 @@ public class Carpeta {
     private Date fechaCreacion;
     private int carpetaPadre;
     private int sitioId;
+    private int curso;
+    
+    public int getSitioId() {
+        return sitioId;
+    }
+
+    public void setSitioId(int sitioId) {
+        this.sitioId = sitioId;
+    }
+
+    public int getCurso() {
+        return curso;
+    }
+
+    public void setCurso(int curso) {
+        this.curso = curso;
+    }
+    
     
     public int getsitioId() {
         return sitioId;
