@@ -13,7 +13,21 @@ import java.sql.*;
  * @author alulab14
  */
 public class Coneccion {
-    public Connection con;
+
+    /**
+     * @return the con
+     */
+    public Connection getCon() {
+        return con;
+    }
+
+    /**
+     * @param con the con to set
+     */
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+    private Connection con;
     public Coneccion(){
         try{
         Class.forName("com.mysql.jdbc.Driver");
@@ -23,11 +37,11 @@ public class Coneccion {
     }
     public void closeConexion(){
         try{
-            con.close();
+            getCon().close();
         }catch (Exception e){}
     }
     
     public Statement createStatement()throws Exception{
-        return con.createStatement();
+        return getCon().createStatement();
     }
 }

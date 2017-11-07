@@ -8,6 +8,7 @@ package AccesoDatos;
 import Modelo.Administrador;
 import Modelo.Coneccion;
 import Vista.frmBusqueda;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,13 +25,10 @@ public class tAdminDA {
 
     private Coneccion con;
 
-    public tAdminDA() {
-        con = new Coneccion();
-    }
-
     public DefaultTableModel modeloAdmin(JTable tablaUsuarios) {
         DefaultTableModel modelo = (DefaultTableModel) tablaUsuarios.getModel();
         Object[] fila = new Object[5];
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
 
@@ -40,11 +38,11 @@ public class tAdminDA {
             ResultSet rs = sentencia.executeQuery(instruccion);
 
             while (rs.next()) {
-                fila[0]=rs.getString("Codigo");
-                fila[1]=rs.getString("Nombre");
-                fila[2]=rs.getString("APaterno");
-                fila[3]=rs.getString("AMaterno");
-                fila[4]=rs.getString("Email");
+                fila[0] = rs.getString("Codigo");
+                fila[1] = rs.getString("Nombre");
+                fila[2] = rs.getString("APaterno");
+                fila[3] = rs.getString("AMaterno");
+                fila[4] = rs.getString("Email");
                 modelo.addRow(fila);
             }
             con.closeConexion();
@@ -53,5 +51,20 @@ public class tAdminDA {
         }
         return modelo;
     }
-;
+
+    public void registrarAdmin(int id, int cargo, String codigo) {
+        con = new Coneccion();
+        try {
+            Connection aux = con.getCon();
+            CallableStatement csmt = aux.prepareCall("{call GUARDAR_ADMIN"
+                    + "(?,?,?)}");
+            csmt.setInt("_U_IDU", id);
+            csmt.setInt("_C_IDCARGO", cargo);
+            csmt.setString("_CODIGO", codigo);
+            aux.close();
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
 }
