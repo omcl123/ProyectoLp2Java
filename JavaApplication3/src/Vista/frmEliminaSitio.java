@@ -27,7 +27,7 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
         this.pnlSitio.setVisible(false);
         sitioSeleccionado = new Sitio();
         logicaNegocio = new SitioBL();
-        lista = new ArrayList();
+        lista = new ArrayList<>();
         lista = logicaNegocio.lecturaSitio();
         actualizarTabla();
     }
@@ -361,7 +361,6 @@ public class frmEliminaSitio extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         lista = logicaNegocio.busquedaXNombre(this.lblNombreBuscar.getText());
-        this.pnlSitio.removeAll();
         Clear_Table();
         actualizarTabla();
     }//GEN-LAST:event_btnBuscarActionPerformed
