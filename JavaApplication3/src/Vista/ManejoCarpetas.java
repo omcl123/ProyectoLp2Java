@@ -40,6 +40,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         initComponents();
         if(nivelActual==0)BtnAnterior.setEnabled(false);
         BtnEliminar.setEnabled(false);
+        CheckCurso.setEnabled(false);
         TableCarpeta.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
                 // do some actions here, for example
@@ -367,6 +368,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 //        if(nivelCarpetaAux.size()==0){
 //            JOptionPane.showMessageDialog(null, "No hay carpetas dentro de esta carpeta","Error",DISPOSE_ON_CLOSE);
 //        }else{
+            
             buffNivel.add(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId());
             nivelActual=nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId();
             if(nivelActual==0)BtnAnterior.setEnabled(false);
@@ -401,10 +403,21 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             }
             mostrarGrupos(carpetaActual);
 //        }
+            if(carpetaActual.getMaestro()==1){
+                CheckBoxMaestro.setEnabled(false);
+            }
+            if(carpetaActual.getNombre().equals("Cursos en el Ciclo")){
+                CheckCurso.setEnabled(true);
+            }else{
+                CheckCurso.setEnabled(false);
+            }
     }//GEN-LAST:event_BtnSiguienteActionPerformed
 
     private void BtnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAnteriorActionPerformed
         // TODO add your handling code here:
+        if(carpetaActual.getMaestro()==1 && !CheckBoxMaestro.isEnabled()){
+            CheckBoxMaestro.setEnabled(true);
+        }
         buffNivel.remove(profundidad);
         profundidad--;
         nivelActual=buffNivel.get(profundidad);
@@ -438,6 +451,11 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             CBoxNomGrupo.setEnabled(true);
         }
         mostrarGrupos(carpetaActual);
+        if(carpetaActual.getNombre().equals("Cursos en el Ciclo")){
+            CheckCurso.setEnabled(true);
+        }else{
+            CheckCurso.setEnabled(false);
+        }
     }//GEN-LAST:event_BtnAnteriorActionPerformed
 
     private void BtnNuevaCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevaCarpetaActionPerformed
@@ -509,8 +527,10 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private void BtnEliminaGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminaGrupoActionPerformed
         // TODO add your handling code here:
         GrupoBL gBL=new GrupoBL();
-        gBL.eliminaGrupo((Integer)TableGrupo.getValueAt(TableGrupo.getSelectedRow(), 1));
-        TableGrupo.remove(TableGrupo.getSelectedRow());
+        int idEliminar=(int) TableGrupo.getValueAt(TableGrupo.getSelectedRow(), 0);
+        System.out.println(idEliminar);
+        gBL.eliminaGrupo(idEliminar);
+        mostrarGrupos(carpetaActual);
     }//GEN-LAST:event_BtnEliminaGrupoActionPerformed
     private void mostrarGrupos(Carpeta c){
         TableGrupo.removeAll();

@@ -113,7 +113,7 @@ public class GrupoDA {
         }catch(Exception e){System.out.println("fallo en coneccion ");}
         
         try{
-            String instruccion = "DELETE FROM GrupoXCarpeta WHERE Carpeta_id=?";
+            String instruccion = "DELETE FROM GrupoXCarpeta WHERE Grupo_Id=?";
             PreparedStatement ps=con.prepareStatement(instruccion);
             ps.setInt(1, id);
             ps.execute();
