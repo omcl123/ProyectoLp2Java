@@ -29,8 +29,7 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         ResultSet rs2=s2.executeQuery(i2);
         rs2.next();
         initComponents();
-        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-        setSize(1000,700);
+        setSize(990,700);
         TxtCodigo.setEnabled(false);
         TxtTel.setEnabled(false);
         TxtTel.setText(rs2.getString("Telefono"));

@@ -26,7 +26,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private ArrayList<Integer> buffNivel=new ArrayList<Integer>();
     private ArrayList<Carpeta> nivelCarpetaActual=new ArrayList<Carpeta>();
     private ArrayList<String>listaGrupos;
-    private ImageIcon icon = new ImageIcon("/Imagenes/carpeta.png");
+    private ImageIcon icon = new ImageIcon(this.getClass().getResource("/Imagenes/carpeta.png"));
     private String [] col={"" ,"Nombre","Descripcion"};
     private CarpetaBL cBL=new CarpetaBL();
     private Carpeta carpetaActual;
@@ -59,13 +59,24 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             CBoxNomGrupo.addItem(listaPermiso.get(i));
         }
         nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+            @Override
+            public Class<?> getColumnClass(int column) {
+                switch (column) {
+                    case 0: return ImageIcon.class;
+                    default: return String.class;
+                }
+            }
+        };
         
         for(int i=0;i<nivelCarpetaActual.size();i++){
             Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
             tableModel.addRow(data);
+            
         }
         TableCarpeta.setModel(tableModel);
+        TableCarpeta.setRowHeight(60);
+       
         carpetaActual=cBL.getCarpetaActual(nivelActual);
         LabelCarpeta.setText(carpetaActual.getNombre());
         if(carpetaActual.getMaestro()!=1){
@@ -138,6 +149,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
             }
         ));
+        TableCarpeta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane1.setViewportView(TableCarpeta);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Carpeta"));
@@ -345,14 +357,14 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BtnAnterior)
                             .addComponent(BtnSiguiente)
                             .addComponent(jLabel4)
                             .addComponent(LabelCarpeta))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -374,8 +386,15 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             if(nivelActual==0)BtnAnterior.setEnabled(false);
             else BtnAnterior.setEnabled(true);
             nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
-            DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-
+            DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0: return ImageIcon.class;
+                        default: return String.class;
+                    }
+                }
+            };
             for(int i=0;i<nivelCarpetaActual.size();i++){
                 Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
                 tableModel.addRow(data);
@@ -425,8 +444,15 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         else BtnAnterior.setEnabled(true);
         System.out.println(nivelActual);
         nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-        
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+            @Override
+            public Class<?> getColumnClass(int column) {
+                switch (column) {
+                    case 0: return ImageIcon.class;
+                    default: return String.class;
+                }
+            }
+        };
         for(int i=0;i<nivelCarpetaActual.size();i++){
             Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
             tableModel.addRow(data);
@@ -479,7 +505,15 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 caBL.registraCarpeta(c, 0,esMaestro);
             }
             nivelCarpetaActual.add(c);
-            DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+            DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0: return ImageIcon.class;
+                        default: return String.class;
+                    }
+                }
+            };
 
             for(int i=0;i<nivelCarpetaActual.size();i++){
                 Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
@@ -499,8 +533,16 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
           CarpetaBL cBL=new CarpetaBL();
           cBL.eliminarCarpeta(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()));
           nivelCarpetaActual.remove(nivelCarpetaActual.size()-1);
-          DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-        
+          DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0: return ImageIcon.class;
+                        default: return String.class;
+                    }
+                }
+            };
+
             for(int i=0;i<nivelCarpetaActual.size();i++){
                 Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
                 tableModel.addRow(data);
