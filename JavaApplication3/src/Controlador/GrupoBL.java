@@ -6,6 +6,9 @@
 package Controlador;
 
 import AccesoDatos.GrupoDA;
+import Modelo.Carpeta;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,5 +21,11 @@ public class GrupoBL {
     }
     public void creaGrupo(int carpetaID,String nomGrupo,String permiso){
         gDA.creaGrupo(carpetaID, nomGrupo, permiso);
+    }
+    public DefaultTableModel listaGrupoXcarpeta(Carpeta c){
+        return gDA.listaGrupoXcarpeta(c);
+    }
+    public void eliminaGrupo(int id){
+        gDA.eliminaGrupo(id);
     }
 }

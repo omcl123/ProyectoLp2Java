@@ -23,6 +23,16 @@ public class Carpeta {
     private int carpetaPadre;
     private int sitioId;
     private int curso;
+    private int Maestro;
+    public int getMaestro() {
+        return Maestro;
+    }
+
+    public void setMaestro(int Maestro) {
+        this.Maestro = Maestro;
+    }
+    
+    
     
     public int getSitioId() {
         return sitioId;

@@ -16,7 +16,7 @@ public class Grupo {
     private int id;
     private String nombre;
     private int permiso;
-    private int idCarpeta;
+
     
     
     public int getId() {
