@@ -21,4 +21,11 @@ public class tAdminBL {
     public DefaultTableModel modeloAdmin(JTable tablaUsuarios){
         return accesoAdminBD.modeloAdmin(tablaUsuarios);
     }      
+    public void registrarAdmin(int id, int cargo, String codigo) {
+        accesoAdminBD.registrarAdmin(id, cargo, codigo);
+    }
+    
+    public void eliminarAdmin(String codigo){
+        accesoAdminBD.eliminarAdmin(codigo);
+    }
 }

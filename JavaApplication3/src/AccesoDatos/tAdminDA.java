@@ -67,4 +67,17 @@ public class tAdminDA {
         }
         con.closeConexion();
     }
+    
+    public void eliminarAdmin(String codigo){
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "DELETE FROM Admin_Sistema WHERE Codigo='"+codigo+"'";
+            sentencia.executeUpdate(instruccion);
+            con.closeConexion();            
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
 }

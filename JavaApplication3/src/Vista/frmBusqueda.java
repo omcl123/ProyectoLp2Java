@@ -17,10 +17,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmBusqueda extends javax.swing.JInternalFrame {
 
+    private String userType;
+    private String codigoSel;
+
     /**
      * Creates new form frmBusqueda
      */
     public frmBusqueda(String userType) {
+        this.userType = userType;
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setSize(730, 840);
@@ -73,6 +77,11 @@ public class frmBusqueda extends javax.swing.JInternalFrame {
                 "Codigo", "Nombre", "APaterno", "AMaterno", "email"
             }
         ));
+        tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaUsuarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,10 +114,46 @@ public class frmBusqueda extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
+        // TODO add your handling code here:
+
+        int index = tablaUsuarios.getSelectedRow();
+        String codigo = (String) tablaUsuarios.getValueAt(index, 0);
+        this.setCodigoSel(codigo);
+    }//GEN-LAST:event_tablaUsuariosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaUsuarios;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the userType
+     */
+    public String getUserType() {
+        return userType;
+    }
+
+    /**
+     * @param userType the userType to set
+     */
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    /**
+     * @return the codigoSel
+     */
+    public String getCodigoSel() {
+        return codigoSel;
+    }
+
+    /**
+     * @param codigoSel the codigoSel to set
+     */
+    public void setCodigoSel(String codigoSel) {
+        this.codigoSel = codigoSel;
+    }
 }
