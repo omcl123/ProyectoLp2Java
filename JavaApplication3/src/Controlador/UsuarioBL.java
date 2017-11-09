@@ -6,6 +6,7 @@
 package Controlador;
 
 import AccesoDatos.UsuarioDA;
+import Modelo.Usuario;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,5 +19,14 @@ public class UsuarioBL {
     
     public DefaultTableModel modeloUsuario(JTable tablaUsuarios) {
         return accesoUsuario.modeloUsuario(tablaUsuarios);
+    }
+    
+    public Usuario buscarUsuarioXcodigo(int codigo){
+        return accesoUsuario.buscarUsuarioXcodigo(codigo);
+    }
+    
+    public void registrarUser(int id,String nombre,String aPaterno,String aMaterno,String email,int habilitado,
+            String emailAlt,String password,int dni,String direccion,int telefono) {
+        accesoUsuario.registrarUser(id, nombre, aPaterno, aMaterno, email, habilitado, emailAlt, password, dni, direccion, telefono);
     }
 }

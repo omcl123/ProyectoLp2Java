@@ -59,17 +59,45 @@ public class UsuarioDA {
                         "inf282g5", "reFuKUxhUijfr8np");
        
             CallableStatement cs=conx.prepareCall("{call BUSCA_USUARIO_CODIGO(?)}");
-            cs.setInt(1, codigo);
+            cs.setInt("CODIGO", codigo);
             ResultSet rs=cs.executeQuery();
             rs.next();
             u.setnEntidad(rs.getInt("id"));
             u.setNombre(rs.getString("nombre"));
             u.setaPaterno(rs.getString("aP"));
             u.setaMaterno(rs.getString("aM"));
+            System.out.println(u.getNombre());
             conx.close();
         }catch(Exception e){
-           
+            System.out.println(e.getMessage());
+            return null;
         }
         return u;
+    }
+    
+    public void registrarUser(int id,String nombre,String aPaterno,String aMaterno,String email,int habilitado,
+            String emailAlt,String password,int dni,String direccion,int telefono) {
+        con = new Coneccion();
+        try {
+            Connection aux = con.getCon();
+            CallableStatement csmt = aux.prepareCall("{call GUARDAR_USUARIO"
+                    + "(?,?,?,?,?,?,?,?,?,?,?)}");
+            csmt.setInt("_ID", id);
+            csmt.setString("_NOMBRE", nombre);
+            csmt.setString("_APATERNO", aPaterno);
+            csmt.setString("_AMATERNO", aMaterno);
+            csmt.setString("_EMAIL", email);
+            csmt.setInt("_HABILITADO", habilitado);
+            csmt.setString("_EMAILALT", emailAlt);
+            csmt.setString("_PASSWORD", password);
+            csmt.setInt("_DNI", dni);
+            csmt.setString("_DIRECCION", direccion);
+            csmt.setInt("_TELEFONO", telefono);
+            csmt.execute();
+            aux.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
     }
 }
