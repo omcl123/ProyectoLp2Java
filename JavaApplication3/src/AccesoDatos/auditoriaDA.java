@@ -29,11 +29,12 @@ public class auditoriaDA {
                     "inf282g5", "reFuKUxhUijfr8np");
         }catch(Exception e){System.out.println("fallo en coneccion ");}
         try{
-            Statement sentencia = con.createStatement();
-            String instruccion = "SELECT * FROM EMPLEADO";
-            ResultSet rs = sentencia.executeQuery(instruccion);
-            while(rs.next()){
-                //modelo.addRow(rowData);
+            CallableStatement cs = null;
+            cs = this.con.prepareCall("{call LISTA_MOVIMIENTOS}");
+            ResultSet rs1=cs.executeQuery();
+            while(rs1.next()){
+                modelo.addRow(new Object[] {rs1.getInt("codigo"),rs1.getString("nombre"),rs1.getString("movimiento"),rs1.getString("documento")
+                ,rs1.getDate("fecha")});
             }
             con.close();
         }catch (Exception e){}
@@ -52,28 +53,41 @@ public class auditoriaDA {
                 });
         try{
             CallableStatement cs = null;
-            cs = this.con.prepareCall("{call BUSCAR_ID_CURSO(?,?)}");
+            cs = this.con.prepareCall("{call BUSCAR_ID_CURSO(?)}");
             System.out.println(nomCur);
             cs.setString(1, nomCur);
-            cs.registerOutParameter(2, Types.INTEGER);
-            cs.execute();
-            int numCur=cs.getInt(2);
+            ResultSet rs1=cs.executeQuery();
+            rs1.next();
+            int numCur=rs1.getInt(1);
             System.out.println(numCur);
-            cs=this.con.prepareCall("{call BUSCAR_CURSO_CARPETA(?,?)}");
+            cs=this.con.prepareCall("{call BUSCAR_CURSO_CARPETA(?)}");
             cs.setInt(1, numCur);
-            cs.registerOutParameter(2, Types.INTEGER);
-            cs.execute();
-            int numCarpeta=cs.getInt(2);
+            ResultSet rs2=cs.executeQuery();
+            rs2.next();
+            int numCarpeta=rs2.getInt(1);
             System.out.println(numCarpeta);
-            cs=this.con.prepareCall("{call LISTA_DOCUMENTOS(?,?)}");
-            cs.setInt(1, numCur);
-            cs.setInt(2, numCarpeta);
+            cs=this.con.prepareCall("{call OBTENER_HIJOS_CARPETA(?)}");
+            cs.setInt("ID_PADRE", numCarpeta);
             ResultSet rs = cs.executeQuery();
             while(rs.next()){
-                modelo.addRow(new Object[] {rs.getString("Tipo"),rs.getString("nombre"),rs.getString("fechaCreacion")});
-                System.out.println(rs.getString("Tipo"));
+                modelo.addRow(new Object[] {"Carpeta",rs.getString("nombre"),rs.getDate("fechaCreacion")});
                 System.out.println(rs.getString("nombre"));
-                System.out.println(rs.getString("fechaCreacion"));
+                System.out.println(rs.getDate("fechaCreacion"));
+                Statement sentencia = con.createStatement();
+                String instruccion = "Select 'Evaluacion' as Tipo, d.Nombre,d.FechaCreacion "
+                        + "from Documentos d,Doc_Evaluacion e "
+                        + "where d.Id=e.Documentos_Id and d.habilitado=1 and d.Carpeta_id="+rs.getInt("id");
+                ResultSet rs3 = sentencia.executeQuery(instruccion);
+                while(rs3.next()){
+                    modelo.addRow(new Object[] {"Evaluacion",rs3.getString(2),rs3.getDate(3)});
+                }
+                String i3 = "Select 'Documento' as Tipo, d.Nombre,d.FechaCreacion "
+                        + "from Documentos d,Doc_docente e "
+                        + "where d.Id=e.Documentos_Id and d.habilitado=1 and d.Carpeta_id="+rs.getInt("id");
+                ResultSet rs4 = sentencia.executeQuery(i3);
+                while(rs4.next()){
+                    modelo.addRow(new Object[] {"Documento",rs4.getString(2),rs4.getDate(3)});
+                }
             }
             con.close();
         }catch (Exception e){System.out.println("Error en query");}
@@ -82,11 +96,11 @@ public class auditoriaDA {
     public DefaultTableModel usuariosMasActivos(String nomCur, String fecha){
         DefaultTableModel modelo=new DefaultTableModel();
         try{
-            Statement sentencia = con.createStatement();
-            String instruccion = "SELECT * FROM EMPLEADO";
-            ResultSet rs = sentencia.executeQuery(instruccion);
-            while(rs.next()){
-                //modelo.addRow(rowData);
+            CallableStatement cs = null;
+            cs = this.con.prepareCall("{call USUARIOS_MAS_ACTIVOS}");
+            ResultSet rs1=cs.executeQuery();
+            while(rs1.next()){
+                modelo.addRow(new Object[] {rs1.getInt("codigo"),rs1.getString("nombre"),rs1.getInt("Total_Movimientos")});
             }
             con.close();
         }catch (Exception e){}

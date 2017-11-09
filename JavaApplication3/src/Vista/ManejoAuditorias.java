@@ -174,6 +174,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                     "Tipo", "Nombre", "Fecha de Creacion"
                 }
             ));
+            CBoxCursos.setEnabled(true);
         }
         else if(evt.getItem().toString().equals("Lista de Movimientos")){
             TableAudit.setModel(new javax.swing.table.DefaultTableModel(
@@ -183,6 +184,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                     "Codigo","Usuario", "Movimiento", "Documento","Fecha"
                 }
             ));
+            CBoxCursos.setEnabled(false);
         }
         else if(evt.getItem().toString().equals("Usuarios más activos")){
             TableAudit.setModel(new javax.swing.table.DefaultTableModel(
@@ -192,6 +194,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                     "Codigo","Usuario", "Numero de Movimients"
                 }
             ));
+            CBoxCursos.setEnabled(false);
         }
     }//GEN-LAST:event_CBoxTipoReporteItemStateChanged
 
