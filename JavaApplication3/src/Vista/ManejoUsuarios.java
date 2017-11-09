@@ -5,6 +5,10 @@
  */
 package Vista;
 
+import Controlador.tAdminBL;
+import Controlador.tAlumnoBL;
+import Controlador.tDocenteBL;
+import Controlador.tPersonalBL;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -14,6 +18,9 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class ManejoUsuarios extends javax.swing.JInternalFrame {
 
+    private String userTypeSel;
+    private frmBusqueda fBusq;
+
     /**
      * Creates new form ManejoUsuarios
      */
@@ -22,6 +29,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         initComponents();
         setSize(990, 700);
         estadoIni();
+        btnModificar.setVisible(false);
     }
 
     public void estadoIni() {
@@ -93,6 +101,11 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         jLabel1.setText("Tipo de usuario:");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +204,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         estadoNuevo();
+        userTypeSel = cbUsers.getSelectedItem().toString();
         if (cbUsers.getSelectedItem().toString() == "Administrador") {
             frmRegistrarAdmin f = new frmRegistrarAdmin();
             jdpContenedor.add(f);
@@ -219,21 +233,21 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         estadoBuscar();
         if (cbUsers.getSelectedItem().toString() == "Administrador") {
-            frmBusqueda f = new frmBusqueda("Administrador");
-            jdpContenedor.add(f);
-            f.setVisible(true);
+            fBusq = new frmBusqueda("Administrador");
+            jdpContenedor.add(fBusq);
+            fBusq.setVisible(true);
         } else if (cbUsers.getSelectedItem().toString() == "Docente") {
-            frmBusqueda f = new frmBusqueda("Docente");
-            jdpContenedor.add(f);
-            f.setVisible(true);
+            fBusq = new frmBusqueda("Docente");
+            jdpContenedor.add(fBusq);
+            fBusq.setVisible(true);
         } else if (cbUsers.getSelectedItem().toString() == "Alumno") {
-            frmBusqueda f = new frmBusqueda("Alumno");
-            jdpContenedor.add(f);
-            f.setVisible(true);
+            fBusq = new frmBusqueda("Alumno");
+            jdpContenedor.add(fBusq);
+            fBusq.setVisible(true);
         } else if (cbUsers.getSelectedItem().toString() == "Personal") {
-            frmBusqueda f = new frmBusqueda("Personal");
-            jdpContenedor.add(f);
-            f.setVisible(true);
+            fBusq = new frmBusqueda("Personal");
+            jdpContenedor.add(fBusq);
+            fBusq.setVisible(true);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -243,11 +257,66 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-        frmBusqueda f = (frmBusqueda) jdpContenedor.getComponent(0);
-        System.out.println(f.getUserType());
-        String codigo=f.getCodigoSel();
+        String userType = fBusq.getUserType();
+        String codigo = fBusq.getCodigoSel();
+        if (codigo == null) {
+            JOptionPane.showMessageDialog(null, "Seleccionar una fila!");
+        } else {
+            if (userType == "Administrador") {
+                tAdminBL accesoAdmin = new tAdminBL();
+                accesoAdmin.eliminarAdmin(codigo);
+                jdpContenedor.removeAll();
+                fBusq = new frmBusqueda("Administrador");
+                jdpContenedor.add(fBusq);
+                fBusq.setVisible(true);
+            } else if (userType == "Alumno") {
+                tAlumnoBL accesoAlumno = new tAlumnoBL();
+                accesoAlumno.eliminarAlumno(codigo);
+                jdpContenedor.removeAll();
+                fBusq = new frmBusqueda("Alumno");
+                jdpContenedor.add(fBusq);
+                fBusq.setVisible(true);
+            } else if (userType == "Docente") {
+                tDocenteBL accesoDocente = new tDocenteBL();
+                accesoDocente.eliminarDocente(codigo);
+                jdpContenedor.removeAll();
+                fBusq = new frmBusqueda("Docente");
+                jdpContenedor.add(fBusq);
+                fBusq.setVisible(true);
+            } else if (userType == "Personal") {
+                tPersonalBL accesoDocente = new tPersonalBL();
+                accesoDocente.eliminarPersonal(codigo);
+                jdpContenedor.removeAll();
+                fBusq = new frmBusqueda("Personal");
+                jdpContenedor.add(fBusq);
+                fBusq.setVisible(true);
+            }
+        }
         System.out.println(codigo);
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        int flag = 0;
+        if (cbUsers.getSelectedItem().toString() == "Administrador") {
+            frmRegistrarAdmin f = (frmRegistrarAdmin) jdpContenedor.getComponent(0);
+            flag = f.guardarAdmin();
+        } else if (cbUsers.getSelectedItem().toString() == "Docente") {
+            frmRegistrarDocente f = (frmRegistrarDocente) jdpContenedor.getComponent(0);
+            flag = f.guardarDocente();
+        } else if (cbUsers.getSelectedItem().toString() == "Alumno") {
+            frmRegistrarAlumno f = (frmRegistrarAlumno) jdpContenedor.getComponent(0);
+            flag = f.guardarAlumno();
+        } else if (cbUsers.getSelectedItem().toString() == "Personal") {
+            frmRegistrarPersonal f = (frmRegistrarPersonal) jdpContenedor.getComponent(0);
+            flag = f.guardarPersonal();
+        }
+        if (flag == 1) {
+            repaint();
+            jdpContenedor.removeAll();
+            estadoIni();
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments

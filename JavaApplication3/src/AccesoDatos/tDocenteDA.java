@@ -6,6 +6,8 @@
 package AccesoDatos;
 
 import Modelo.Coneccion;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
@@ -49,4 +51,33 @@ public class tDocenteDA {
         return modelo;
     }
     
+     public void registrarDocente(int id, int especialidad, String codigo) {
+        con = new Coneccion();
+        try {
+            Connection aux = con.getCon();
+            CallableStatement csmt = aux.prepareCall("{call GUARDAR_DOCENTE"
+                    + "(?,?,?)}");
+            csmt.setInt("_ID", id);
+            csmt.setInt("_ESPECIALIDAD", especialidad);
+            csmt.setString("_CODIGO", codigo);
+            csmt.execute();
+            aux.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
+
+    public void eliminarDocente(String codigo) {
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "DELETE FROM Docente WHERE Codigo='" + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
 }

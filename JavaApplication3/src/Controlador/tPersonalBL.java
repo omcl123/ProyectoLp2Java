@@ -20,4 +20,11 @@ public class tPersonalBL {
         return accesoPersonalBD.modeloPersonal(tablaUsuarios);
     }      
     
+    public void registrarPersonal(int id, int cargo, String codigo) {
+        accesoPersonalBD.registrarPersonal(id, cargo, codigo);
+    }
+
+    public void eliminarPersonal(String codigo) {
+        accesoPersonalBD.eliminarPersonal(codigo);
+    }
 }

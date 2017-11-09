@@ -61,21 +61,22 @@ public class tAdminDA {
             csmt.setInt("_U_IDU", id);
             csmt.setInt("_C_IDCARGO", cargo);
             csmt.setString("_CODIGO", codigo);
+            csmt.execute();
             aux.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
         con.closeConexion();
     }
-    
-    public void eliminarAdmin(String codigo){
+
+    public void eliminarAdmin(String codigo) {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
-            String instruccion = "DELETE FROM Admin_Sistema WHERE Codigo='"+codigo+"'";
+            String instruccion = "DELETE FROM Admin_Sistema WHERE Codigo='" + codigo + "'";
             sentencia.executeUpdate(instruccion);
-            con.closeConexion();            
-        }catch(Exception e){
+            con.closeConexion();
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
         con.closeConexion();

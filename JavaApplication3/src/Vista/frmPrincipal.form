@@ -52,14 +52,6 @@
             <Property name="text" type="java.lang.String" value="|"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jmSitio">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Manejo Sitio"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmSitioMouseClicked"/>
-          </Events>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="MenuCarpetas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Manejo Carpetas"/>

@@ -19,5 +19,11 @@ public class tDocenteBL {
     public DefaultTableModel modeloDocente(JTable tablaUsuarios){
         return accesoDocenteBD.modeloDocente(tablaUsuarios);
     }      
-    
+    public void registrarDocente(int id, int especialidad, String codigo) {
+        accesoDocenteBD.registrarDocente(id, especialidad, codigo);
+    }
+
+    public void eliminarDocente(String codigo) {
+        accesoDocenteBD.eliminarDocente(codigo);
+    }
 }

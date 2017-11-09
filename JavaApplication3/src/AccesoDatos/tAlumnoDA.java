@@ -6,6 +6,8 @@
 package AccesoDatos;
 
 import Modelo.Coneccion;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
@@ -35,11 +37,11 @@ public class tAlumnoDA {
             ResultSet rs = sentencia.executeQuery(instruccion);
 
             while (rs.next()) {
-                fila[0]=rs.getString("Codigo");
-                fila[1]=rs.getString("Nombre");
-                fila[2]=rs.getString("APaterno");
-                fila[3]=rs.getString("AMaterno");
-                fila[4]=rs.getString("Email");
+                fila[0] = rs.getString("Codigo");
+                fila[1] = rs.getString("Nombre");
+                fila[2] = rs.getString("APaterno");
+                fila[3] = rs.getString("AMaterno");
+                fila[4] = rs.getString("Email");
                 modelo.addRow(fila);
             }
             con.closeConexion();
@@ -48,5 +50,34 @@ public class tAlumnoDA {
         }
         return modelo;
     }
-    
+
+    public void registrarAlumno(int id, int especialidad, String codigo) {
+        con = new Coneccion();
+        try {
+            Connection aux = con.getCon();
+            CallableStatement csmt = aux.prepareCall("{call GUARDAR_ALUMNO"
+                    + "(?,?,?)}");
+            csmt.setInt("_ID", id);
+            csmt.setInt("_ESPECIALIDAD", especialidad);
+            csmt.setString("_CODIGO", codigo);
+            csmt.execute();
+            aux.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
+
+    public void eliminarAlumno(String codigo) {
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "DELETE FROM Alumno WHERE Codigo='" + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
 }

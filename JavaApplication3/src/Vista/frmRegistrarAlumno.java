@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vista;
 
 import Controlador.EspecialidadBL;
 import Controlador.UsuarioBL;
+import Controlador.tAdminBL;
+import Controlador.tAlumnoBL;
 import Modelo.Especialidad;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,23 +24,47 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmRegistrarAlumno
      */
+    private ArrayList<Especialidad> listaEsp;
+
     public frmRegistrarAlumno() {
         initComponents();
         txtNroEntidad.setEnabled(false);
-        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-        setSize(730,840);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setSize(730, 840);
         DefaultTableModel modelo;
         UsuarioBL accesoUser = new UsuarioBL();
         modelo = accesoUser.modeloUsuario(tablaUsuarios1);
         llenarCBEspecialidad();
     }
-    
+
     private void llenarCBEspecialidad() {
         EspecialidadBL accesoCargo = new EspecialidadBL();
-        ArrayList<Especialidad> lista = accesoCargo.listarEspecialidades();
-        for (int i = 0; i < lista.size(); i++) {
-            cbEspecialidad.addItem(lista.get(i).getNombre());
+        listaEsp = accesoCargo.listarEspecialidades();
+        for (int i = 0; i < listaEsp.size(); i++) {
+            cbEspecialidad.addItem(listaEsp.get(i).getNombre());
         }
+    }
+
+    public int guardarAlumno() {
+        tAlumnoBL accesoAlumno = new tAlumnoBL();
+        if (txtNroEntidad.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Seleccionar un usuario");
+            return 0;
+        }
+        int id = Integer.parseInt(txtNroEntidad.getText());
+        if (cbEspecialidad.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccionar un cargo");
+            return 0;
+        }
+        int especialidad = listaEsp.get(cbEspecialidad.getSelectedIndex()).getId();
+        if (txtCodigo.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "ingresar un codigo");
+            return 0;
+        }
+        String codigo = txtCodigo.getText().toString();
+        accesoAlumno.registrarAlumno(id, especialidad, codigo);
+        JOptionPane.showMessageDialog(null, "RegistroExitoso");
+        return 1;
     }
 
     /**
@@ -53,7 +79,7 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNroEntidad = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -108,7 +134,7 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,7 +152,7 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
                     .addComponent(cbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(54, 54, 54))
         );
@@ -153,8 +179,8 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
 
     private void tablaUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuarios1MouseClicked
         // TODO add your handling code here:
-        int index=tablaUsuarios1.getSelectedRow();
-        String id=(String)tablaUsuarios1.getValueAt(index,0);
+        int index = tablaUsuarios1.getSelectedRow();
+        String id = (String) tablaUsuarios1.getValueAt(index, 0);
         txtNroEntidad.setText(id);
     }//GEN-LAST:event_tablaUsuarios1MouseClicked
 
@@ -165,11 +191,9 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTable tablaUsuarios1;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNroEntidad;
     // End of variables declaration//GEN-END:variables
 }

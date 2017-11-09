@@ -64,7 +64,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jmUsuarios = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
-        jmSitio = new javax.swing.JMenu();
         MenuCarpetas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -169,14 +168,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu6.setText("|");
         jMenuBar1.add(jMenu6);
 
-        jmSitio.setText("Manejo Sitio");
-        jmSitio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jmSitioMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jmSitio);
-
         MenuCarpetas.setText("Manejo Carpetas");
         MenuCarpetas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -230,13 +221,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         PrincDesktopPane.add(f);
         f.setVisible(true);
     }//GEN-LAST:event_jmUsuariosMouseClicked
-
-    private void jmSitioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSitioMouseClicked
-        PrincDesktopPane.removeAll();
-        ManejoSitio f = new ManejoSitio();
-        PrincDesktopPane.add(f);
-        f.setVisible(true);
-    }//GEN-LAST:event_jmSitioMouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
@@ -310,7 +294,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu jmAuditorias;
     private javax.swing.JMenu jmGrupos;
-    private javax.swing.JMenu jmSitio;
     private javax.swing.JMenu jmUsuarios;
     private javax.swing.JLabel nameLabel;
     // End of variables declaration//GEN-END:variables

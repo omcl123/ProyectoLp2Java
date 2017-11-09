@@ -6,6 +6,8 @@
 package AccesoDatos;
 
 import Modelo.Coneccion;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
@@ -48,5 +50,33 @@ public class tPersonalDA {
         }
         return modelo;
     }
-    
+    public void registrarPersonal(int id, int cargo, String codigo) {
+        con = new Coneccion();
+        try {
+            Connection aux = con.getCon();
+            CallableStatement csmt = aux.prepareCall("{call GUARDAR_PERSONAL"
+                    + "(?,?,?)}");
+            csmt.setInt("_ID", id);
+            csmt.setInt("_CARGO", cargo);
+            csmt.setString("_CODIGO", codigo);
+            csmt.execute();
+            aux.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
+
+    public void eliminarPersonal(String codigo) {
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "DELETE FROM Personal WHERE Codigo='" + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+    }
 }

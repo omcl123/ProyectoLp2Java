@@ -20,4 +20,12 @@ public class tAlumnoBL {
         return accesoAlumnoBD.modeloAlumno(tablaUsuarios);
     }      
     
+    public void registrarAlumno(int id, int especialidad, String codigo) {
+        accesoAlumnoBD.registrarAlumno(id, especialidad, codigo);
+    }
+
+    public void eliminarAlumno(String codigo){
+        accesoAlumnoBD.eliminarAlumno(codigo);
+    }
+    
 }

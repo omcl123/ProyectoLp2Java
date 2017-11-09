@@ -8,8 +8,11 @@ package Vista;
 
 import Controlador.CargoBL;
 import Controlador.UsuarioBL;
+import Controlador.tAdminBL;
+import Controlador.tPersonalBL;
 import Modelo.Cargo;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,6 +25,8 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmRegistrarPersonal
      */
+    ArrayList<Cargo> listaCargo;
+    
     public frmRegistrarPersonal() {
         initComponents();
         txtNroEntidad.setEnabled(false);
@@ -35,10 +40,32 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
     
     private void llenarCBCargo(){
         CargoBL accesoCargo=new CargoBL();
-        ArrayList<Cargo> listaCargo=accesoCargo.listarCargos();
+        listaCargo=accesoCargo.listarCargos();
         for(int i=0;i<listaCargo.size();i++){
             cbCargo.addItem(listaCargo.get(i).getNombre());
         };
+    }
+    
+    public int guardarPersonal() {
+        tPersonalBL accesoPersonal = new tPersonalBL();
+        if (txtNroEntidad.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Seleccionar un usuario");
+            return 0;
+        }
+        int id = Integer.parseInt(txtNroEntidad.getText());
+        if (cbCargo.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccionar un cargo");
+            return 0;
+        }
+        int cargo = listaCargo.get(cbCargo.getSelectedIndex()).getIdCargo();
+        if (txtCodigo.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "ingresar un codigo");
+            return 0;
+        }
+        String codigo = txtCodigo.getText().toString();
+        accesoPersonal.registrarPersonal(id, cargo, codigo);
+        JOptionPane.showMessageDialog(null, "RegistroExitoso");
+        return 1;
     }
 
     /**
@@ -54,7 +81,7 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNroEntidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cbCargo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -100,7 +127,7 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
@@ -125,7 +152,7 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -161,8 +188,8 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNroEntidad;
     // End of variables declaration//GEN-END:variables
 }
