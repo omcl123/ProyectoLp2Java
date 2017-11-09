@@ -6,6 +6,10 @@
 package AccesoDatos;
 
 import Modelo.Coneccion;
+import Modelo.Usuario;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
@@ -47,5 +51,25 @@ public class UsuarioDA {
         }
         return modelo;
     }
-    
+    public Usuario buscarUsuarioXcodigo(int codigo){
+        Usuario u=new Usuario();
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conx = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                        "inf282g5", "reFuKUxhUijfr8np");
+       
+            CallableStatement cs=conx.prepareCall("{call BUSCA_USUARIO_CODIGO(?)}");
+            cs.setInt(1, codigo);
+            ResultSet rs=cs.executeQuery();
+            rs.next();
+            u.setnEntidad(rs.getInt("id"));
+            u.setNombre(rs.getString("nombre"));
+            u.setaPaterno(rs.getString("aP"));
+            u.setaMaterno(rs.getString("aM"));
+            conx.close();
+        }catch(Exception e){
+           
+        }
+        return u;
+    }
 }

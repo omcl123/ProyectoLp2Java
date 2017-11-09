@@ -6,11 +6,13 @@
 package AccesoDatos;
 import Modelo.Carpeta;
 import Modelo.Grupo;
+import Modelo.Usuario;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -60,7 +62,7 @@ public class GrupoDA {
            System.out.println("fallo en query ");
         }
     }
-    public int getNextId(){
+    public int getNextId() throws SQLException{
         try{
         Class.forName("com.mysql.jdbc.Driver");
         con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
@@ -74,10 +76,12 @@ public class GrupoDA {
             rs.next();
             int nextId=rs.getInt("next")+1;
             System.out.println(nextId);
+            con.close();
             return nextId;
         }catch(Exception e){
            
         }
+        con.close();
         return -1;
     }
     public DefaultTableModel listaGrupoXcarpeta(Carpeta c){
@@ -126,4 +130,84 @@ public class GrupoDA {
            System.out.println("fallo en query ");
         }
     }
+    public DefaultTableModel listaTotalGrupo(){
+        String []col={"Id","Nombre","Permiso"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            Statement sentencia = con.createStatement();
+            String instruccion = "select g.Id as id,g.Nombre as nombre, p.Nombre as permiso "
+                    + "from Grupo g,Permiso p "
+                    + "where g.Permiso_idPermiso=p.idPermiso;";
+            ResultSet rs=sentencia.executeQuery(instruccion);
+            while(rs.next()){
+                Object[] data={rs.getInt("id"),rs.getString("nombre"),rs.getString("permiso")};
+                tableModel.addRow(data);
+            }
+            
+        }catch(Exception e){
+           
+        }
+        return tableModel;
+    }
+    public DefaultTableModel listaUsuariosXGrupo(int idGrupo) throws SQLException{
+        String []col={"Codigo","Nombre completo","Cargo"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            CallableStatement cs=con.prepareCall("{call LISTA_USUARIO_X_GRUPO(?)}");
+            cs.setInt("ID_GRUPO", idGrupo);
+            ResultSet rs=cs.executeQuery();
+            while(rs.next()){
+                Object[] data={rs.getInt("codigo"),rs.getString("nombre"),rs.getString("tipo")};
+                tableModel.addRow(data);
+            }
+        }catch(Exception e){
+           
+        }
+        return tableModel;
+    }
+    public void asignarUsuario(int idUsuario,int idGrupo){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            Statement sentencia = con.createStatement();
+            String instruccion = "INSERT INTO GrupoXUsuario values("+idUsuario+","+idGrupo+");";
+            sentencia.executeUpdate(instruccion);
+            con.close();
+        }catch(Exception e){
+           
+        }
+    }
+    public void eliminarUsuarioGrupo(int idUsuario,int idGrupo){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            Statement sentencia = con.createStatement();
+            String instruccion = "DELETE FROM GrupoXUsuario WHERE Usuario_IdUsuario="+idUsuario+" and Grupo_Id="+idGrupo;
+            sentencia.executeUpdate(instruccion);
+            con.close();
+        }catch(Exception e){
+           
+        }
+    }
+    
 }
