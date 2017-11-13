@@ -44,7 +44,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="585" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="581" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -74,11 +74,8 @@
                       <Component id="btnModificar" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnEliminar" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnCancelar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnNUB" alignment="0" max="32767" attributes="0"/>
                   </Group>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="btnNUB" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -102,9 +99,9 @@
                   <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="163" max="32767" attributes="0"/>
+                  <EmptySpace pref="165" max="32767" attributes="0"/>
                   <Component id="btnNUB" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

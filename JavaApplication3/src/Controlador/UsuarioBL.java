@@ -25,8 +25,18 @@ public class UsuarioBL {
         return accesoUsuario.buscarUsuarioXcodigo(codigo);
     }
     
-    public void registrarUser(int id,String nombre,String aPaterno,String aMaterno,String email,int habilitado,
+    public void registrarUser(int id,int cargo,String nombre,String aPaterno,String aMaterno,String email,int habilitado,
             String emailAlt,String password,int dni,String direccion,int telefono) {
-        accesoUsuario.registrarUser(id, nombre, aPaterno, aMaterno, email, habilitado, emailAlt, password, dni, direccion, telefono);
+        accesoUsuario.registrarUser(id, cargo,nombre, aPaterno, aMaterno, email, habilitado, emailAlt, password, dni, direccion, telefono);
+    }
+    
+    public int generarID(){
+        return accesoUsuario.generarID();
+    }
+    public void registrarCargo(int idUsuario, int idCargo){
+        accesoUsuario.registrarCargo(idUsuario, idCargo);
+    }
+    public int verificarUsuarioEnUso(int idUsuario){
+        return accesoUsuario.verificarUsuarioEnUso(idUsuario);
     }
 }
