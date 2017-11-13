@@ -522,7 +522,9 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             TableCarpeta.setModel(tableModel);
             BtnEliminar.setEnabled(false);
         }
-        
+        BtnSiguiente.setEnabled(true);
+        TxtNombre.setText("");
+        TxtADescripcion.setText("");
     }//GEN-LAST:event_BtnNuevaCarpetaActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed

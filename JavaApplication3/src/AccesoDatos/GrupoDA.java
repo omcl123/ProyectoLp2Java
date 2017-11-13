@@ -5,6 +5,7 @@
  */
 package AccesoDatos;
 
+import Controlador.UsuarioBL;
 import Modelo.Carpeta;
 import Modelo.Grupo;
 import Modelo.Usuario;
@@ -210,6 +211,8 @@ public class GrupoDA {
 
         try {
             Statement sentencia = con.createStatement();
+            System.out.println(idUsuario);
+            System.out.println(idGrupo);
             String instruccion = "INSERT INTO GrupoXUsuario values(" + idUsuario + "," + idGrupo + ");";
             sentencia.executeUpdate(instruccion);
             con.close();
@@ -228,6 +231,7 @@ public class GrupoDA {
         }
 
         try {
+            
             Statement sentencia = con.createStatement();
             String instruccion = "DELETE FROM GrupoXUsuario WHERE Usuario_IdUsuario=" + idUsuario + " and Grupo_Id=" + idGrupo;
             sentencia.executeUpdate(instruccion);

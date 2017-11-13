@@ -8,6 +8,9 @@ package Vista;
 import Controlador.GrupoBL;
 import Controlador.UsuarioBL;
 import Modelo.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -214,7 +217,9 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         int codigo = Integer.parseInt(txtCodigo.getText());
         Usuario u = accesoUser.buscarUsuarioXcodigo(codigo);
         if (u != null) {
-            txtNombre.setText(u.getNombre());
+            txtNombre.setText(u.getNombre()+' '+u.getaPaterno()+' '+u.getaMaterno());
+            idUsuSel=u.getnEntidad();
+            System.out.println(u.getnEntidad());
         } else {
             txtNombre.setText("NO ENCONTRADO");
         }
@@ -224,8 +229,13 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:  
         if (!txtNombre.getText().equals("NO ENCONTRADO") && !txtNombre.getText().equals("")) {
             if (idGrupoSel != -1) {
-                int idUsu = Integer.parseInt(txtCodigo.getText());
-                accesoGrupo.asignarUsuario(idUsu, idGrupoSel);
+                //int idUsu = Integer.parseInt(txtCodigo.getText());
+                System.out.println(idUsuSel);
+                accesoGrupo.asignarUsuario(idUsuSel, idGrupoSel);
+                try{
+                    DefaultTableModel modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
+                    tableUsuarios.setModel(modeloU);
+                }catch(Exception e){}
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccionar un grupo");
             }
@@ -237,13 +247,28 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
+        int index = tableUsuarios.getSelectedRow();
+        
+        UsuarioBL uBL= new UsuarioBL();
+        Usuario u=uBL.buscarUsuarioXcodigo((int) tableUsuarios.getValueAt(index, 0));
+        idUsuSel=u.getnEntidad();
         if(idGrupoSel==-1)
             JOptionPane.showMessageDialog(null, "Seleccionar un grupo!");
         if(idUsuSel==-1)
             JOptionPane.showMessageDialog(null, "Seleccionar un usuario!");
         if(idUsuSel!=-1 && idGrupoSel!=-1){
+            System.out.println(idUsuSel);
+            System.out.println(idGrupoSel);
             accesoGrupo.eliminarUsuarioGrupo(idUsuSel, idGrupoSel);
             idUsuSel=-1;
+            DefaultTableModel modeloU;
+            try {
+                modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
+                tableUsuarios.setModel(modeloU);
+            } catch (SQLException ex) {
+                Logger.getLogger(ManejoGrupos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 

@@ -95,14 +95,16 @@ public class CarpetaDA {
             Statement sentencia = con.createStatement();
             if(opcion==1){
                 //System.out.println("creando carpeta ");
-                String instruccion = "INSERT INTO Carpeta VALUES (?,?,?,sysdate(),?,?,0,1);";
+                String instruccion = "INSERT INTO Carpeta VALUES (?,?,?,sysdate(),?,?,0,1,?);";
                 PreparedStatement ps=con.prepareStatement(instruccion);
                 ps.setInt(1, nextId);
                 ps.setInt(2, c.getCarpetaPadre());
                 ps.setString(3, c.getNombre());
                 ps.setString(4, c.getDescripcion());
                 ps.setInt(5, c.getCurso());
+                ps.setInt(6, maestro);
                 ps.execute();
+                
                 //int i=sentencia.executeUpdate(instruccion);
             }
             else{
