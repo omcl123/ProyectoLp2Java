@@ -67,6 +67,11 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                     default: return String.class;
                 }
             }
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
         };
         
         for(int i=0;i<nivelCarpetaActual.size();i++){

@@ -137,6 +137,10 @@ public class GrupoDA {
             PreparedStatement ps = con.prepareStatement(instruccion);
             ps.setInt(1, id);
             ps.execute();
+            String i3 = "DELETE FROM GrupoXUsuario WHERE Grupo_Id=?";
+            PreparedStatement ps2 = con.prepareStatement(instruccion);
+            ps2.setInt(1, id);
+            ps2.execute();
             String i2 = "DELETE FROM Grupo WHERE Id=?";
             PreparedStatement ps1 = con.prepareStatement(i2);
             ps1.setInt(1, id);
