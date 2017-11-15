@@ -302,15 +302,18 @@ public class Login extends javax.swing.JFrame {
         try{
             System.out.println(txtUsuario.getText());
             Statement sentencia = con.createStatement();i++;
-            String instruccion = "SELECT d.Codigo, u.Password,concat(u.Nombre,' ',u.APaterno,' ',u.AMaterno) as Name, u.IdUsuario as user"
-                    + "  FROM Docente d, Usuario u "
-                    + "WHERE d.Usuario_IdUsuario=u.IdUsuario and d.Codigo="+txtUsuario.getText();i++;
+            String instruccion = "Select us.id as id, us.nombre as nombre ,us.apellidoP as aP,apellidoM as aM,cargo,us.password as Password from " +
+                " ((Select u.IdUsuario as id,u.nombre as nombre,u.APaterno as apellidoP,u.AMaterno as apellidoM, u.IdCargo as cargo,u.Password as password " +
+                " from Usuario u,Personal a where a.Usuario_IdUsuario=u.IdUsuario and a.Codigo="+ txtUsuario.getText()+") " +
+                " union" +
+                " (Select u.IdUsuario as id,u.nombre as nombre,u.APaterno as apellidoP,u.AMaterno as apellidoM, u.IdCargo as cargo,u.Password as password " +
+                " from Usuario u,Admin_Sistema d where d.Usuario_IdUsuario=u.IdUsuario and d.Codigo="+ txtUsuario.getText()+")) us;";i++;
             ResultSet rs = sentencia.executeQuery(instruccion);i++;
             rs.next();
             //System.out.println(rs.getString("Password"));i++;
             String ps=rs.getString("Password");i++;
-            nombre=rs.getString("Name");
-            userID=rs.getInt("user");
+            nombre=rs.getString("nombre");
+            userID=rs.getInt("id");
             frmPrincipal.codUsuario=userID;
             con.closeConexion();
             if(ps.equals(passString)){
@@ -329,7 +332,7 @@ public class Login extends javax.swing.JFrame {
                 s4.executeUpdate(i4);
             }
             else{System.out.println("Contraseña equivocada");}
-        }catch (Exception e){System.out.println("fallo en query "+i);}
+        }catch (Exception e){System.out.println(e);}
         if (exitoso) {
             new java.util.Timer().schedule(new TimerTask(){
             @Override

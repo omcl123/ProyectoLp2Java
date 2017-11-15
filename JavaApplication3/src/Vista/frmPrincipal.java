@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class frmPrincipal extends javax.swing.JFrame {
     private String UserName;
     public static int codUsuario;
+    public static int cargo;
     /**
      * @return the UserName
      */
