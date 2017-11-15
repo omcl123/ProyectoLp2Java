@@ -41,7 +41,7 @@ public class CarpetaDA {
             System.out.println(rs.getString("nombre"));
             c.setsitioId(rs.getInt("Sitio_id"));
             c.setMaestro(rs.getInt("Maestro"));
-          
+            c.setHabilitado(rs.getInt("habilitado"));
             System.out.println("query ejecutado");
              con.close();
              return c;
@@ -61,7 +61,7 @@ public class CarpetaDA {
         try{
             Statement sentencia = con.createStatement();
             System.out.println("Ejecutando query");
-            String instruccion = "select * from Carpeta where Carpeta_id="+numPadre+" and Sitio_id=1 and habilitado=0;";
+            String instruccion = "select * from Carpeta where Carpeta_id="+numPadre+" and Sitio_id=1";
             ResultSet rs = sentencia.executeQuery(instruccion);
             while(rs.next()){
                 Carpeta c =new Carpeta();
@@ -73,6 +73,7 @@ public class CarpetaDA {
                 c.setNombre(rs.getString("nombre"));
                 System.out.println(rs.getString("nombre"));
                 c.setsitioId(rs.getInt("Sitio_id"));
+                c.setHabilitado(rs.getInt("habilitado"));
                 lista.add(c);
             }
             System.out.println("query ejecutado");
@@ -130,12 +131,6 @@ public class CarpetaDA {
         }catch(Exception e){System.out.println("fallo en coneccion ");}
         
         try{
-//            String lineaCarpetas="select id from (select * from Carpeta" +
-//                        "	order by Carpeta_id, id) Carpeta_sorted," +
-//                        "	(select @pv := "+c.getId()+") initialisation" +
-//                        "where find_in_set(Carpeta_id, @pv) > 0 and @pv := concat(@pv, ',', id);";
-//            PreparedStatement ps1=con.prepareStatement(lineaCarpetas);
-//            ResultSet rs=ps1.executeQuery();
             CallableStatement cs=con.prepareCall("{call OBTENER_HIJOS_CARPETA(?)}");
             cs.setInt("ID_PADRE", c.getId());
             ResultSet rs=cs.executeQuery();
@@ -150,6 +145,23 @@ public class CarpetaDA {
             String instruccion = "UPDATE Carpeta set habilitado=1 WHERE id = ?;";
             PreparedStatement ps=con.prepareStatement(instruccion);
             ps.setInt(1, c.getId());
+            ps.execute();
+            con.close();
+        }catch(Exception e){
+           System.out.println(e);
+        }
+    }
+    public void habilitarCarpeta(int idCarpeta){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            String instruccion = "UPDATE Carpeta set habilitado=0 WHERE id = ?;";
+            PreparedStatement ps=con.prepareStatement(instruccion);
+            ps.setInt(1, idCarpeta);
             ps.execute();
             con.close();
         }catch(Exception e){

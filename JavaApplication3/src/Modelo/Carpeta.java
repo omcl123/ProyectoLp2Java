@@ -17,13 +17,20 @@ public class Carpeta {
     private int id;
     private String nombre;
     private String descripcion;
-    private ArrayList<Grupo> grupos;
-    private ArrayList<Documento> documentos;
     private Date fechaCreacion;
     private int carpetaPadre;
     private int sitioId;
     private int curso;
     private int Maestro;
+    private int habilitado;
+    public int getHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(int habilitado) {
+        this.habilitado = habilitado;
+    }
+    
     public int getMaestro() {
         return Maestro;
     }
@@ -101,20 +108,5 @@ public class Carpeta {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<Grupo> getGrupos() {
-        return grupos;
-    }
-
-    public void setGrupos(ArrayList<Grupo> grupos) {
-        this.grupos = grupos;
-    }
-
-    public ArrayList<Documento> getDocumentos() {
-        return documentos;
-    }
-
-    public void setDocumentos(ArrayList<Documento> documentos) {
-        this.documentos = documentos;
-    }
-    
+   
 }
