@@ -86,18 +86,24 @@ public class GrupoDA {
             rs.next();
             int nextId = rs.getInt("next") + 1;
             System.out.println(nextId);
-            con.close();
+            //con.close();
             return nextId;
         } catch (Exception e) {
 
         }
-        con.close();
+        //con.close();
         return -1;
     }
 
     public DefaultTableModel listaGrupoXcarpeta(Carpeta c) {
         String[] col = {"Id", "Nombre", "Permiso"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5",
@@ -153,7 +159,13 @@ public class GrupoDA {
 
     public DefaultTableModel listaTotalGrupo() {
         String[] col = {"Id", "Nombre", "Permiso"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5",

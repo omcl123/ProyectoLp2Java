@@ -8,7 +8,16 @@ import Controlador.auditoriaBL;
 import Controlador.CursoBL;
 import java.awt.Color;
 import java.awt.List;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.poi.hssf.*;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  *
@@ -161,7 +170,30 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExportarActionPerformed
-        // TODO add your handling code here:
+        // TODO add your ha
+        HSSFWorkbook wb = new HSSFWorkbook();
+        if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
+            HSSFSheet sheet = wb.createSheet("Excel Sheet");
+            HSSFRow rowhead = sheet.createRow(0);
+            rowhead.createCell(0).setCellValue("Tipo");
+            rowhead.createCell(1).setCellValue("Nombre");
+            rowhead.createCell(2).setCellValue("Fecha de Creación");
+            for(int i=0;i<TableAudit.getRowCount();i++){
+                HSSFRow row = sheet.createRow(i+1);
+                row.createCell(0).setCellValue(TableAudit.getValueAt(i, 0).toString());
+                row.createCell(1).setCellValue(TableAudit.getValueAt(i, 1).toString());
+                row.createCell(2).setCellValue(TableAudit.getValueAt(i, 2).toString());
+            }   
+            try {
+                FileOutputStream  fileOut = new FileOutputStream("Reportes/Lista_de_documentos.xls",false);
+                wb.write(fileOut);
+                fileOut.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_BtnExportarActionPerformed
 
     private void CBoxTipoReporteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBoxTipoReporteItemStateChanged
