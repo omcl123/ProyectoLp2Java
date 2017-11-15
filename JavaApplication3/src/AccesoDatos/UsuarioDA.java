@@ -33,7 +33,7 @@ public class UsuarioDA {
         try {
             Statement sentencia = con.createStatement();
 
-            String instruccion = "SELECT u.IdUsuario, u.Nombre, u.APaterno, u.AMaterno, u.Email FROM Usuario u ";
+            String instruccion = "SELECT u.IdUsuario, u.Nombre, u.APaterno, u.AMaterno, u.Email, u.Habilitado,u.IdCargo FROM Usuario u ";
 
             ResultSet rs = sentencia.executeQuery(instruccion);
 
@@ -43,7 +43,11 @@ public class UsuarioDA {
                 fila[2] = rs.getString("APaterno");
                 fila[3] = rs.getString("AMaterno");
                 fila[4] = rs.getString("Email");
-                modelo.addRow(fila);
+                int habilitado = rs.getInt("Habilitado");
+                int cargo = rs.getInt("IdCargo");
+                if (habilitado == 1 && cargo == -1) {
+                    modelo.addRow(fila);
+                }
             }
             con.closeConexion();
         } catch (Exception ex) {
@@ -128,19 +132,21 @@ public class UsuarioDA {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
-            String instruccion = "UPDATE Usuarios SET IdCargo =" + "idCargo" + "WHERE IdUsuario=" + idUsuario;
+            String instruccion = "UPDATE Usuario SET IdCargo ='" + idCargo + "' WHERE IdUsuario='" + idUsuario + "'";
+            sentencia.executeUpdate(instruccion);
         } catch (Exception e) {
+            System.out.println("error en registrar caargo usuario");
             System.out.println(e.toString());
         }
         con.closeConexion();
     }
-    
-    public int verificarUsuarioEnUso(int idUsuario){
+
+    public int verificarUsuarioEnUso(int idUsuario) {
         //al usar este metodo se asume que el usuario si existe dado que se selecciona de una tabla que extrae datos de la bd
         //-1=error
         //0=ok
         //1 a mas = usuario en uso
-        int resultado=-1;
+        int resultado = -1;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conx = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5",
@@ -150,11 +156,119 @@ public class UsuarioDA {
             cs.setInt("_ID", idUsuario);
             cs.registerOutParameter("_enUso", java.sql.Types.INTEGER);
             cs.execute();
-            resultado=cs.getInt("_enUso");
+            resultado = cs.getInt("_enUso");
             conx.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return resultado;
+    }
+
+    public void actualizarNombre(String nuevoNombre, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET Nombre='" + nuevoNombre + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarAPaterno(String nuevoAP, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET APaterno='" + nuevoAP + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarAMaterno(String nuevoAM, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET AMaterno='" + nuevoAM + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarDNI(int nuevoDNI, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET DNI='" + nuevoDNI + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarTelefono(int nuevotelf, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET Telefono='" + nuevotelf + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarEmail(String nuevoEmail, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET Email='" + nuevoEmail + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarEmailAlt(String nuevoEmailAlt, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET EmailAlternativo='" + nuevoEmailAlt + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarPsw(String nuevaPsw, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET Password='" + nuevaPsw + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void actualizarDireccion(String nuevaDir, String tipoTabla, String codigo) {
+        try {
+            Statement sentencia = con.createStatement();
+            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario)" + "SET Direccion='" + nuevaDir + "' WHERE Codigo='"
+                    + codigo + "'";
+            sentencia.executeUpdate(instruccion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

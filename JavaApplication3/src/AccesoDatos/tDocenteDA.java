@@ -31,7 +31,7 @@ public class tDocenteDA {
         try {
             Statement sentencia = con.createStatement();
 
-            String instruccion = "SELECT a.Codigo, u.Nombre, u.APaterno, u.AMaterno, u.Email FROM Docente a, Usuario u "
+            String instruccion = "SELECT a.Codigo, u.Nombre, u.APaterno, u.AMaterno, u.Email, u.Habilitado FROM Docente a, Usuario u "
                     + "WHERE a.Usuario_IdUsuario=u.IdUsuario";
 
             ResultSet rs = sentencia.executeQuery(instruccion);
@@ -42,7 +42,8 @@ public class tDocenteDA {
                 fila[2]=rs.getString("APaterno");
                 fila[3]=rs.getString("AMaterno");
                 fila[4]=rs.getString("Email");
-                modelo.addRow(fila);
+                int habilitado = rs.getInt("Habilitado");
+                if (habilitado == 1) modelo.addRow(fila);
             }
             con.closeConexion();
         } catch (Exception ex) {
@@ -72,7 +73,9 @@ public class tDocenteDA {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
-            String instruccion = "DELETE FROM Docente WHERE Codigo='" + codigo + "'";
+            String instruccion = "UPDATE Usuario INNER JOIN Docente ON (Usuario.IdUsuario=Docente.Usuario_IdUsuario)"+
+                    "SET Habilitado = 0, IdCargo = -1 WHERE Codigo='" 
+                    + codigo + "'";
             sentencia.executeUpdate(instruccion);
             con.closeConexion();
         } catch (Exception e) {

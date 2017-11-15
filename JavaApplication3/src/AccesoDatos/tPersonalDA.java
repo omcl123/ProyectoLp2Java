@@ -31,7 +31,7 @@ public class tPersonalDA {
         try {
             Statement sentencia = con.createStatement();
 
-            String instruccion = "SELECT a.Codigo, u.Nombre, u.APaterno, u.AMaterno, u.Email FROM Personal a, Usuario u "
+            String instruccion = "SELECT a.Codigo, u.Nombre, u.APaterno, u.AMaterno, u.Email, u.Habilitado FROM Personal a, Usuario u "
                     + "WHERE a.Usuario_IdUsuario=u.IdUsuario";
 
             ResultSet rs = sentencia.executeQuery(instruccion);
@@ -42,7 +42,8 @@ public class tPersonalDA {
                 fila[2]=rs.getString("APaterno");
                 fila[3]=rs.getString("AMaterno");
                 fila[4]=rs.getString("Email");
-                modelo.addRow(fila);
+                int habilitado = rs.getInt("Habilitado");
+                if (habilitado == 1) modelo.addRow(fila);
             }
             con.closeConexion();
         } catch (Exception ex) {
@@ -71,7 +72,9 @@ public class tPersonalDA {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
-            String instruccion = "DELETE FROM Personal WHERE Codigo='" + codigo + "'";
+            String instruccion = "UPDATE Usuario INNER JOIN Personal ON (Usuario.IdUsuario=Personal.Usuario_IdUsuario)"+
+                    "SET Habilitado = 0, IdCargo = -1 WHERE Codigo='" 
+                    + codigo + "'";
             sentencia.executeUpdate(instruccion);
             con.closeConexion();
         } catch (Exception e) {

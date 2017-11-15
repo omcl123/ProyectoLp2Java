@@ -6,6 +6,8 @@
 package Vista;
 
 import Controlador.UsuarioBL;
+import Modelo.Coneccion;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -13,12 +15,42 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author Ruben
  */
-public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
+public class frmModificarUsuario extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form frmRegUsuarioBase
+     * @return the tipoTabla
      */
-    public frmRegUsuarioBase() {
+    public String getTipoTabla() {
+        return tipoTabla;
+    }
+
+    /**
+     * @param tipoTabla the tipoTabla to set
+     */
+    public void setTipoTabla(String tipoTabla) {
+        this.tipoTabla = tipoTabla;
+    }
+
+    /**
+     * @return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+    private String codigo;
+    private String tipoTabla;
+
+    /**
+     * Creates new form frmModificarUsuario
+     */
+    public frmModificarUsuario() {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setSize(730, 840);
@@ -50,11 +82,9 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
         txtPassword = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        btnActualizar = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuario"));
 
@@ -74,14 +104,14 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Telefono:");
 
-        jButton1.setText("Guardar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel11.setText("Direccion:");
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                btnActualizarMouseClicked(evt);
             }
         });
-
-        jLabel11.setText("Direccion:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,47 +119,49 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtEmailAlt))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNombre))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtAPaterno))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtAMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel11)
+                            .addComponent(jLabel9)
                             .addGap(18, 18, 18)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(44, 161, Short.MAX_VALUE))
+                            .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtEmailAlt))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel10)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtNombre))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtAPaterno))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtAMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(44, 158, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnActualizar)
+                .addGap(70, 70, 70))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,9 +203,9 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(btnActualizar)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,66 +228,65 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
         // TODO add your handling code here:
+        UsuarioBL accesoUser = new UsuarioBL();
+        String camposAct = new String();
         try {
-            UsuarioBL accesoUser = new UsuarioBL();
-            int id = accesoUser.generarID();
-            String nombre = (txtNombre.getText());
-            String aPaterno = (txtAPaterno.getText());
-            String aMaterno = (txtAMaterno.getText());
-            int dni = Integer.parseInt(txtDNI.getText());
-            String email = (txtEmail.getText());
-            String emailAlt = (txtEmailAlt.getText());
-            String password = (txtPassword.getText());
-            int habilitado = 1;
-            int telefono = Integer.parseInt(txtTelefono.getText());
-            String direccion = (txtDireccion.getText());
-            accesoUser.registrarUser(id, -1, nombre, aPaterno, aMaterno, email, habilitado, emailAlt, password, dni, direccion, telefono);
+            if (!txtNombre.getText().equals("")) {
+                String nuevoNombre = txtNombre.getText();
+                accesoUser.actualizarNombre(nuevoNombre, tipoTabla, codigo);
+                camposAct += "Nombre ";
+            }
+            if (!txtAPaterno.getText().equals("")) {
+                String nuevoAP = txtAPaterno.getText();
+                accesoUser.actualizarAPaterno(nuevoAP, tipoTabla, codigo);
+                camposAct += "APaterno ";
+            }
+            if (!txtAMaterno.getText().equals("")) {
+                String nuevoAM = txtAMaterno.getText();
+                accesoUser.actualizarAMaterno(nuevoAM, tipoTabla, codigo);
+                camposAct += "AMaterno ";
+            }
+            if (!txtDNI.getText().equals("")) {
+                int nuevoDNI = Integer.parseInt(txtDNI.getText());
+                accesoUser.actualizarDNI(nuevoDNI, tipoTabla, codigo);
+                camposAct += "DNI ";
+            }
+            if (!txtTelefono.getText().equals("")) {
+                int nuevotelf = Integer.parseInt(txtTelefono.getText());
+                accesoUser.actualizarTelefono(nuevotelf, tipoTabla, codigo);
+                camposAct += "Telefono ";
+            }
+            if (!txtEmail.getText().equals("")) {
+                String nuevoEmail = txtEmail.getText();
+                accesoUser.actualizarEmail(nuevoEmail, tipoTabla, codigo);
+                camposAct += "Email ";
+            }
+            if (!txtEmailAlt.getText().equals("")) {
+                String nuevoEmailAlt = txtEmailAlt.getText();
+                accesoUser.actualizarEmailAlt(nuevoEmailAlt, tipoTabla, codigo);
+                camposAct += "EmailAlt ";
+            }
+            if (!txtPassword.getText().equals("")) {
+                String nuevaPsw = txtPassword.getText();
+                accesoUser.actualizarPsw(nuevaPsw, tipoTabla, codigo);
+                camposAct += "Password ";
+            }
+            if (!txtDireccion.getText().equals("")) {
+                String nuevaDir = txtDireccion.getText();
+                accesoUser.actualizarDireccion(nuevaDir, tipoTabla, codigo);
+                camposAct += "Direccion ";
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ingresar Datos validos");
-            return;
+            JOptionPane.showMessageDialog(null, "Ingresar datos validos!");
         }
-        JOptionPane.showMessageDialog(null, "Registro Exitoso");
-    }//GEN-LAST:event_jButton1MouseClicked
+        JOptionPane.showMessageDialog(null, "Campos Actualizados: "+camposAct);
+    }//GEN-LAST:event_btnActualizarMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmRegUsuarioBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmRegUsuarioBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmRegUsuarioBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmRegUsuarioBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmRegUsuarioBase().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

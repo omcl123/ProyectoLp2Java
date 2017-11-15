@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -20,6 +20,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
 
     private String userTypeSel;
     private frmBusqueda fBusq;
+    private int modificando =0 ;
 
     /**
      * Creates new form ManejoUsuarios
@@ -29,7 +30,12 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         initComponents();
         setSize(990, 700);
         estadoIni();
-        btnModificar.setVisible(false);
+//        btnModificar.setVisible(false);
+    }
+    
+    public void estadoModificar(){
+        estadoBuscar();        
+        btnEliminar.setEnabled(false);
     }
 
     public void estadoIni() {
@@ -130,9 +136,9 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         });
 
         btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
             }
         });
 
@@ -253,6 +259,10 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         repaint();
         jdpContenedor.removeAll();
         estadoIni();
+        if(modificando==1){
+            modificando=0;
+            btnBuscarActionPerformed(evt);
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -275,10 +285,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
             fBusq.setVisible(true);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
@@ -351,6 +357,38 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         jdpContenedor.add(f);
         f.setVisible(true);
     }//GEN-LAST:event_btnNUBMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        // TODO add your handling code here:
+        modificando=1;
+        estadoModificar();
+        String userType = fBusq.getUserType();
+        String codigo = fBusq.getCodigoSel();
+        frmModificarUsuario f = new frmModificarUsuario();
+        f.setCodigo(codigo);
+        if (codigo == null) {
+            JOptionPane.showMessageDialog(null, "Seleccionar una fila!");
+        } else {
+            if (userType == "Administrador") {
+                f.setTipoTabla("Admin_Sistema");
+                jdpContenedor.removeAll();
+                jdpContenedor.add(f);
+            } else if (userType == "Alumno") {
+                f.setTipoTabla("Alumno");
+                jdpContenedor.removeAll();
+                jdpContenedor.add(f);
+            } else if (userType == "Docente") {
+                f.setTipoTabla("Docente");
+                jdpContenedor.removeAll();
+                jdpContenedor.add(f);
+            } else if (userType == "Personal") {
+                f.setTipoTabla("Personal");
+                jdpContenedor.removeAll();
+                jdpContenedor.add(f);
+            }
+            f.setVisible(true);
+        }
+    }//GEN-LAST:event_btnModificarMouseClicked
 
     /**
      * @param args the command line arguments

@@ -47,11 +47,13 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
 
     public int guardarAlumno() {
         tAlumnoBL accesoAlumno = new tAlumnoBL();
+        UsuarioBL accesoUser = new UsuarioBL();
         if (txtNroEntidad.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Seleccionar un usuario");
             return 0;
         }
         int id = Integer.parseInt(txtNroEntidad.getText());
+        accesoUser.registrarCargo(id, 1);
         if (cbEspecialidad.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Seleccionar un cargo");
             return 0;

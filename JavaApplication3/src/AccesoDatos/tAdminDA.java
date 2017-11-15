@@ -32,7 +32,7 @@ public class tAdminDA {
         try {
             Statement sentencia = con.createStatement();
 
-            String instruccion = "SELECT a.Codigo, u.Nombre, u.APaterno, u.AMaterno, u.Email FROM Admin_Sistema a, Usuario u "
+            String instruccion = "SELECT a.Codigo, u.Nombre, u.APaterno, u.AMaterno, u.Email,u.Habilitado FROM Admin_Sistema a, Usuario u "
                     + "WHERE a.Usuario_IdUsuario=u.IdUsuario";
 
             ResultSet rs = sentencia.executeQuery(instruccion);
@@ -43,7 +43,8 @@ public class tAdminDA {
                 fila[2] = rs.getString("APaterno");
                 fila[3] = rs.getString("AMaterno");
                 fila[4] = rs.getString("Email");
-                modelo.addRow(fila);
+                int habilitado = rs.getInt("Habilitado");
+                if (habilitado == 1) modelo.addRow(fila);
             }
             con.closeConexion();
         } catch (Exception ex) {
@@ -73,7 +74,9 @@ public class tAdminDA {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
-            String instruccion = "DELETE FROM Admin_Sistema WHERE Codigo='" + codigo + "'";
+            String instruccion = "UPDATE Usuario INNER JOIN Admin_Sistema ON (Usuario.IdUsuario=Admin_Sistema.Usuario_IdUsuario)"+
+                    "SET Habilitado = 0, IdCargo = -1 WHERE Codigo='" 
+                    + codigo + "'";
             sentencia.executeUpdate(instruccion);
             con.closeConexion();
         } catch (Exception e) {

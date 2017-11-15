@@ -5,9 +5,7 @@
  */
 package Vista;
 
-import Controlador.CargoBL;
-import Controlador.UsuarioBL;
-import Controlador.tAdminBL;
+import Controlador.*;
 import Modelo.Cargo;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -33,35 +31,32 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         DefaultTableModel modelo;
         UsuarioBL accesoUser = new UsuarioBL();
         modelo = accesoUser.modeloUsuario(tablaUsuarios);
-        llenarCBCargo();
+//        llenarCBCargo();
     }
 
-    private void llenarCBCargo() {
-        CargoBL accesoCargo = new CargoBL();
-        listaCargo = accesoCargo.listarCargos();
-        for (int i = 0; i < listaCargo.size(); i++) {
-            cbCargo.addItem(listaCargo.get(i).getNombre());
-        };
-    }
+//    private void llenarCBCargo() {
+//        CargoBL accesoCargo = new CargoBL();
+//        listaCargo = accesoCargo.listarCargos();
+//        for (int i = 0; i < listaCargo.size(); i++) {
+//            cbCargo.addItem(listaCargo.get(i).getNombre());
+//        };
+//    }
 
     public int guardarAdmin() {
         tAdminBL accesoAdmin = new tAdminBL();
+        UsuarioBL accesoUser = new UsuarioBL();
         if (txtNroEntidad.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Seleccionar un usuario");
             return 0;
         }
         int id = Integer.parseInt(txtNroEntidad.getText());
-        if (cbCargo.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Seleccionar un cargo");
-            return 0;
-        }
-        int cargo = listaCargo.get(cbCargo.getSelectedIndex()).getIdCargo();
+        accesoUser.registrarCargo(id, 3);
         if (txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "ingresar un codigo");
             return 0;
         }
         String codigo = txtCodigo.getText().toString();
-        accesoAdmin.registrarAdmin(id, cargo, codigo);
+        accesoAdmin.registrarAdmin(id, 3, codigo);
         JOptionPane.showMessageDialog(null, "RegistroExitoso");
         return 1;
     }
@@ -80,8 +75,6 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         txtNroEntidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        cbCargo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
 
@@ -90,10 +83,6 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         jLabel1.setText("Nro. Entidad:");
 
         jLabel7.setText("Código:");
-
-        jLabel8.setText("Cargo:");
-
-        cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,11 +116,8 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(51, 51, 51)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -143,11 +129,7 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
                     .addComponent(txtNroEntidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -168,7 +150,7 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,10 +165,8 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbCargo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaUsuarios;

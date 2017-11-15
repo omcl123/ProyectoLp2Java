@@ -39,4 +39,40 @@ public class UsuarioBL {
     public int verificarUsuarioEnUso(int idUsuario){
         return accesoUsuario.verificarUsuarioEnUso(idUsuario);
     }
+    
+    public void actualizarNombre(String nuevoNombre, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarNombre(nuevoNombre, tipoTabla, codigo);
+    }
+
+    public void actualizarAPaterno(String nuevoAP, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarAPaterno(nuevoAP, tipoTabla, codigo);
+    }
+
+    public void actualizarAMaterno(String nuevoAM, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarAMaterno(nuevoAM, tipoTabla, codigo);
+    }
+
+    public void actualizarDNI(int nuevoDNI, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarDNI(nuevoDNI, tipoTabla, codigo);
+    }
+
+    public void actualizarTelefono(int nuevotelf, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarTelefono(nuevotelf, tipoTabla, codigo);
+    }
+
+    public void actualizarEmail(String nuevoEmail, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarEmail(nuevoEmail, tipoTabla, codigo);
+    }
+
+    public void actualizarEmailAlt(String nuevoEmailAlt, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarEmailAlt(nuevoEmailAlt, tipoTabla, codigo);
+    }
+
+    public void actualizarPsw(String nuevaPsw, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarPsw(nuevaPsw, tipoTabla, codigo);
+    }
+
+    public void actualizarDireccion(String nuevaDir, String tipoTabla, String codigo) {
+        accesoUsuario.actualizarDireccion(nuevaDir, tipoTabla, codigo);
+    }
 }
