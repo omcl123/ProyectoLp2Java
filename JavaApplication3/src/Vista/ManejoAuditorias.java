@@ -235,13 +235,14 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         auditoriaBL aBL=new auditoriaBL();
         System.out.println(CBoxTipoReporte.getSelectedItem().toString());
          if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
-            TableAudit.setModel(aBL.listaMov(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
+            TableAudit.setModel(aBL.listaDoc(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
         }
         else if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Movimientos")){
-            
+            TableAudit.setModel(aBL.listaMov(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
         }
         else if(CBoxTipoReporte.getSelectedItem().toString().equals("Usuarios más activos")){
-            
+            System.out.println("Generando reporte");
+            TableAudit.setModel(aBL.usuariosMasActivos(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
         }
     }//GEN-LAST:event_btnGeneraReporteActionPerformed
 

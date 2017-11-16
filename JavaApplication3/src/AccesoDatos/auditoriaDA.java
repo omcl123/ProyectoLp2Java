@@ -22,7 +22,11 @@ public class auditoriaDA {
     }
     
     public DefaultTableModel listaMov(String nomCur, String fecha){
-        DefaultTableModel modelo=new DefaultTableModel();
+        DefaultTableModel modelo=new DefaultTableModel(new Object [][] {
+                },
+                new String [] {
+                    "Codigo", "Nombre","Movimiento" ,"Documento","Fecha de Creacion"
+                });
         try{
         Class.forName("com.mysql.jdbc.Driver");
         con = (Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
@@ -35,9 +39,10 @@ public class auditoriaDA {
             while(rs1.next()){
                 modelo.addRow(new Object[] {rs1.getInt("codigo"),rs1.getString("nombre"),rs1.getString("movimiento"),rs1.getString("documento")
                 ,rs1.getDate("fecha")});
+                System.out.println(rs1.getInt("codigo"));
             }
             con.close();
-        }catch (Exception e){}
+        }catch (Exception e){System.out.println(e);}
         return modelo;
     }
     public DefaultTableModel listaDoc(String nomCur, String fecha){
@@ -69,6 +74,7 @@ public class auditoriaDA {
             cs=this.con.prepareCall("{call OBTENER_HIJOS_CARPETA(?)}");
             cs.setInt("ID_PADRE", numCarpeta);
             ResultSet rs = cs.executeQuery();
+            
             while(rs.next()){
                 modelo.addRow(new Object[] {"Carpeta",rs.getString("nombre"),rs.getDate("fechaCreacion")});
                 System.out.println(rs.getString("nombre"));
@@ -94,16 +100,30 @@ public class auditoriaDA {
         return modelo;
     }
     public DefaultTableModel usuariosMasActivos(String nomCur, String fecha){
-        DefaultTableModel modelo=new DefaultTableModel();
+        DefaultTableModel modelo=new DefaultTableModel(new Object [][] {
+                },
+                new String [] {
+                    "Codigo", "Nombre","Movimientos"
+                });
         try{
-            CallableStatement cs = null;
-            cs = this.con.prepareCall("{call USUARIOS_MAS_ACTIVOS}");
+            Class.forName("com.mysql.jdbc.Driver");
+            con = (Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                        "inf282g5", "reFuKUxhUijfr8np");
+            }catch(Exception e){System.out.println("fallo en coneccion ");}
+        try{
+            
+            CallableStatement cs = this.con.prepareCall("{call USUARIOS_MAS_ACTIVOS}");
             ResultSet rs1=cs.executeQuery();
+            //rs1.next();
+            
             while(rs1.next()){
                 modelo.addRow(new Object[] {rs1.getInt("codigo"),rs1.getString("nombre"),rs1.getInt("Total_Movimientos")});
+                System.out.println(rs1.getInt("codigo"));
+                System.out.println(rs1.getInt("nombre"));
+                System.out.println(rs1.getInt("Total_Movimientos"));
             }
             con.close();
-        }catch (Exception e){}
+        }catch (Exception e){System.out.println(e);}
         return modelo;
     }
 }

@@ -715,6 +715,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         BtnSiguiente.setEnabled(true);
         TxtNombre.setText("");
         TxtADescripcion.setText("");
+        JOptionPane.showMessageDialog(null,"Carpeta creada con éxito","Aviso de confirmacion",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_BtnNuevaCarpetaActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
@@ -787,9 +788,14 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
     private void BtnNuevoGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoGrupoActionPerformed
         // TODO add your handling code here:
+        if(TxtNomGrupo.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"DEbe ingresar un nombre","Aviso de alerta",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         GrupoBL gBL=new GrupoBL();
         gBL.creaGrupo(carpetaActual.getId(), TxtNomGrupo.getText(), CBoxNomGrupo.getSelectedItem().toString());
         mostrarGrupos(carpetaActual);
+        JOptionPane.showMessageDialog(null,"Grupo creado con éxito","Aviso de confirmacion",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_BtnNuevoGrupoActionPerformed
 
     private void CheckBoxMaestroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBoxMaestroActionPerformed
