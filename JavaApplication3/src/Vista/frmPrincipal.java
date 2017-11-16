@@ -16,6 +16,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private String UserName;
     public static int codUsuario;
     public static int cargo;
+    public static String codigoHijo;
     /**
      * @return the UserName
      */
@@ -37,6 +38,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         setTitle("Gestor de documentos PUCP");
+        System.out.println(cargo);
+        if(cargo==2){
+            jmUsuarios.setVisible(false);
+            barrita2.setVisible(false);
+        }
     }
     
     public void setNombreUsuario(){
@@ -64,7 +70,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jmGrupos = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jmUsuarios = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
+        barrita2 = new javax.swing.JMenu();
         MenuCarpetas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -165,9 +171,9 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmUsuarios);
 
-        jMenu6.setForeground(new java.awt.Color(153, 153, 153));
-        jMenu6.setText("|");
-        jMenuBar1.add(jMenu6);
+        barrita2.setForeground(new java.awt.Color(153, 153, 153));
+        barrita2.setText("|");
+        jMenuBar1.add(barrita2);
 
         MenuCarpetas.setText("Manejo Carpetas");
         MenuCarpetas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -230,6 +236,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         try {
             f = new ModificacionUsuario();
             PrincDesktopPane.add(f);
+            f.setCodUsuario(codigoHijo);
             f.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -285,12 +292,12 @@ public class frmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuCarpetas;
     private javax.swing.JDesktopPane PrincDesktopPane;
+    private javax.swing.JMenu barrita2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu jmAuditorias;

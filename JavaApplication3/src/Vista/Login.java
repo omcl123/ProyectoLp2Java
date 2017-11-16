@@ -300,6 +300,7 @@ public class Login extends javax.swing.JFrame {
         con= new Coneccion();
         int i=0;
         try{
+            frmPrincipal.codigoHijo = txtUsuario.getText();
             System.out.println(txtUsuario.getText());
             Statement sentencia = con.createStatement();i++;
             String instruccion = "Select us.id as id, us.nombre as nombre ,us.apellidoP as aP,apellidoM as aM,cargo,us.password as Password from " +

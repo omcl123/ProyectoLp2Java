@@ -19,6 +19,21 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class ModificacionUsuario extends javax.swing.JInternalFrame {
 
     /**
+     * @return the codUsuario
+     */
+    public String getCodUsuario() {
+        return codUsuario;
+    }
+
+    /**
+     * @param codUsuario the codUsuario to set
+     */
+    public void setCodUsuario(String codUsuario) {
+        this.codUsuario = codUsuario;
+    }
+    private String codUsuario;
+
+    /**
      * Creates new form ModificacionUsuario
      */
     private Coneccion con;
@@ -29,9 +44,9 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         ResultSet rs2=s2.executeQuery(i2);
         rs2.next();
         initComponents();
-        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setSize(990, 700);
         TxtCodigo.setEnabled(false);
+        TxtCodigo.setText(codUsuario);
         TxtTel.setEnabled(false);
         TxtTel.setText(rs2.getString("Telefono"));
         txtDir.setEnabled(false);
