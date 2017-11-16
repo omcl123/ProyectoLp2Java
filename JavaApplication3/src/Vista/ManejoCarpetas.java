@@ -28,6 +28,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private ArrayList<String>listaGrupos;
     private ImageIcon icon = new ImageIcon(this.getClass().getResource("/Imagenes/carpeta.png"));
     private String [] col={"" ,"Nombre","Descripcion"};
+    private String [] colA={"" ,"Nombre","Descripcion","Habilitado"};
     private CarpetaBL cBL=new CarpetaBL();
     private Carpeta carpetaActual;
     /**
@@ -59,30 +60,77 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             CBoxNomGrupo.addItem(listaPermiso.get(i));
         }
         nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0){
-            @Override
-            public Class<?> getColumnClass(int column) {
-                switch (column) {
-                    case 0: return ImageIcon.class;
-                    default: return String.class;
+        DefaultTableModel tableModel ;
+        if(frmPrincipal.cargo==2){
+            BtnHabilitar.setVisible(false);
+            tableModel = new DefaultTableModel(col, 0){
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0: return ImageIcon.class;
+                        default: return String.class;
+                    }
                 }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                   //all cells false
+                   return false;
+                }
+            };
+
+            for(int i=0;i<nivelCarpetaActual.size();i++){
+                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                tableModel.addRow(data);
+
             }
-            @Override
-            public boolean isCellEditable(int row, int column) {
-               //all cells false
-               return false;
+        }else{
+            System.out.println("Cargando");
+                //BtnHabilitar.setVisible(true);
+//                if(carpetaActual.getHabilitado()==1){
+//                    BtnHabilitar.setEnabled(false);
+//                }else{
+//                    BtnHabilitar.setEnabled(true);
+//                }
+                tableModel = new DefaultTableModel(colA, 0){
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0: return ImageIcon.class;
+                        default: return String.class;
+                    }
+                }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                   //all cells false
+                   return false;
+                }
+            };
+
+            for(int i=0;i<nivelCarpetaActual.size();i++){
+                String opcion;
+                if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                    opcion="SI";
+                } else{
+                    opcion="NO";
+                }
+                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion(),
+                    opcion};
+                tableModel.addRow(data);
+
             }
-        };
-        
-        for(int i=0;i<nivelCarpetaActual.size();i++){
-            Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-            tableModel.addRow(data);
-            
+            System.out.println("Cargando");
         }
+        
         TableCarpeta.setModel(tableModel);
         TableCarpeta.setRowHeight(60);
        
         carpetaActual=cBL.getCarpetaActual(nivelActual);
+        System.out.println(carpetaActual.getHabilitado());
+        if(carpetaActual.getHabilitado()==1){
+            BtnHabilitar.setEnabled(true);
+        }else{
+            BtnHabilitar.setEnabled(false);
+        }
         LabelCarpeta.setText(carpetaActual.getNombre());
         if(carpetaActual.getMaestro()!=1){
             BtnNuevoGrupo.setEnabled(false);
@@ -140,6 +188,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         BtnSiguiente = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         LabelCarpeta = new javax.swing.JLabel();
+        BtnHabilitar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -228,7 +277,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CheckCurso)
                     .addComponent(CheckBoxMaestro))
@@ -329,6 +378,13 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
         LabelCarpeta.setText("jLabel5");
 
+        BtnHabilitar.setText("Habilitar");
+        BtnHabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnHabilitarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -348,6 +404,8 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(LabelCarpeta)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BtnHabilitar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BtnSiguiente))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -367,7 +425,8 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                             .addComponent(BtnAnterior)
                             .addComponent(BtnSiguiente)
                             .addComponent(jLabel4)
-                            .addComponent(LabelCarpeta))
+                            .addComponent(LabelCarpeta)
+                            .addComponent(BtnHabilitar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -391,23 +450,57 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             if(nivelActual==0)BtnAnterior.setEnabled(false);
             else BtnAnterior.setEnabled(true);
             nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
-            DefaultTableModel tableModel = new DefaultTableModel(col, 0){
-                @Override
-                public Class<?> getColumnClass(int column) {
-                    switch (column) {
-                        case 0: return ImageIcon.class;
-                        default: return String.class;
+            DefaultTableModel tableModel ;
+            if(frmPrincipal.cargo==2){
+                tableModel = new DefaultTableModel(col, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
                     }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                       //all cells false
+                       return false;
+                    }
+                };
+
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                    tableModel.addRow(data);
+
                 }
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                   //all cells false
-                   return false;
+            }else{
+                if(carpetaActual.getHabilitado()==1)BtnHabilitar.setEnabled(false);else BtnHabilitar.setEnabled(true);
+                    tableModel = new DefaultTableModel(colA, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
+                    }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                       //all cells false
+                       return false;
+                    }
+                };
+
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    String opcion;
+                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                        opcion="SI";
+                    } else{
+                        opcion="NO";
+                    }
+                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion(),
+                        opcion};
+                    tableModel.addRow(data);
+
                 }
-            };
-            for(int i=0;i<nivelCarpetaActual.size();i++){
-                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                tableModel.addRow(data);
             }
             TableCarpeta.setModel(tableModel);
             profundidad++;
@@ -415,6 +508,11 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 BtnSiguiente.setEnabled(false);
             }
             carpetaActual=cBL.getCarpetaActual(nivelActual);
+            if(carpetaActual.getHabilitado()==1){
+                BtnHabilitar.setEnabled(true);
+            }else{
+                BtnHabilitar.setEnabled(false);
+            }
             LabelCarpeta.setText(carpetaActual.getNombre());
             TableCarpeta.setModel(tableModel);
             carpetaActual=cBL.getCarpetaActual(nivelActual);
@@ -454,28 +552,67 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         else BtnAnterior.setEnabled(true);
         System.out.println(nivelActual);
         nivelCarpetaActual=cBL.lecturaCurso(nivelActual);
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0){
-            @Override
-            public Class<?> getColumnClass(int column) {
-                switch (column) {
-                    case 0: return ImageIcon.class;
-                    default: return String.class;
+        DefaultTableModel tableModel ;
+        if(frmPrincipal.cargo==2){
+            tableModel = new DefaultTableModel(col, 0){
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0: return ImageIcon.class;
+                        default: return String.class;
+                    }
                 }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                   //all cells false
+                   return false;
+                }
+            };
+
+            for(int i=0;i<nivelCarpetaActual.size();i++){
+                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                tableModel.addRow(data);
+
             }
-            @Override
-            public boolean isCellEditable(int row, int column) {
-               //all cells false
-               return false;
+        }else{
+            if(carpetaActual.getHabilitado()==1)BtnHabilitar.setEnabled(false);else BtnHabilitar.setEnabled(true);
+                tableModel = new DefaultTableModel(colA, 0){
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0: return ImageIcon.class;
+                        default: return String.class;
+                    }
+                }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                   //all cells false
+                   return false;
+                }
+            };
+
+            for(int i=0;i<nivelCarpetaActual.size();i++){
+                String opcion;
+                if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                    opcion="SI";
+                } else{
+                    opcion="NO";
+                }
+                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion(),
+                    opcion};
+                tableModel.addRow(data);
+
             }
-        };
-        for(int i=0;i<nivelCarpetaActual.size();i++){
-            Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-            tableModel.addRow(data);
         }
         TableCarpeta.setModel(tableModel);
         BtnSiguiente.setEnabled(true);
         BtnEliminar.setEnabled(false);
         carpetaActual=cBL.getCarpetaActual(nivelActual);
+        if(carpetaActual.getHabilitado()==1){
+                BtnHabilitar.setEnabled(true);
+            }else{
+                BtnHabilitar.setEnabled(false);
+            }
         LabelCarpeta.setText(carpetaActual.getNombre());
         TableCarpeta.setModel(tableModel);
         carpetaActual=cBL.getCarpetaActual(nivelActual);
@@ -520,24 +657,57 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 caBL.registraCarpeta(c, 0,esMaestro);
             }
             nivelCarpetaActual.add(c);
-            DefaultTableModel tableModel = new DefaultTableModel(col, 0){
-                @Override
-                public Class<?> getColumnClass(int column) {
-                    switch (column) {
-                        case 0: return ImageIcon.class;
-                        default: return String.class;
+            DefaultTableModel tableModel ;
+            if(frmPrincipal.cargo==2){
+                tableModel = new DefaultTableModel(col, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
                     }
-                }
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                   //all cells false
-                   return false;
-                }
-            };
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                       //all cells false
+                       return false;
+                    }
+                };
 
-            for(int i=0;i<nivelCarpetaActual.size();i++){
-                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                tableModel.addRow(data);
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                    tableModel.addRow(data);
+
+                }
+            }else{
+                if(carpetaActual.getHabilitado()==1)BtnHabilitar.setEnabled(false);else BtnHabilitar.setEnabled(true);
+                    tableModel = new DefaultTableModel(colA, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
+                    }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                       //all cells false
+                       return false;
+                    }
+                };
+
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    String opcion;
+                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                        opcion="SI";
+                    } else{
+                        opcion="NO";
+                    }
+                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion(),
+                        opcion};
+                    tableModel.addRow(data);
+
+                }
             }
             TableCarpeta.setModel(tableModel);
             BtnEliminar.setEnabled(false);
@@ -555,24 +725,57 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
           CarpetaBL cBL=new CarpetaBL();
           cBL.eliminarCarpeta(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()));
           nivelCarpetaActual.remove(nivelCarpetaActual.size()-1);
-          DefaultTableModel tableModel = new DefaultTableModel(col, 0){
-                @Override
-                public Class<?> getColumnClass(int column) {
-                    switch (column) {
-                        case 0: return ImageIcon.class;
-                        default: return String.class;
+          DefaultTableModel tableModel ;
+            if(frmPrincipal.cargo==2){
+                tableModel = new DefaultTableModel(col, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
                     }
-                }
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                   //all cells false
-                   return false;
-                }
-            };
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                       //all cells false
+                       return false;
+                    }
+                };
 
-            for(int i=0;i<nivelCarpetaActual.size();i++){
-                Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                tableModel.addRow(data);
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                    tableModel.addRow(data);
+
+                }
+            }else{
+                if(carpetaActual.getHabilitado()==1)BtnHabilitar.setEnabled(false);else BtnHabilitar.setEnabled(true);
+                    tableModel = new DefaultTableModel(colA, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
+                    }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                       //all cells false
+                       return false;
+                    }
+                };
+
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    String opcion;
+                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                        opcion="SI";
+                    } else{
+                        opcion="NO";
+                    }
+                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion(),
+                        opcion};
+                    tableModel.addRow(data);
+
+                }
             }
             TableCarpeta.setModel(tableModel);
         }
@@ -601,6 +804,13 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         gBL.eliminaGrupo(idEliminar);
         mostrarGrupos(carpetaActual);
     }//GEN-LAST:event_BtnEliminaGrupoActionPerformed
+
+    private void BtnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHabilitarActionPerformed
+        // TODO add your handling code here:
+        CarpetaBL cBL=new CarpetaBL();
+        cBL.habilitarCarpeta(carpetaActual.getId());
+        BtnHabilitar.setEnabled(false);
+    }//GEN-LAST:event_BtnHabilitarActionPerformed
     private void mostrarGrupos(Carpeta c){
         TableGrupo.removeAll();
         GrupoBL gBL=new GrupoBL();
@@ -611,6 +821,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private javax.swing.JButton BtnAnterior;
     private javax.swing.JButton BtnEliminaGrupo;
     private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnHabilitar;
     private javax.swing.JButton BtnNuevaCarpeta;
     private javax.swing.JButton BtnNuevoGrupo;
     private javax.swing.JButton BtnSiguiente;

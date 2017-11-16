@@ -31,4 +31,7 @@ public class CarpetaBL {
      public Carpeta getCarpetaActual(int nivel){
          return dDA.getCarpetaActual(nivel);
      }
+     public void habilitarCarpeta(int idCarpeta){
+        dDA.habilitarCarpeta(idCarpeta);
+     }
 }
