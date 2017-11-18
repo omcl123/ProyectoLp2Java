@@ -117,6 +117,8 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
         cbUsers.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Docente", "Alumno", "Personal" }));
 
         jLabel1.setText("Tipo de usuario:");
