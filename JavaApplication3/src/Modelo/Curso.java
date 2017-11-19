@@ -14,9 +14,28 @@ import java.util.ArrayList;
 public class Curso {
 
     private String codCurso;
+    private String nombre;
+    private int id;
     private String horario;
     private Docente docente;
     private ArrayList<Alumno>alumnos;
+    
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     
     public String getCodCurso() {
         return codCurso;

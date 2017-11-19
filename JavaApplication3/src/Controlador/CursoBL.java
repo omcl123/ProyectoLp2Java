@@ -22,4 +22,7 @@ public class CursoBL {
     public int obtieneIdCurso(String nomCur){
         return dDA.obtieneIdCurso(nomCur);
     }
+    public Curso buscaCursoPorCodigo(String codigo){
+        return dDA.buscaCursoPorCodigo(codigo);
+    }
 }

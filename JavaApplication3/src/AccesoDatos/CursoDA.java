@@ -6,6 +6,7 @@
 package AccesoDatos;
 import Modelo.Curso;
 import Modelo.Sitio;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -78,5 +79,28 @@ public class CursoDA {
            
         }
         return -1;
+    }
+    public Curso buscaCursoPorCodigo(String codigo){
+        
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            CallableStatement cs=con.prepareCall("{call BUSCAR_CURSO_POR_CODIGO(?)}");
+            cs.setString("_CODIGO", codigo);
+            ResultSet rs=cs.executeQuery();
+            rs.next();
+            Curso c=new Curso();
+            c.setId(rs.getInt("idCurso"));
+            c.setNombre(rs.getString("Nombre"));
+            c.setCodCurso(rs.getString("Codigo"));
+            return c;
+        }catch(Exception e){
+           
+        }
+        return null;
     }
 }

@@ -9,6 +9,7 @@ import Controlador.CursoBL;
 import Controlador.GrupoBL;
 import Controlador.PermisoBL;
 import Modelo.Carpeta;
+import Modelo.Curso;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -31,6 +32,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private String [] colA={"" ,"Nombre","Descripcion","Habilitado"};
     private CarpetaBL cBL=new CarpetaBL();
     private Carpeta carpetaActual;
+    private Curso cursoSeleccionado;
     /**
      * Creates new form ManejoCarpetas
      */
@@ -40,8 +42,12 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         setClosable(true);
         initComponents();
         if(nivelActual==0)BtnAnterior.setEnabled(false);
+        TxtCodCur.setEnabled(false);
+        BtnBuscaCur.setEnabled(false);
         BtnEliminar.setEnabled(false);
         CheckCurso.setEnabled(false);
+        //BtnModificar.setEnabled(false);
+        BtnGuardar.setEnabled(false);
         TableCarpeta.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
                 // do some actions here, for example
@@ -79,8 +85,9 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             };
 
             for(int i=0;i<nivelCarpetaActual.size();i++){
+                if(nivelCarpetaActual.get(i).getHabilitado()==0){
                 Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                tableModel.addRow(data);
+                tableModel.addRow(data);}
 
             }
         }else{
@@ -164,6 +171,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel3 = new javax.swing.JPanel();
         BtnHabilitar = new javax.swing.JButton();
         LabelCarpeta = new javax.swing.JLabel();
@@ -184,12 +192,17 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         TxtNombre = new javax.swing.JTextField();
         BtnNuevaCarpeta = new javax.swing.JButton();
-        BtnEliminar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        BtnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TxtADescripcion = new javax.swing.JTextArea();
         CheckCurso = new javax.swing.JCheckBox();
         CheckBoxMaestro = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        TxtCodCur = new javax.swing.JTextField();
+        BtnBuscaCur = new javax.swing.JButton();
+        BtnModificar = new javax.swing.JButton();
+        BtnGuardar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -284,7 +297,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(BtnNuevoGrupo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BtnEliminaGrupo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -319,6 +332,8 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setText("Descripcion:");
+
         BtnEliminar.setText("Eliminar Carpeta");
         BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -326,20 +341,32 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setText("Descripcion:");
-
         TxtADescripcion.setColumns(20);
         TxtADescripcion.setRows(5);
         jScrollPane2.setViewportView(TxtADescripcion);
 
         CheckCurso.setBackground(new java.awt.Color(255, 255, 255));
         CheckCurso.setText("Carpeta de Curso");
+        CheckCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckCursoActionPerformed(evt);
+            }
+        });
 
         CheckBoxMaestro.setBackground(new java.awt.Color(255, 255, 255));
         CheckBoxMaestro.setText("Maestro");
         CheckBoxMaestro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CheckBoxMaestroActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Codigo");
+
+        BtnBuscaCur.setText("Buscar");
+        BtnBuscaCur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBuscaCurActionPerformed(evt);
             }
         });
 
@@ -353,48 +380,70 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel1))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
+                                .addComponent(TxtCodCur)
+                                .addGap(18, 18, 18)
+                                .addComponent(BtnBuscaCur))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TxtNombre))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                                .addComponent(TxtNombre))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(BtnNuevaCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(CheckCurso)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(CheckBoxMaestro))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(BtnNuevaCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(10, 10, 10)))
-                        .addGap(0, 23, Short.MAX_VALUE))))
+                            .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 37, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(TxtCodCur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnBuscaCur))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CheckCurso)
                     .addComponent(CheckBoxMaestro))
-                .addGap(18, 18, 18)
-                .addComponent(BtnNuevaCarpeta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnNuevaCarpeta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnEliminar)
                 .addGap(9, 9, 9))
         );
+
+        BtnModificar.setText("Modificar");
+        BtnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnModificarActionPerformed(evt);
+            }
+        });
+
+        BtnGuardar.setText("Guardar");
+        BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -404,15 +453,19 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(BtnAnterior)
-                                .addGap(47, 47, 47)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(1, 1, 1)
                                 .addComponent(LabelCarpeta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BtnGuardar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BtnHabilitar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BtnSiguiente))
@@ -423,39 +476,53 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(BtnSiguiente)
-                                    .addComponent(BtnHabilitar)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(BtnAnterior)
-                                    .addComponent(jLabel4)
-                                    .addComponent(LabelCarpeta))))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(BtnSiguiente)
+                                .addComponent(BtnHabilitar))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(BtnAnterior)
+                                .addComponent(jLabel4)
+                                .addComponent(LabelCarpeta)
+                                .addComponent(BtnModificar)
+                                .addComponent(BtnGuardar)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+        );
+
+        jDesktopPane1.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -492,8 +559,9 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 };
 
                 for(int i=0;i<nivelCarpetaActual.size();i++){
+                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
                     Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                    tableModel.addRow(data);
+                    tableModel.addRow(data);}
 
                 }
             }else{
@@ -594,8 +662,9 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             };
 
             for(int i=0;i<nivelCarpetaActual.size();i++){
+                if(nivelCarpetaActual.get(i).getHabilitado()==0){
                 Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                tableModel.addRow(data);
+                tableModel.addRow(data);}
 
             }
         }else{
@@ -660,6 +729,134 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_BtnAnteriorActionPerformed
 
+    private void BtnNuevoGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoGrupoActionPerformed
+        // TODO add your handling code here:
+        if(TxtNomGrupo.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"DEbe ingresar un nombre","Aviso de alerta",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        GrupoBL gBL=new GrupoBL();
+        gBL.creaGrupo(carpetaActual.getId(), TxtNomGrupo.getText(), CBoxNomGrupo.getSelectedItem().toString());
+        mostrarGrupos(carpetaActual);
+        JOptionPane.showMessageDialog(null,"Grupo creado con éxito","Aviso de confirmacion",JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_BtnNuevoGrupoActionPerformed
+
+    private void BtnEliminaGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminaGrupoActionPerformed
+        // TODO add your handling code here:
+        GrupoBL gBL=new GrupoBL();
+        int idEliminar=(int) TableGrupo.getValueAt(TableGrupo.getSelectedRow(), 0);
+        System.out.println(idEliminar);
+        gBL.eliminaGrupo(idEliminar);
+        mostrarGrupos(carpetaActual);
+    }//GEN-LAST:event_BtnEliminaGrupoActionPerformed
+
+    private void BtnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHabilitarActionPerformed
+        // TODO add your handling code here:
+        CarpetaBL cBL=new CarpetaBL();
+        cBL.habilitarCarpeta(carpetaActual.getId());
+        BtnHabilitar.setEnabled(false);
+    }//GEN-LAST:event_BtnHabilitarActionPerformed
+
+    private void BtnBuscaCurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscaCurActionPerformed
+        // TODO add your handling code here:
+        if(TxtCodCur.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Ingrese un código","Error",DISPOSE_ON_CLOSE);
+            return;
+        }
+        CursoBL cBL=new CursoBL();
+        cursoSeleccionado=cBL.buscaCursoPorCodigo(TxtCodCur.getText());
+        if(cursoSeleccionado==null){
+            JOptionPane.showMessageDialog(null, "No se ha encontrado un curso con ese código","Error",DISPOSE_ON_CLOSE);
+            return;
+        }else{
+            TxtNombre.setText(cursoSeleccionado.getNombre());
+        }
+    }//GEN-LAST:event_BtnBuscaCurActionPerformed
+
+    private void CheckBoxMaestroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBoxMaestroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CheckBoxMaestroActionPerformed
+
+    private void CheckCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckCursoActionPerformed
+        // TODO add your handling code here:
+        if(CheckCurso.isSelected()){
+            TxtCodCur.setEnabled(true);
+            BtnBuscaCur.setEnabled(true);
+        }else if(!CheckCurso.isSelected()){
+            TxtCodCur.setEnabled(false);
+            BtnBuscaCur.setEnabled(false);
+        }
+    }//GEN-LAST:event_CheckCursoActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta carpeta?", "Aviso", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            System.out.println("SI");
+            CarpetaBL cBL=new CarpetaBL();
+            cBL.eliminarCarpeta(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()));
+            nivelCarpetaActual.remove(nivelCarpetaActual.size()-1);
+            DefaultTableModel tableModel ;
+            if(frmPrincipal.cargo==2){
+                tableModel = new DefaultTableModel(col, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
+                    }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        //all cells false
+                        return false;
+                    }
+                };
+
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                        Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                        tableModel.addRow(data);}
+
+                }
+            }else{
+                if(carpetaActual.getHabilitado()==1)BtnHabilitar.setEnabled(false);else BtnHabilitar.setEnabled(true);
+                tableModel = new DefaultTableModel(colA, 0){
+                    @Override
+                    public Class<?> getColumnClass(int column) {
+                        switch (column) {
+                            case 0: return ImageIcon.class;
+                            default: return String.class;
+                        }
+                    }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        //all cells false
+                        return false;
+                    }
+                };
+
+                for(int i=0;i<nivelCarpetaActual.size();i++){
+                    String opcion;
+                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                        opcion="SI";
+                    } else{
+                        opcion="NO";
+                    }
+                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion(),
+                        opcion};
+                    tableModel.addRow(data);
+
+                }
+            }
+            TableCarpeta.setModel(tableModel);
+        }
+        else {
+            System.out.println("NO");
+        }
+        BtnEliminar.setEnabled(false);
+    }//GEN-LAST:event_BtnEliminarActionPerformed
+
     private void BtnNuevaCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevaCarpetaActionPerformed
         // TODO add your handling code here:}
         int esMaestro=0;
@@ -673,10 +870,16 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
             c.setDescripcion(TxtADescripcion.getText());
             c.setCarpetaPadre(nivelActual);
             if(CheckCurso.isSelected()){
+                if(cursoSeleccionado==null){
+                    JOptionPane.showMessageDialog(null, "No se ha seleccionado un curso","Error",DISPOSE_ON_CLOSE);
+                    return;
+                }
                 CursoBL cBL=new CursoBL();
-                c.setCurso(cBL.obtieneIdCurso(TxtNombre.getText()));
-                System.out.println(c.getCurso());
+                c.setCurso(cursoSeleccionado.getId());
+                //System.out.println(c.getCurso());
                 caBL.registraCarpeta(c, 1,esMaestro);
+                CheckCurso.setSelected(false);
+                TxtCodCur.setText("");
             }else{
                 caBL.registraCarpeta(c, 0,esMaestro);
             }
@@ -693,19 +896,20 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                     }
                     @Override
                     public boolean isCellEditable(int row, int column) {
-                       //all cells false
-                       return false;
+                        //all cells false
+                        return false;
                     }
                 };
 
                 for(int i=0;i<nivelCarpetaActual.size();i++){
-                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                    tableModel.addRow(data);
+                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
+                        Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
+                        tableModel.addRow(data);}
 
                 }
             }else{
                 if(carpetaActual.getHabilitado()==1)BtnHabilitar.setEnabled(false);else BtnHabilitar.setEnabled(true);
-                    tableModel = new DefaultTableModel(colA, 0){
+                tableModel = new DefaultTableModel(colA, 0){
                     @Override
                     public Class<?> getColumnClass(int column) {
                         switch (column) {
@@ -715,8 +919,8 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                     }
                     @Override
                     public boolean isCellEditable(int row, int column) {
-                       //all cells false
-                       return false;
+                        //all cells false
+                        return false;
                     }
                 };
 
@@ -742,105 +946,30 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(null,"Carpeta creada con éxito","Aviso de confirmacion",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_BtnNuevaCarpetaActionPerformed
 
-    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+    private void BtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModificarActionPerformed
         // TODO add your handling code here:
-        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta carpeta?", "Aviso", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-          System.out.println("SI");
-          CarpetaBL cBL=new CarpetaBL();
-          cBL.eliminarCarpeta(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()));
-          nivelCarpetaActual.remove(nivelCarpetaActual.size()-1);
-          DefaultTableModel tableModel ;
-            if(frmPrincipal.cargo==2){
-                tableModel = new DefaultTableModel(col, 0){
-                    @Override
-                    public Class<?> getColumnClass(int column) {
-                        switch (column) {
-                            case 0: return ImageIcon.class;
-                            default: return String.class;
-                        }
-                    }
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                       //all cells false
-                       return false;
-                    }
-                };
-
-                for(int i=0;i<nivelCarpetaActual.size();i++){
-                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion()};
-                    tableModel.addRow(data);
-
-                }
-            }else{
-                if(carpetaActual.getHabilitado()==1)BtnHabilitar.setEnabled(false);else BtnHabilitar.setEnabled(true);
-                    tableModel = new DefaultTableModel(colA, 0){
-                    @Override
-                    public Class<?> getColumnClass(int column) {
-                        switch (column) {
-                            case 0: return ImageIcon.class;
-                            default: return String.class;
-                        }
-                    }
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                       //all cells false
-                       return false;
-                    }
-                };
-
-                for(int i=0;i<nivelCarpetaActual.size();i++){
-                    String opcion;
-                    if(nivelCarpetaActual.get(i).getHabilitado()==0){
-                        opcion="SI";
-                    } else{
-                        opcion="NO";
-                    }
-                    Object[] data={icon,nivelCarpetaActual.get(i).getNombre(),nivelCarpetaActual.get(i).getDescripcion(),
-                        opcion};
-                    tableModel.addRow(data);
-
-                }
-            }
-            TableCarpeta.setModel(tableModel);
-        }
-        else {
-           System.out.println("NO");
-        }
-        BtnEliminar.setEnabled(false);
-    }//GEN-LAST:event_BtnEliminarActionPerformed
-
-    private void BtnNuevoGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoGrupoActionPerformed
-        // TODO add your handling code here:
-        if(TxtNomGrupo.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"DEbe ingresar un nombre","Aviso de alerta",JOptionPane.WARNING_MESSAGE);
+        if(TableCarpeta.getSelectedRow()==-1){
+            JOptionPane.showMessageDialog(null, "Seleccione una carpeta","Error",DISPOSE_ON_CLOSE);
             return;
         }
-        GrupoBL gBL=new GrupoBL();
-        gBL.creaGrupo(carpetaActual.getId(), TxtNomGrupo.getText(), CBoxNomGrupo.getSelectedItem().toString());
-        mostrarGrupos(carpetaActual);
-        JOptionPane.showMessageDialog(null,"Grupo creado con éxito","Aviso de confirmacion",JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_BtnNuevoGrupoActionPerformed
+        BtnNuevaCarpeta.setEnabled(false);
+        BtnEliminar.setEnabled(false);
+        BtnModificar.setEnabled(false);
+        BtnGuardar.setEnabled(true);
+        TxtNombre.setText(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getNombre());
+        TxtADescripcion.setText(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getDescripcion());
+    }//GEN-LAST:event_BtnModificarActionPerformed
 
-    private void CheckBoxMaestroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBoxMaestroActionPerformed
+    private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CheckBoxMaestroActionPerformed
-
-    private void BtnEliminaGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminaGrupoActionPerformed
-        // TODO add your handling code here:
-        GrupoBL gBL=new GrupoBL();
-        int idEliminar=(int) TableGrupo.getValueAt(TableGrupo.getSelectedRow(), 0);
-        System.out.println(idEliminar);
-        gBL.eliminaGrupo(idEliminar);
-        mostrarGrupos(carpetaActual);
-    }//GEN-LAST:event_BtnEliminaGrupoActionPerformed
-
-    private void BtnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHabilitarActionPerformed
-        // TODO add your handling code here:
-        CarpetaBL cBL=new CarpetaBL();
-        cBL.habilitarCarpeta(carpetaActual.getId());
-        BtnHabilitar.setEnabled(false);
-    }//GEN-LAST:event_BtnHabilitarActionPerformed
+        BtnNuevaCarpeta.setEnabled(true);
+        BtnEliminar.setEnabled(true);
+        BtnModificar.setEnabled(true);
+        BtnGuardar.setEnabled(false);
+        nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).setNombre(TxtNombre.getText());
+        nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).setDescripcion(TxtADescripcion.getText());
+        
+    }//GEN-LAST:event_BtnGuardarActionPerformed
     private void mostrarGrupos(Carpeta c){
         TableGrupo.removeAll();
         GrupoBL gBL=new GrupoBL();
@@ -849,9 +978,12 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAnterior;
+    private javax.swing.JButton BtnBuscaCur;
     private javax.swing.JButton BtnEliminaGrupo;
     private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnHabilitar;
+    private javax.swing.JButton BtnModificar;
     private javax.swing.JButton BtnNuevaCarpeta;
     private javax.swing.JButton BtnNuevoGrupo;
     private javax.swing.JButton BtnSiguiente;
@@ -862,12 +994,15 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private javax.swing.JTable TableCarpeta;
     private javax.swing.JTable TableGrupo;
     private javax.swing.JTextArea TxtADescripcion;
+    private javax.swing.JTextField TxtCodCur;
     private javax.swing.JTextField TxtNomGrupo;
     private javax.swing.JTextField TxtNombre;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
