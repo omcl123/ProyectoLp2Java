@@ -80,6 +80,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/100pucp.png"))); // NOI18N
 
+        nameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         nameLabel.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel.setText("jLabel2");
 
@@ -95,6 +96,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setText("(Ver Perfil)");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -19,6 +19,7 @@ public class FrmCambiarPassword extends javax.swing.JInternalFrame {
      */
     public FrmCambiarPassword() {
         initComponents();
+        //this.setLocation(null);
     }
 
     /**

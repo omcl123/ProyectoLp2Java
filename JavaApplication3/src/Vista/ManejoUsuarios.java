@@ -28,7 +28,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
     public ManejoUsuarios() {
 
         initComponents();
-        setSize(990, 700);
+        //setSize(990, 700);
         estadoIni();
 //        btnModificar.setVisible(false);
     }
@@ -110,7 +110,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         jdpContenedor.setLayout(jdpContenedorLayout);
         jdpContenedorLayout.setHorizontalGroup(
             jdpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 581, Short.MAX_VALUE)
+            .addGap(0, 729, Short.MAX_VALUE)
         );
         jdpContenedorLayout.setVerticalGroup(
             jdpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +211,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(btnEliminar)
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
                 .addComponent(btnNUB)
                 .addGap(24, 24, 24))
         );
