@@ -168,4 +168,23 @@ public class CarpetaDA {
            System.out.println(e);
         }
     }
+    public void modificarCarpeta(int id,String nombre,String descripcion){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        con = (com.mysql.jdbc.Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
+                    "inf282g5", "reFuKUxhUijfr8np");
+        }catch(Exception e){System.out.println("fallo en coneccion ");}
+        
+        try{
+            String instruccion = "UPDATE Carpeta set nombre=?,descripcion=? WHERE id = ?;";
+            PreparedStatement ps=con.prepareStatement(instruccion);
+            ps.setString(1, nombre);
+            ps.setString(2,descripcion);
+            ps.setInt(3,id);
+            ps.execute();
+            con.close();
+        }catch(Exception e){
+           System.out.println(e);
+        }
+    }
 }

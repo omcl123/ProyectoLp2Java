@@ -34,4 +34,7 @@ public class CarpetaBL {
      public void habilitarCarpeta(int idCarpeta){
         dDA.habilitarCarpeta(idCarpeta);
      }
+     public void modificarCarpeta(int id,String nombre,String descripcion){
+         dDA.modificarCarpeta(id, nombre, descripcion);
+     }
 }

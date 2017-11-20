@@ -968,7 +968,8 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         BtnGuardar.setEnabled(false);
         nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).setNombre(TxtNombre.getText());
         nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).setDescripcion(TxtADescripcion.getText());
-        
+        CarpetaBL cBL=new CarpetaBL();
+        cBL.modificarCarpeta(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId(), TxtNombre.getText(),TxtADescripcion.getText());
     }//GEN-LAST:event_BtnGuardarActionPerformed
     private void mostrarGrupos(Carpeta c){
         TableGrupo.removeAll();
