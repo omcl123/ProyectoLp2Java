@@ -178,7 +178,7 @@ public class GrupoDA {
             Statement sentencia = con.createStatement();
             String instruccion = "select g.Id as id,g.Nombre as nombre, p.Nombre as permiso "
                     + "from Grupo g,Permiso p "
-                    + "where g.Permiso_idPermiso=p.idPermiso;";
+                    + "where g.Permiso_idPermiso=p.idPermiso order by nombre;";
             ResultSet rs = sentencia.executeQuery(instruccion);
             while (rs.next()) {
                 Object[] data = {rs.getInt("id"), rs.getString("nombre"), rs.getString("permiso")};

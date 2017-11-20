@@ -119,6 +119,11 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
                 btnAsignarUsrMouseClicked(evt);
             }
         });
+        btnAsignarUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarUsrActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Codigo:");
 
@@ -235,6 +240,7 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
                 try{
                     DefaultTableModel modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
                     tableUsuarios.setModel(modeloU);
+                    JOptionPane.showMessageDialog(null, "Usuario Seleccionado");
                 }catch(Exception e){}
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccionar un grupo");
@@ -257,18 +263,20 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         if(idUsuSel==-1)
             JOptionPane.showMessageDialog(null, "Seleccionar un usuario!");
         if(idUsuSel!=-1 && idGrupoSel!=-1){
-            System.out.println(idUsuSel);
-            System.out.println(idGrupoSel);
-            accesoGrupo.eliminarUsuarioGrupo(idUsuSel, idGrupoSel);
-            idUsuSel=-1;
-            DefaultTableModel modeloU;
-            try {
-                modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
-                tableUsuarios.setModel(modeloU);
-            } catch (SQLException ex) {
-                Logger.getLogger(ManejoGrupos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar este usuario del grupo?", "Aviso", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                System.out.println(idUsuSel);
+                System.out.println(idGrupoSel);
+                accesoGrupo.eliminarUsuarioGrupo(idUsuSel, idGrupoSel);
+                idUsuSel=-1;
+                DefaultTableModel modeloU;
+                try {
+                    modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
+                    tableUsuarios.setModel(modeloU);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManejoGrupos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else return;
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -277,6 +285,10 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         int index = tableUsuarios.getSelectedRow();
         idUsuSel = (int) tableUsuarios.getValueAt(index, 0);
     }//GEN-LAST:event_tableUsuariosMouseClicked
+
+    private void btnAsignarUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarUsrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAsignarUsrActionPerformed
 
     /**
      * @param args the command line arguments
