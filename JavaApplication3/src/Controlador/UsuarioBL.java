@@ -6,7 +6,9 @@
 package Controlador;
 
 import AccesoDatos.UsuarioDA;
+import Modelo.Coneccion;
 import Modelo.Usuario;
+import java.sql.ResultSet;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -74,5 +76,13 @@ public class UsuarioBL {
 
     public void actualizarDireccion(String nuevaDir, String tipoTabla, String codigo) {
         accesoUsuario.actualizarDireccion(nuevaDir, tipoTabla, codigo);
+    }
+    
+    public ResultSet logeoUser(Coneccion con,String codUser) throws Exception{
+            return accesoUsuario.logeoUser(con, codUser);
+    }
+    
+    public void enviarEmail(String email){
+        accesoUsuario.enviarEmail(email);
     }
 }

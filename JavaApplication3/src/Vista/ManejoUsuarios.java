@@ -28,7 +28,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
     public ManejoUsuarios() {
 
         initComponents();
-        //setSize(990, 700);
+        setSize(990, 700);
         estadoIni();
 //        btnModificar.setVisible(false);
     }
@@ -295,34 +295,38 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         if (codigo == null) {
             JOptionPane.showMessageDialog(null, "Seleccionar una fila!");
         } else {
-            if (userType == "Administrador") {
-                tAdminBL accesoAdmin = new tAdminBL();
-                accesoAdmin.eliminarAdmin(codigo);
-                jdpContenedor.removeAll();
-                fBusq = new frmBusqueda("Administrador");
-                jdpContenedor.add(fBusq);
-                fBusq.setVisible(true);
-            } else if (userType == "Alumno") {
-                tAlumnoBL accesoAlumno = new tAlumnoBL();
-                accesoAlumno.eliminarAlumno(codigo);
-                jdpContenedor.removeAll();
-                fBusq = new frmBusqueda("Alumno");
-                jdpContenedor.add(fBusq);
-                fBusq.setVisible(true);
-            } else if (userType == "Docente") {
-                tDocenteBL accesoDocente = new tDocenteBL();
-                accesoDocente.eliminarDocente(codigo);
-                jdpContenedor.removeAll();
-                fBusq = new frmBusqueda("Docente");
-                jdpContenedor.add(fBusq);
-                fBusq.setVisible(true);
-            } else if (userType == "Personal") {
-                tPersonalBL accesoDocente = new tPersonalBL();
-                accesoDocente.eliminarPersonal(codigo);
-                jdpContenedor.removeAll();
-                fBusq = new frmBusqueda("Personal");
-                jdpContenedor.add(fBusq);
-                fBusq.setVisible(true);
+
+            int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar este usuario?", "Aviso", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                if (userType == "Administrador") {
+                    tAdminBL accesoAdmin = new tAdminBL();
+                    accesoAdmin.eliminarAdmin(codigo);
+                    jdpContenedor.removeAll();
+                    fBusq = new frmBusqueda("Administrador");
+                    jdpContenedor.add(fBusq);
+                    fBusq.setVisible(true);
+                } else if (userType == "Alumno") {
+                    tAlumnoBL accesoAlumno = new tAlumnoBL();
+                    accesoAlumno.eliminarAlumno(codigo);
+                    jdpContenedor.removeAll();
+                    fBusq = new frmBusqueda("Alumno");
+                    jdpContenedor.add(fBusq);
+                    fBusq.setVisible(true);
+                } else if (userType == "Docente") {
+                    tDocenteBL accesoDocente = new tDocenteBL();
+                    accesoDocente.eliminarDocente(codigo);
+                    jdpContenedor.removeAll();
+                    fBusq = new frmBusqueda("Docente");
+                    jdpContenedor.add(fBusq);
+                    fBusq.setVisible(true);
+                } else if (userType == "Personal") {
+                    tPersonalBL accesoDocente = new tPersonalBL();
+                    accesoDocente.eliminarPersonal(codigo);
+                    jdpContenedor.removeAll();
+                    fBusq = new frmBusqueda("Personal");
+                    jdpContenedor.add(fBusq);
+                    fBusq.setVisible(true);
+                }
             }
         }
         System.out.println(codigo);

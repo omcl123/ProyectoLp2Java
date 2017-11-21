@@ -14,9 +14,9 @@ import java.util.logging.Logger;
  */
 public class frmPrincipal extends javax.swing.JFrame {
     private String UserName;
-    public static int codUsuario;
+    public static int idUsuario;
     public static int cargo;
-    public static String codigoHijo;
+    public static String codUsuario;
     /**
      * @return the UserName
      */
@@ -239,7 +239,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         try {
             f = new ModificacionUsuario();
             PrincDesktopPane.add(f);
-            f.setCodUsuario(codigoHijo);
             f.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);

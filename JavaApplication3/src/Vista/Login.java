@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Controlador.UsuarioBL;
 import java.awt.Dialog;
 import java.util.TimerTask;
 import javax.swing.JOptionPane;
@@ -302,23 +303,18 @@ public class Login extends javax.swing.JFrame {
         con= new Coneccion();
         int i=0;
         try{
-            frmPrincipal.codigoHijo = txtUsuario.getText();
+            frmPrincipal.codUsuario = txtUsuario.getText();
             System.out.println(txtUsuario.getText());
-            Statement sentencia = con.createStatement();i++;
-            String instruccion = "Select us.id as id, us.nombre as nombre ,us.apellidoP as aP,apellidoM as aM,cargo,us.password as Password from " +
-                " ((Select u.IdUsuario as id,u.nombre as nombre,u.APaterno as apellidoP,u.AMaterno as apellidoM, u.IdCargo as cargo,u.Password as password " +
-                " from Usuario u,Personal a where a.Usuario_IdUsuario=u.IdUsuario and a.Codigo="+ txtUsuario.getText()+") " +
-                " union" +
-                " (Select u.IdUsuario as id,u.nombre as nombre,u.APaterno as apellidoP,u.AMaterno as apellidoM, u.IdCargo as cargo,u.Password as password " +
-                " from Usuario u,Admin_Sistema d where d.Usuario_IdUsuario=u.IdUsuario and d.Codigo="+ txtUsuario.getText()+")) us;";i++;
-            ResultSet rs = sentencia.executeQuery(instruccion);i++;
+            UsuarioBL accesoUser = new UsuarioBL();
+            String codUser=txtUsuario.getText();
+            ResultSet rs = accesoUser.logeoUser(con, codUser);
             rs.next();
             //System.out.println(rs.getString("Password"));i++;
             String ps=rs.getString("Password");i++;
             nombre=rs.getString("nombre")+" "+rs.getString("aP")+" "+rs.getString("aM");
             userID=rs.getInt("id");
             frmPrincipal.cargo=rs.getInt("cargo");
-            frmPrincipal.codUsuario=userID;
+            frmPrincipal.idUsuario=userID;
             con.closeConexion();
             if(ps.equals(passString)){
                 con= new Coneccion();

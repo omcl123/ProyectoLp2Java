@@ -194,9 +194,9 @@ public class frmModificarUsuario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnActualizar)
-                .addGap(27, 27, 27))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -223,56 +223,60 @@ public class frmModificarUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         UsuarioBL accesoUser = new UsuarioBL();
         String camposAct = new String();
-        try {
-            if (!txtNombre.getText().equals("")) {
-                String nuevoNombre = txtNombre.getText();
-                accesoUser.actualizarNombre(nuevoNombre, tipoTabla, codigo);
-                camposAct += "Nombre ";
+        int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de querer actualizar este usuario?", "Aviso", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            try {
+                if (!txtNombre.getText().equals("")) {
+                    String nuevoNombre = txtNombre.getText();
+                    accesoUser.actualizarNombre(nuevoNombre, tipoTabla, codigo);
+                    camposAct += "Nombre ";
+                }
+                if (!txtAPaterno.getText().equals("")) {
+                    String nuevoAP = txtAPaterno.getText();
+                    accesoUser.actualizarAPaterno(nuevoAP, tipoTabla, codigo);
+                    camposAct += "APaterno ";
+                }
+                if (!txtAMaterno.getText().equals("")) {
+                    String nuevoAM = txtAMaterno.getText();
+                    accesoUser.actualizarAMaterno(nuevoAM, tipoTabla, codigo);
+                    camposAct += "AMaterno ";
+                }
+                if (!txtDNI.getText().equals("")) {
+                    int nuevoDNI = Integer.parseInt(txtDNI.getText());
+                    accesoUser.actualizarDNI(nuevoDNI, tipoTabla, codigo);
+                    camposAct += "DNI ";
+                }
+                if (!txtTelefono.getText().equals("")) {
+                    int nuevotelf = Integer.parseInt(txtTelefono.getText());
+                    accesoUser.actualizarTelefono(nuevotelf, tipoTabla, codigo);
+                    camposAct += "Telefono ";
+                }
+                if (!txtEmail.getText().equals("")) {
+                    String nuevoEmail = txtEmail.getText();
+                    accesoUser.actualizarEmail(nuevoEmail, tipoTabla, codigo);
+                    camposAct += "Email ";
+                }
+                if (!txtEmailAlt.getText().equals("")) {
+                    String nuevoEmailAlt = txtEmailAlt.getText();
+                    accesoUser.actualizarEmailAlt(nuevoEmailAlt, tipoTabla, codigo);
+                    camposAct += "EmailAlt ";
+                }
+                if (!txtPassword.getText().equals("")) {
+                    String nuevaPsw = txtPassword.getText();
+                    accesoUser.actualizarPsw(nuevaPsw, tipoTabla, codigo);
+                    camposAct += "Password ";
+                }
+                if (!txtDireccion.getText().equals("")) {
+                    String nuevaDir = txtDireccion.getText();
+                    accesoUser.actualizarDireccion(nuevaDir, tipoTabla, codigo);
+                    camposAct += "Direccion ";
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Ingresar datos validos!");
             }
-            if (!txtAPaterno.getText().equals("")) {
-                String nuevoAP = txtAPaterno.getText();
-                accesoUser.actualizarAPaterno(nuevoAP, tipoTabla, codigo);
-                camposAct += "APaterno ";
-            }
-            if (!txtAMaterno.getText().equals("")) {
-                String nuevoAM = txtAMaterno.getText();
-                accesoUser.actualizarAMaterno(nuevoAM, tipoTabla, codigo);
-                camposAct += "AMaterno ";
-            }
-            if (!txtDNI.getText().equals("")) {
-                int nuevoDNI = Integer.parseInt(txtDNI.getText());
-                accesoUser.actualizarDNI(nuevoDNI, tipoTabla, codigo);
-                camposAct += "DNI ";
-            }
-            if (!txtTelefono.getText().equals("")) {
-                int nuevotelf = Integer.parseInt(txtTelefono.getText());
-                accesoUser.actualizarTelefono(nuevotelf, tipoTabla, codigo);
-                camposAct += "Telefono ";
-            }
-            if (!txtEmail.getText().equals("")) {
-                String nuevoEmail = txtEmail.getText();
-                accesoUser.actualizarEmail(nuevoEmail, tipoTabla, codigo);
-                camposAct += "Email ";
-            }
-            if (!txtEmailAlt.getText().equals("")) {
-                String nuevoEmailAlt = txtEmailAlt.getText();
-                accesoUser.actualizarEmailAlt(nuevoEmailAlt, tipoTabla, codigo);
-                camposAct += "EmailAlt ";
-            }
-            if (!txtPassword.getText().equals("")) {
-                String nuevaPsw = txtPassword.getText();
-                accesoUser.actualizarPsw(nuevaPsw, tipoTabla, codigo);
-                camposAct += "Password ";
-            }
-            if (!txtDireccion.getText().equals("")) {
-                String nuevaDir = txtDireccion.getText();
-                accesoUser.actualizarDireccion(nuevaDir, tipoTabla, codigo);
-                camposAct += "Direccion ";
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ingresar datos validos!");
+            JOptionPane.showMessageDialog(null, "Campos Actualizados: " + camposAct);
+            this.dispose();
         }
-        JOptionPane.showMessageDialog(null, "Campos Actualizados: "+camposAct);
     }//GEN-LAST:event_btnActualizarMouseClicked
 
 

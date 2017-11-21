@@ -14,6 +14,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -269,6 +273,59 @@ public class UsuarioDA {
             sentencia.executeUpdate(instruccion);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public ResultSet logeoUser(Coneccion con, String codUser) throws Exception {
+
+        Statement sentencia = con.createStatement();
+        String instruccion = "Select us.id as id, us.nombre as nombre ,us.apellidoP as aP,apellidoM as aM,cargo,us.password as Password from "
+                + " ((Select u.IdUsuario as id,u.nombre as nombre,u.APaterno as apellidoP,u.AMaterno as apellidoM, u.IdCargo as cargo,u.Password as password "
+                + " from Usuario u,Personal a where a.Usuario_IdUsuario=u.IdUsuario and a.Codigo=" + codUser + ") "
+                + " union"
+                + " (Select u.IdUsuario as id,u.nombre as nombre,u.APaterno as apellidoP,u.AMaterno as apellidoM, u.IdCargo as cargo,u.Password as password "
+                + " from Usuario u,Admin_Sistema d where d.Usuario_IdUsuario=u.IdUsuario and d.Codigo=" + codUser + ")) us;";
+        ResultSet rs = sentencia.executeQuery(instruccion);
+        return rs;
+    }
+
+    public void enviarEmail(String email) {
+        try {
+            String host = "smtp.gmail.com";
+            String user = "sistemalp2@gmail.com";
+            String pass = "chistema2017";
+            String to = email;
+            String from = "ruben.e.c.j.0796@gmail.com";
+            String subject = "test";
+            String messageText = "email test xd";
+            boolean sessionDebug = false;
+
+            Properties props = System.getProperties();
+
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.required", "true");
+
+            java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+            Session mailSession = Session.getDefaultInstance(props, null);
+            mailSession.setDebug(sessionDebug);
+            Message msg = new MimeMessage(mailSession);
+            msg.setFrom(new InternetAddress(from));
+            InternetAddress[] address = {new InternetAddress(to)};
+            msg.setRecipients(Message.RecipientType.TO, address);
+            msg.setSubject(subject);
+            msg.setSentDate(new Date());
+            msg.setText(messageText);
+
+            Transport transport = mailSession.getTransport("smtp");
+            transport.connect(host, user, pass);
+            transport.sendMessage(msg, msg.getAllRecipients());
+            transport.close();
+            System.out.println("message send successfully");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

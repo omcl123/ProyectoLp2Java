@@ -18,36 +18,18 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class ModificacionUsuario extends javax.swing.JInternalFrame {
 
-    /**
-     * @return the codUsuario
-     */
-    public String getCodUsuario() {
-        return codUsuario;
-    }
-
-    /**
-     * @param codUsuario the codUsuario to set
-     */
-    public void setCodUsuario(String codUsuario) {
-        this.codUsuario = codUsuario;
-    }
-    private String codUsuario;
-
-    /**
-     * Creates new form ModificacionUsuario
-     */
     private Coneccion con;
     public ModificacionUsuario() throws Exception {
         con = new Coneccion();
         Statement s2= con.createStatement();
-        String i2 = "SELECT * from Usuario where idUsuario="+frmPrincipal.codUsuario;
+        String i2 = "SELECT * from Usuario where idUsuario="+frmPrincipal.idUsuario;
         ResultSet rs2=s2.executeQuery(i2);
         rs2.next();
         initComponents();
         
         //setSize(990, 700);
         TxtCodigo.setEnabled(false);
-        TxtCodigo.setText(codUsuario);
+        TxtCodigo.setText(frmPrincipal.codUsuario);
         TxtTel.setEnabled(false);
         TxtTel.setText(rs2.getString("Telefono"));
         txtDir.setEnabled(false);
@@ -316,7 +298,7 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         try {
             Statement s2= con.createStatement();
             String i2 = "UPDATE Usuario SET EmailAlternativo='"+txtEmail2.getText()+"',Direccion='"+txtDir.getText()+"',Telefono="+TxtTel.getText()
-                    + " WHERE IdUsuario="+frmPrincipal.codUsuario;
+                    + " WHERE IdUsuario="+frmPrincipal.idUsuario;
             s2.executeUpdate(i2);
             con.closeConexion();
         } catch (Exception ex) {
