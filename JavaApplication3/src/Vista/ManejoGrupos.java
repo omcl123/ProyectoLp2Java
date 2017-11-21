@@ -55,6 +55,9 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         pnlGrupo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableGrupos = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        TxtNomGrupo = new javax.swing.JTextField();
+        BtnBuscar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -130,25 +133,47 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tableGrupos);
 
+        jLabel2.setText("Nombre: ");
+
+        BtnBuscar.setText("Buscar");
+        BtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlGrupoLayout = new javax.swing.GroupLayout(pnlGrupo);
         pnlGrupo.setLayout(pnlGrupoLayout);
         pnlGrupoLayout.setHorizontalGroup(
             pnlGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGroup(pnlGrupoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtNomGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnBuscar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlGrupoLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         pnlGrupoLayout.setVerticalGroup(
             pnlGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
+            .addGroup(pnlGrupoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtNomGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnBuscar)
+                    .addComponent(jLabel2))
+                .addContainerGap(456, Short.MAX_VALUE))
             .addGroup(pnlGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlGrupoLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(14, Short.MAX_VALUE)))
+                    .addGap(66, 66, 66)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(25, Short.MAX_VALUE)))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -209,11 +234,14 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         pnlFondoLayout.setHorizontalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAsignarUsr))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(btnAsignarUsr))
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
@@ -350,6 +378,30 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAsignarUsrActionPerformed
 
+    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
+        // TODO add your handling code here:
+        int encontrado=-1;
+        for(int i=0;i<tableGrupos.getRowCount();i++){
+            System.out.println(tableGrupos.getValueAt(i,1));
+            if(tableGrupos.getValueAt(i,1).equals(TxtNomGrupo.getText())){
+                encontrado=i;
+            }
+        }
+        if(encontrado==-1){
+            JOptionPane.showMessageDialog(null, "Grupo no encontrado");
+            return;
+        }
+        tableGrupos.setRowSelectionInterval(encontrado, encontrado);
+        int index = tableGrupos.getSelectedRow();
+        idGrupoSel = (int) tableGrupos.getValueAt(index, 0);
+        try {
+            DefaultTableModel modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
+            tableUsuarios.setModel(modeloU);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_BtnBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -386,10 +438,13 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnBuscar;
+    private javax.swing.JTextField TxtNomGrupo;
     private javax.swing.JButton btnAsignarUsr;
     private javax.swing.JButton btnBuscaUsuario;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
