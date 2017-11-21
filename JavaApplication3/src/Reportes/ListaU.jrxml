@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b0697a5e-f743-4b05-9352-2f3c68ba86b4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[(SELECT dc.codigo as codigo,
+			concat(u.Nombre,' ',u.APaterno,' ',u.AMaterno)as nombre,
+			COUNT(m.Usuario_IdUsuario) as Total_Movimientos
+    from Usuario u,Mov_Auditoria m, Docente dc
+    where u.IdUsuario=m.Usuario_IdUsuario and dc.Usuario_IdUsuario=u.IdUsuario and u.IdUsuario in
+	(Select Usuario_IdUsuario from Docente where Usuario_IdUsuario=u.IdUsuario)having COUNT(m.Usuario_IdUsuario)>0) 
+    union
+    (SELECT a.codigo as codigo,
+			concat(u.Nombre,' ',u.APaterno,' ',u.AMaterno)as nombre,
+			COUNT(m.Usuario_IdUsuario) as Total_Movimientos
+    from Usuario u,Mov_Auditoria m, Alumno a
+    where u.IdUsuario=m.Usuario_IdUsuario and a.Usuario_IdUsuario=u.IdUsuario and u.IdUsuario in
+	(Select Usuario_IdUsuario from Alumno where Usuario_IdUsuario=u.IdUsuario)having COUNT(m.Usuario_IdUsuario)>0)
+    order by Total_Movimientos ;]]>
+	</queryString>
+	<field name="codigo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total_Movimientos" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="331" height="79" backcolor="#006181" uuid="94f01e25-419c-4802-8329-e2d0bfe9c986"/>
+			</rectangle>
+			<image>
+				<reportElement x="333" y="0" width="222" height="79" uuid="ed1a34b4-a9fb-4b04-b9ec-b507c1830760"/>
+				<imageExpression><![CDATA["C:\\Users\\Oscar\\Documents\\lp2\\clase10\\ProyectoLp2Java\\JavaApplication3\\src\\Imagenes\\100pucp.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="17" y="12" width="180" height="21" forecolor="#FFFFFF" uuid="a60962f9-b227-4b3f-bda9-9e1003170c25"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Usuario más Activo]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="74" y="47" width="123" height="20" forecolor="#FFFFFF" uuid="c5fc2e95-91dd-483e-935c-c5067ce0465d"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="47" width="55" height="20" forecolor="#FFFFFF" uuid="d15efe7e-1934-4638-83fc-6d050ae54343"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="1ee39fdc-b94a-4924-838d-2b1586a9c262"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="133" height="20" uuid="436ab0a9-4c2c-47dd-9210-fd7a9c56b8b1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="0" width="124" height="20" uuid="480b43e9-4aff-41ca-8107-2fef1bd52a17"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Movimientos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="100" height="20" uuid="a9d46e53-68e2-48ad-89fc-7ae72d31bd93"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="0" width="132" height="20" uuid="b6ec6681-70f3-41b0-bd0f-70eb095f639c"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="0" width="124" height="20" uuid="797fc2a7-1668-41a1-b2b7-5d2a31fbf50a"/>
+				<textFieldExpression><![CDATA[$F{Total_Movimientos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

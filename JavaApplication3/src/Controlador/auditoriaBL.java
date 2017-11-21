@@ -15,14 +15,14 @@ public class auditoriaBL {
     public auditoriaBL(){
         aDA=new auditoriaDA();
     }
-    public DefaultTableModel listaDoc(String nomCur, String fecha){
+    public void listaDoc(String nomCur, String fecha){
         System.out.println("Generando Reporte");
-        return aDA.listaDoc(nomCur, fecha);
+        aDA.listaDoc(nomCur, fecha);
     }
-    public DefaultTableModel listaMov(String nomCur, String fecha){
-        return aDA.listaMov(nomCur, fecha);
+    public void listaMov(String nomCur, String fecha){
+        aDA.listaMov(nomCur, fecha);
     }
-    public DefaultTableModel usuariosMasActivos(String nomCur, String fecha){
-        return aDA.usuariosMasActivos(nomCur, fecha);
+    public void usuariosMasActivos(String nomCur, String fecha){
+        aDA.usuariosMasActivos(nomCur, fecha);
     }
 }
