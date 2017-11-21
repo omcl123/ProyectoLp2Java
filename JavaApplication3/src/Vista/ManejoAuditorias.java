@@ -189,7 +189,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnGeneraReporte)
                 .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(BtnExportar)
                 .addGap(28, 28, 28))

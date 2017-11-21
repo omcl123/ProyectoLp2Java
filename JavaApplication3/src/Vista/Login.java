@@ -89,7 +89,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(123, 123, 123)
+                .addGap(133, 133, 133)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -102,7 +102,7 @@ public class Login extends javax.swing.JFrame {
         );
 
         txtUsuario.setFont(new java.awt.Font("Vijaya", 0, 16)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuario.setForeground(new java.awt.Color(51, 51, 51));
         txtUsuario.setText("Usuario");
         txtUsuario.setBorder(null);
         txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -111,7 +111,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        pswUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        pswUsuario.setForeground(new java.awt.Color(51, 51, 51));
         pswUsuario.setText("......");
         pswUsuario.setBorder(null);
         pswUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -143,7 +143,7 @@ public class Login extends javax.swing.JFrame {
         lblMensaje.setFont(new java.awt.Font("Vijaya", 1, 16)); // NOI18N
         lblMensaje.setForeground(new java.awt.Color(204, 0, 0));
         lblMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblMensaje.setText("El Usuario o la contraseña no son validos. Porfavor ingrese nuevamente");
+        lblMensaje.setText("El Usuario o la contraseña no son validos. Porfavor ingrese nuevamente.");
 
         javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
         login.setLayout(loginLayout);
@@ -154,7 +154,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(77, 77, 77)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
                 .addContainerGap()

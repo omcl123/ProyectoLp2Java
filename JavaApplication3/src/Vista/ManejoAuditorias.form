@@ -72,7 +72,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnGeneraReporte" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="218" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="225" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="BtnExportar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>

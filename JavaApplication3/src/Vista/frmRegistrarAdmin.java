@@ -27,7 +27,6 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         initComponents();
         txtNroEntidad.setEnabled(false);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-        setSize(730, 840);
         DefaultTableModel modelo;
         UsuarioBL accesoUser = new UsuarioBL();
         modelo = accesoUser.modeloUsuario(tablaUsuarios);
@@ -99,10 +98,10 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel7))
                 .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNroEntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 81, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(txtNroEntidad, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
+                .addGap(0, 52, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

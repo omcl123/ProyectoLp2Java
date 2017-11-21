@@ -28,7 +28,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
     public ManejoUsuarios() {
 
         initComponents();
-        setSize(990, 700);
         estadoIni();
 //        btnModificar.setVisible(false);
     }

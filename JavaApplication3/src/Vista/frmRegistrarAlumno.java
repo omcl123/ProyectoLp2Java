@@ -30,7 +30,6 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
         initComponents();
         txtNroEntidad.setEnabled(false);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-        setSize(730, 840);
         DefaultTableModel modelo;
         UsuarioBL accesoUser = new UsuarioBL();
         modelo = accesoUser.modeloUsuario(tablaUsuarios1);
