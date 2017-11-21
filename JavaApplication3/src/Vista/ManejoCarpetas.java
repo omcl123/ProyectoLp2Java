@@ -33,6 +33,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
     private CarpetaBL cBL=new CarpetaBL();
     private Carpeta carpetaActual;
     private Curso cursoSeleccionado;
+    private int idCursoSeleccionado;
     /**
      * Creates new form ManejoCarpetas
      */
@@ -42,6 +43,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         setClosable(true);
         initComponents();
         if(nivelActual==0)BtnAnterior.setEnabled(false);
+        idCursoSeleccionado=0;
         TxtCodCur.setEnabled(false);
         BtnBuscaCur.setEnabled(false);
         BtnEliminar.setEnabled(false);
@@ -596,6 +598,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 BtnSiguiente.setEnabled(false);
             }
             carpetaActual=cBL.getCarpetaActual(nivelActual);
+            idCursoSeleccionado=carpetaActual.getCurso();
             if(carpetaActual.getHabilitado()==1){
                 BtnHabilitar.setEnabled(true);
             }else{
@@ -697,6 +700,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         BtnSiguiente.setEnabled(true);
         BtnEliminar.setEnabled(false);
         carpetaActual=cBL.getCarpetaActual(nivelActual);
+        if(carpetaActual.getCurso()!=idCursoSeleccionado)idCursoSeleccionado=0;
         if(carpetaActual.getHabilitado()==1){
                 BtnHabilitar.setEnabled(true);
             }else{
@@ -877,6 +881,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
                 CheckCurso.setSelected(false);
                 TxtCodCur.setText("");
             }else{
+                c.setCurso(idCursoSeleccionado);
                 caBL.registraCarpeta(c, 0,esMaestro);
             }
             nivelCarpetaActual.add(c);
