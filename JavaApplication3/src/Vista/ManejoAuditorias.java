@@ -44,13 +44,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         //(new String[] { "Curso 1","Curso 2","Curso 3"}));
         CBoxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>
         (new String[] { "El dia anterior", "Semana pasada", "Mes Pasado","Comienzo del ciclo"}));
-        TableAudit.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                },
-                new String [] {
-                    "Tipo", "Nombre", "Fecha de Creacion"
-                }
-            ));
+        
     }
 
     /**
@@ -65,8 +59,6 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         Fondo = new javax.swing.JPanel();
         btnGeneraReporte = new javax.swing.JButton();
         BtnExportar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TableAudit = new javax.swing.JTable();
         Imagen = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -94,16 +86,6 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                 BtnExportarActionPerformed(evt);
             }
         });
-
-        TableAudit.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(TableAudit);
 
         Imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/auditoria_logo.png"))); // NOI18N
 
@@ -169,14 +151,14 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
                 .addContainerGap(39, Short.MAX_VALUE)
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BtnExportar)
-                    .addComponent(btnGeneraReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane1)
-                        .addGroup(FondoLayout.createSequentialGroup()
-                            .addComponent(Imagen)
-                            .addGap(59, 59, 59)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(FondoLayout.createSequentialGroup()
+                        .addComponent(BtnExportar)
+                        .addGap(76, 76, 76)
+                        .addComponent(btnGeneraReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(FondoLayout.createSequentialGroup()
+                        .addComponent(Imagen)
+                        .addGap(59, 59, 59)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21))
         );
         FondoLayout.setVerticalGroup(
@@ -187,12 +169,10 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                     .addComponent(Imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(btnGeneraReporte)
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(BtnExportar)
-                .addGap(28, 28, 28))
+                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGeneraReporte)
+                    .addComponent(BtnExportar))
+                .addContainerGap(335, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,61 +191,43 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
 
     private void BtnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExportarActionPerformed
         // TODO add your ha
-        HSSFWorkbook wb = new HSSFWorkbook();
-        if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
-            HSSFSheet sheet = wb.createSheet("Excel Sheet");
-            HSSFRow rowhead = sheet.createRow(0);
-            rowhead.createCell(0).setCellValue("Tipo");
-            rowhead.createCell(1).setCellValue("Nombre");
-            rowhead.createCell(2).setCellValue("Fecha de Creación");
-            for(int i=0;i<TableAudit.getRowCount();i++){
-                HSSFRow row = sheet.createRow(i+1);
-                row.createCell(0).setCellValue(TableAudit.getValueAt(i, 0).toString());
-                row.createCell(1).setCellValue(TableAudit.getValueAt(i, 1).toString());
-                row.createCell(2).setCellValue(TableAudit.getValueAt(i, 2).toString());
-            }   
-            try {
-                FileOutputStream  fileOut = new FileOutputStream("Reportes/Lista_de_documentos.xls",false);
-                wb.write(fileOut);
-                fileOut.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        HSSFWorkbook wb = new HSSFWorkbook();
+//        if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
+//            HSSFSheet sheet = wb.createSheet("Excel Sheet");
+//            HSSFRow rowhead = sheet.createRow(0);
+//            rowhead.createCell(0).setCellValue("Tipo");
+//            rowhead.createCell(1).setCellValue("Nombre");
+//            rowhead.createCell(2).setCellValue("Fecha de Creación");
+//            for(int i=0;i<TableAudit.getRowCount();i++){
+//                HSSFRow row = sheet.createRow(i+1);
+//                row.createCell(0).setCellValue(TableAudit.getValueAt(i, 0).toString());
+//                row.createCell(1).setCellValue(TableAudit.getValueAt(i, 1).toString());
+//                row.createCell(2).setCellValue(TableAudit.getValueAt(i, 2).toString());
+//            }   
+//            try {
+//                FileOutputStream  fileOut = new FileOutputStream("Reportes/Lista_de_documentos.xls",false);
+//                wb.write(fileOut);
+//                fileOut.close();
+//            } catch (FileNotFoundException ex) {
+//                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException ex) {
+//                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }//GEN-LAST:event_BtnExportarActionPerformed
 
     private void CBoxTipoReporteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBoxTipoReporteItemStateChanged
         // TODO add your handling code here:
         if(evt.getItem().toString().equals("Lista de Documentos")){
-            TableAudit.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                },
-                new String [] {
-                    "Tipo", "Nombre", "Fecha de Creacion"
-                }
-            ));
+            
             CBoxCursos.setEnabled(true);
         }
         else if(evt.getItem().toString().equals("Lista de Movimientos")){
-            TableAudit.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                },
-                new String [] {
-                    "Codigo","Usuario", "Movimiento", "Documento","Fecha"
-                }
-            ));
+            
             CBoxCursos.setEnabled(false);
         }
         else if(evt.getItem().toString().equals("Usuarios más activos")){
-            TableAudit.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                },
-                new String [] {
-                    "Codigo","Usuario", "Numero de Movimients"
-                }
-            ));
+            
             CBoxCursos.setEnabled(false);
         }
     }//GEN-LAST:event_CBoxTipoReporteItemStateChanged
@@ -275,14 +237,14 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         auditoriaBL aBL=new auditoriaBL();
         System.out.println(CBoxTipoReporte.getSelectedItem().toString());
          if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
-            TableAudit.setModel(aBL.listaDoc(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
+            aBL.listaDoc(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString());
         }
         else if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Movimientos")){
-            TableAudit.setModel(aBL.listaMov(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
+            aBL.listaMov(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString());
         }
         else if(CBoxTipoReporte.getSelectedItem().toString().equals("Usuarios más activos")){
             System.out.println("Generando reporte");
-            TableAudit.setModel(aBL.usuariosMasActivos(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString()));
+            aBL.usuariosMasActivos(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString());
         }
     }//GEN-LAST:event_btnGeneraReporteActionPerformed
 
@@ -329,12 +291,10 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> CBoxTipoReporte;
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Imagen;
-    private javax.swing.JTable TableAudit;
     private javax.swing.JButton btnGeneraReporte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
