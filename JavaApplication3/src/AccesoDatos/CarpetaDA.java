@@ -42,6 +42,7 @@ public class CarpetaDA {
             c.setsitioId(rs.getInt("Sitio_id"));
             c.setMaestro(rs.getInt("Maestro"));
             c.setHabilitado(rs.getInt("habilitado"));
+            c.setCurso(rs.getInt("Curso"));
             System.out.println("query ejecutado");
              con.close();
              return c;
