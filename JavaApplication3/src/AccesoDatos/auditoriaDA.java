@@ -37,8 +37,10 @@ public class auditoriaDA {
             JasperReport jr = (JasperReport)JRLoader.loadObjectFromFile(auditoriaDA.class.getResource
                          ("/Reportes/ListaM_1.jasper").getFile());
             JasperPrint impresion =JasperFillManager.fillReport(jr, null, con);
-            JasperViewer viewer = new JasperViewer(impresion);
+            JasperViewer viewer = new JasperViewer(impresion,false);
+            
             viewer.setVisible(true);
+            viewer.setDefaultCloseOperation(0);
             con.close();
         }catch(Exception e){System.out.println("fallo en coneccion ");}
         
@@ -71,8 +73,9 @@ public class auditoriaDA {
             parametros.put("NOM_CURSO",nomCur);
             parametros.put("NUM_CARPETA",numCarpeta);
             JasperPrint impresion =JasperFillManager.fillReport(jr, parametros, con);
-            JasperViewer viewer = new JasperViewer(impresion);
+            JasperViewer viewer = new JasperViewer(impresion,false);
             viewer.setVisible(true);
+            viewer.setDefaultCloseOperation(0);
             con.close();
         }catch(Exception e)
         {System.out.println(e);}
@@ -86,8 +89,10 @@ public class auditoriaDA {
             JasperReport jr = (JasperReport)JRLoader.loadObjectFromFile(auditoriaDA.class.getResource
                          ("/Reportes/ListaU.jasper").getFile());
             JasperPrint impresion =JasperFillManager.fillReport(jr, null, con);
-            JasperViewer viewer = new JasperViewer(impresion);
+            JasperViewer viewer = new JasperViewer(impresion, false);
             viewer.setVisible(true);
+            
+            viewer.setDefaultCloseOperation(0);
             con.close();
         }catch(Exception e){System.out.println("fallo en coneccion ");}
     }
