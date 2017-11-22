@@ -4,38 +4,6 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jmAuditorias">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Manejo auditorias"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmAuditoriasMouseClicked"/>
-          </Events>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="99" green="99" red="99" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="|"/>
-          </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jmGrupos">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Manejo Grupos"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmGruposMouseClicked"/>
-          </Events>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="99" green="99" red="99" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="|"/>
-          </Properties>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="jmUsuarios">
           <Properties>
             <Property name="text" type="java.lang.String" value="Manejo Usuarios"/>
@@ -59,7 +27,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="barrita2">
+        <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="99" red="99" type="rgb"/>
@@ -73,6 +41,38 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuCarpetasMouseClicked"/>
+          </Events>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="barrita2">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="99" red="99" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="|"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jmGrupos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Manejo Grupos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmGruposMouseClicked"/>
+          </Events>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu4">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="99" red="99" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="|"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jmAuditorias">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Manejo auditorias"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jmAuditoriasMouseClicked"/>
           </Events>
         </Menu>
       </SubComponents>
@@ -220,7 +220,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="597" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="599" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

@@ -69,15 +69,15 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         PrincDesktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jmAuditorias = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jmGrupos = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
         jmUsuarios = new javax.swing.JMenu();
         btnUDerivados = new javax.swing.JMenuItem();
         btnRegUBase = new javax.swing.JMenuItem();
-        barrita2 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         MenuCarpetas = new javax.swing.JMenu();
+        barrita2 = new javax.swing.JMenu();
+        jmGrupos = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jmAuditorias = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,32 +144,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         );
         PrincDesktopPaneLayout.setVerticalGroup(
             PrincDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
+            .addGap(0, 599, Short.MAX_VALUE)
         );
-
-        jmAuditorias.setText("Manejo auditorias");
-        jmAuditorias.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jmAuditoriasMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jmAuditorias);
-
-        jMenu2.setForeground(new java.awt.Color(153, 153, 153));
-        jMenu2.setText("|");
-        jMenuBar1.add(jMenu2);
-
-        jmGrupos.setText("Manejo Grupos");
-        jmGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jmGruposMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jmGrupos);
-
-        jMenu4.setForeground(new java.awt.Color(153, 153, 153));
-        jMenu4.setText("|");
-        jMenuBar1.add(jMenu4);
 
         jmUsuarios.setText("Manejo Usuarios");
 
@@ -191,9 +167,9 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jmUsuarios);
 
-        barrita2.setForeground(new java.awt.Color(153, 153, 153));
-        barrita2.setText("|");
-        jMenuBar1.add(barrita2);
+        jMenu2.setForeground(new java.awt.Color(153, 153, 153));
+        jMenu2.setText("|");
+        jMenuBar1.add(jMenu2);
 
         MenuCarpetas.setText("Manejo Carpetas");
         MenuCarpetas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -202,6 +178,30 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(MenuCarpetas);
+
+        barrita2.setForeground(new java.awt.Color(153, 153, 153));
+        barrita2.setText("|");
+        jMenuBar1.add(barrita2);
+
+        jmGrupos.setText("Manejo Grupos");
+        jmGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmGruposMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jmGrupos);
+
+        jMenu4.setForeground(new java.awt.Color(153, 153, 153));
+        jMenu4.setText("|");
+        jMenuBar1.add(jMenu4);
+
+        jmAuditorias.setText("Manejo auditorias");
+        jmAuditorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmAuditoriasMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jmAuditorias);
 
         setJMenuBar(jMenuBar1);
 
