@@ -35,7 +35,7 @@ public class auditoriaDA {
             con = (Connection)DriverManager.getConnection("jdbc:mysql://200.16.7.96/inf282g5", 
                         "inf282g5", "reFuKUxhUijfr8np");
             JasperReport jr = (JasperReport)JRLoader.loadObjectFromFile(auditoriaDA.class.getResource
-                         ("/Reportes/ListaM.jasper").getFile());
+                         ("/Reportes/ListaM_1.jasper").getFile());
             JasperPrint impresion =JasperFillManager.fillReport(jr, null, con);
             JasperViewer viewer = new JasperViewer(impresion);
             viewer.setVisible(true);

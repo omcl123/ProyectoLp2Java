@@ -3,6 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="style1" isDefault="true" forecolor="#404040" backcolor="#C0C0C0"/>
 	<queryString>
 		<![CDATA[(SELECT dc.Codigo as codigo,concat(u.Nombre,' ',u.APaterno,' ',u.AMaterno)as nombre,a.Nombre as movimiento,d.Nombre as documento,m.Fecha as fecha
 	from Mov_Auditoria m,Usuario u, Documentos d, Accion a,Docente dc
@@ -70,46 +71,61 @@
 		<band height="61" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="65" height="20" uuid="77581f68-d295-4799-be98-6acde1fab44e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="65" y="0" width="135" height="20" uuid="3185c812-1bbe-4769-b95a-d4be9902d0b4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Nombre y Apellidos]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="200" y="0" width="100" height="20" uuid="b47b450d-d165-4e38-b1d1-bb77a1432579"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Movimiento]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="300" y="0" width="169" height="20" uuid="84875ac6-d62d-43de-8894-58552fb0f36b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Nombre del documento]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="469" y="0" width="86" height="20" uuid="6e62dd38-ac81-454b-ba9d-28a58580d13c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField>
-				<reportElement x="2" y="0" width="63" height="20" uuid="3b32341e-24e0-409a-b387-6f21eb925e68"/>
+				<reportElement style="style1" x="2" y="0" width="63" height="20" uuid="3b32341e-24e0-409a-b387-6f21eb925e68"/>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="65" y="0" width="135" height="20" uuid="28d9b7e9-77ea-4ffc-a66e-3c8e4fba7700"/>
+				<reportElement style="style1" x="65" y="0" width="135" height="20" uuid="28d9b7e9-77ea-4ffc-a66e-3c8e4fba7700"/>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="200" y="0" width="100" height="20" uuid="e9c61863-5bd4-486d-b1e2-f1f7d8b654f2"/>
+				<reportElement style="style1" x="200" y="0" width="100" height="20" uuid="e9c61863-5bd4-486d-b1e2-f1f7d8b654f2"/>
 				<textFieldExpression><![CDATA[$F{movimiento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="300" y="0" width="169" height="20" uuid="d793fba7-15b8-459c-b356-83d173e5e183"/>
+				<reportElement style="style1" x="300" y="0" width="169" height="20" uuid="d793fba7-15b8-459c-b356-83d173e5e183"/>
 				<textFieldExpression><![CDATA[$F{documento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="469" y="0" width="86" height="20" uuid="c87d32a7-913e-45e9-9c6c-99bf110eb8e3"/>
+				<reportElement style="style1" x="469" y="0" width="86" height="20" uuid="c87d32a7-913e-45e9-9c6c-99bf110eb8e3"/>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 		</band>
