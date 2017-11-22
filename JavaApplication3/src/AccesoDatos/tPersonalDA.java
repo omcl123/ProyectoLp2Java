@@ -37,13 +37,15 @@ public class tPersonalDA {
             ResultSet rs = sentencia.executeQuery(instruccion);
 
             while (rs.next()) {
-                fila[0]=rs.getString("Codigo");
-                fila[1]=rs.getString("Nombre");
-                fila[2]=rs.getString("APaterno");
-                fila[3]=rs.getString("AMaterno");
-                fila[4]=rs.getString("Email");
+                fila[0] = rs.getString("Codigo");
+                fila[1] = rs.getString("Nombre");
+                fila[2] = rs.getString("APaterno");
+                fila[3] = rs.getString("AMaterno");
+                fila[4] = rs.getString("Email");
                 int habilitado = rs.getInt("Habilitado");
-                if (habilitado == 1) modelo.addRow(fila);
+                if (habilitado == 1) {
+                    modelo.addRow(fila);
+                }
             }
             con.closeConexion();
         } catch (Exception ex) {
@@ -51,6 +53,7 @@ public class tPersonalDA {
         }
         return modelo;
     }
+
     public void registrarPersonal(int id, int cargo, String codigo) {
         con = new Coneccion();
         try {
@@ -68,18 +71,43 @@ public class tPersonalDA {
         con.closeConexion();
     }
 
-    public void eliminarPersonal(String codigo) {
+    public void eliminarPersonal(String codigo, int id) {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
-            String instruccion = "UPDATE Usuario INNER JOIN Personal ON (Usuario.IdUsuario=Personal.Usuario_IdUsuario)"+
-                    "SET Habilitado = 0, IdCargo = -1 WHERE Codigo='" 
+            String instruccion = "UPDATE Usuario INNER JOIN Personal ON (Usuario.IdUsuario=Personal.Usuario_IdUsuario)"
+                    + "SET Habilitado = 0, IdCargo = -1 WHERE Codigo='"
                     + codigo + "'";
             sentencia.executeUpdate(instruccion);
-            con.closeConexion();
+
+            Statement sentencia2 = con.createStatement();
+            String instruccion2 = "DELETE FROM GrupoXUsuario WHERE Usuario_IdUsuario = " + id;
+            sentencia.executeUpdate(instruccion2);
         } catch (Exception e) {
             System.out.println(e.toString());
         }
         con.closeConexion();
+    }
+
+    public int getId(String codigo) {
+        int id = -1;
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT a.Usuario_IdUsuario,a.Codigo  FROM Personal a "
+                    + "WHERE a.Codigo='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            id = rs.getInt("Usuario_IdUsuario");
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+        return id;
     }
 }

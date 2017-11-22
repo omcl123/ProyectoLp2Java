@@ -24,8 +24,11 @@ public class tAlumnoBL {
         accesoAlumnoBD.registrarAlumno(id, especialidad, codigo);
     }
 
-    public void eliminarAlumno(String codigo){
-        accesoAlumnoBD.eliminarAlumno(codigo);
+    public void eliminarAlumno(String codigo,int id){
+        accesoAlumnoBD.eliminarAlumno(codigo,id);
     }
     
+    public int getId(String codigo){
+        return accesoAlumnoBD.getId(codigo);
+    }
 }

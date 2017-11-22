@@ -284,28 +284,32 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
             if (reply == JOptionPane.YES_OPTION) {
                 if (userType == "Administrador") {
                     tAdminBL accesoAdmin = new tAdminBL();
-                    accesoAdmin.eliminarAdmin(codigo);
+                    int id = accesoAdmin.getId(codigo);
+                    accesoAdmin.eliminarAdmin(codigo,id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Administrador");
                     jdpContenedor.add(fBusq);
                     fBusq.setVisible(true);
                 } else if (userType == "Alumno") {
                     tAlumnoBL accesoAlumno = new tAlumnoBL();
-                    accesoAlumno.eliminarAlumno(codigo);
+                    int id = accesoAlumno.getId(codigo);
+                    accesoAlumno.eliminarAlumno(codigo,id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Alumno");
                     jdpContenedor.add(fBusq);
                     fBusq.setVisible(true);
                 } else if (userType == "Docente") {
                     tDocenteBL accesoDocente = new tDocenteBL();
-                    accesoDocente.eliminarDocente(codigo);
+                    int id = accesoDocente.getId(codigo);
+                    accesoDocente.eliminarDocente(codigo,id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Docente");
                     jdpContenedor.add(fBusq);
                     fBusq.setVisible(true);
                 } else if (userType == "Personal") {
-                    tPersonalBL accesoDocente = new tPersonalBL();
-                    accesoDocente.eliminarPersonal(codigo);
+                    tPersonalBL accesoPersonal = new tPersonalBL();
+                    int id = accesoPersonal.getId(codigo);
+                    accesoPersonal.eliminarPersonal(codigo,id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Personal");
                     jdpContenedor.add(fBusq);
@@ -371,11 +375,10 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 @Override
                 public void run() {
                     try {
-                        System.out.println("si estoy iniciando pero soy imbecil XD");
                         int a;
                         while (true) {
+                            this.sleep(10);
                             a = f.getFin();
-//                            System.out.print(a);
                             if (a == 1) {
                                 estadoIni();
                                 System.out.println("acabo");

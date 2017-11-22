@@ -8,6 +8,7 @@ package Controlador;
 import AccesoDatos.UsuarioDA;
 import Modelo.Coneccion;
 import Modelo.Usuario;
+import java.io.File;
 import java.sql.ResultSet;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -88,5 +89,17 @@ public class UsuarioBL {
     
     public void enviarEmailNuevaPass(String email,String password){
         accesoUsuario.enviarEmailNuevaPass(email, password);
+    }
+    
+    public String obtenerPassword(int idUser) {
+        return accesoUsuario.obtenerPassword(idUser);
+    }
+    
+    public String obtenerEmail(int idUser){
+        return accesoUsuario.obtenerEmail(idUser);
+    }
+    
+    public void cargarArchivos(File archivo){
+        accesoUsuario.cargarArchivos(archivo);
     }
 }

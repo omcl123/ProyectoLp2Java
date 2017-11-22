@@ -7,6 +7,9 @@ package AccesoDatos;
 
 import Modelo.Coneccion;
 import Modelo.Usuario;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -288,33 +291,44 @@ public class UsuarioDA {
         return rs;
     }
 
-    public void obtenerEmail(String Password) {
-//        try {
-//            Statement sentencia = con.createStatement();
-//
-//            String instruccion = "SELECT u.Email FROM Usuario u WHERE IdUsuario ="+;
-//
-//            ResultSet rs = sentencia.executeQuery(instruccion);
-//
-//            while (rs.next()) {
-//                fila[0] = rs.getString("IdUsuario");
-//                fila[1] = rs.getString("Nombre");
-//                fila[2] = rs.getString("APaterno");
-//                fila[3] = rs.getString("AMaterno");
-//                fila[4] = rs.getString("Email");
-//                int habilitado = rs.getInt("Habilitado");
-//                int cargo = rs.getInt("IdCargo");
-//                if (habilitado == 1 && cargo == -1) {
-//                    modelo.addRow(fila);
-//                }
-//            }
-//            con.closeConexion();
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
+    public String obtenerEmail(int idUser) {
+        String email = new String();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT u.Email FROM Usuario u WHERE IdUsuario ='" + idUser + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            email = rs.getString("Email");
+
+            con.closeConexion();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return email;
     }
 
-    public void obtenerPassword() {
+    public String obtenerPassword(int idUser) {
+        String password = new String();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT u.Passsword FROM Usuario u WHERE IdUsuario ='" + idUser + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            password = rs.getString("Email");
+
+            con.closeConexion();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return password;
 
     }
 
@@ -395,6 +409,19 @@ public class UsuarioDA {
             System.out.println("message send successfully");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    public void cargarArchivos(File archivo) {
+        try {
+            FileReader fr = new FileReader(archivo);
+            BufferedReader br = new BufferedReader(fr);
+            while(true){
+                String linea = br.readLine();
+                System.out.println(linea);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -64,6 +64,9 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
         }
         String codigo = txtCodigo.getText().toString();
         accesoAlumno.registrarAlumno(id, especialidad, codigo);
+        String email = accesoUser.obtenerEmail(id);
+        String password = accesoUser.obtenerPassword(id);
+        accesoUser.enviarEmailNuevoReg(email, codigo, password);
         JOptionPane.showMessageDialog(null, "RegistroExitoso");
         return 1;
     }
@@ -88,6 +91,8 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaUsuarios1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        txtBusq = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         pnlFondo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -160,19 +165,34 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/alumno_logo.png"))); // NOI18N
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+            .addGroup(pnlFondoLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
-                .addGap(27, 27, 27))
+                        .addGap(10, 10, 10)
+                        .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnBuscar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlFondoLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2))
+                        .addGap(27, 27, 27))))
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,8 +201,12 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -209,8 +233,28 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
         txtNroEntidad.setText(id);
     }//GEN-LAST:event_tablaUsuarios1MouseClicked
 
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        // TODO add your handling code here:
+        int encontrado=-1;
+        for(int i=0;i<tablaUsuarios1.getRowCount();i++){
+            System.out.println(tablaUsuarios1.getValueAt(i,1));
+            if(tablaUsuarios1.getValueAt(i,1).equals(txtBusq.getText())){
+                encontrado=i;
+            }
+        }
+        if(encontrado==-1){
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+            return;
+        }
+        tablaUsuarios1.setRowSelectionInterval(encontrado, encontrado);
+        int index = tablaUsuarios1.getSelectedRow();
+        String id = (String) tablaUsuarios1.getValueAt(index, 0);
+        txtNroEntidad.setText(id);
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox<String> cbEspecialidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -220,6 +264,7 @@ public class frmRegistrarAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlFondo;
     private javax.swing.JTable tablaUsuarios1;
+    private javax.swing.JTextField txtBusq;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNroEntidad;
     // End of variables declaration//GEN-END:variables

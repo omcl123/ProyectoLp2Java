@@ -22,12 +22,12 @@ public class frmRegistrarDocente extends javax.swing.JInternalFrame {
      * Creates new form frmRegistrarDocente
      */
     private ArrayList<Especialidad> listaEsp;
-    
+
     public frmRegistrarDocente() {
         initComponents();
         txtNroEntidad.setEnabled(false);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-        
+
         DefaultTableModel modelo;
         UsuarioBL accesoUser = new UsuarioBL();
         modelo = accesoUser.modeloUsuario(tablaUsuarios);
@@ -41,7 +41,7 @@ public class frmRegistrarDocente extends javax.swing.JInternalFrame {
             cbEspecialidad.addItem(listaEsp.get(i).getNombre());
         };
     }
-    
+
     public int guardarDocente() {
         tDocenteBL accesoDocente = new tDocenteBL();
         UsuarioBL accesoUser = new UsuarioBL();
@@ -62,6 +62,9 @@ public class frmRegistrarDocente extends javax.swing.JInternalFrame {
         }
         String codigo = txtCodigo.getText().toString();
         accesoDocente.registrarDocente(id, especialidad, codigo);
+        String email = accesoUser.obtenerEmail(id);
+        String password = accesoUser.obtenerPassword(id);
+        accesoUser.enviarEmailNuevoReg(email, codigo, password);
         JOptionPane.showMessageDialog(null, "RegistroExitoso");
         return 1;
     }
@@ -86,6 +89,8 @@ public class frmRegistrarDocente extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
         lblIcon = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        txtBusq = new javax.swing.JTextField();
 
         pnlFondo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -155,35 +160,52 @@ public class frmRegistrarDocente extends javax.swing.JInternalFrame {
 
         lblIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/docente.png"))); // NOI18N
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnlFondoLayout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlFondoLayout.createSequentialGroup()
+                            .addGap(61, 61, 61)
+                            .addComponent(lblIcon)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(lblIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(43, 43, 43)
+                        .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnBuscar)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+            .addGroup(pnlFondoLayout.createSequentialGroup()
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFondoLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                        .addContainerGap(14, Short.MAX_VALUE)
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addContainerGap(12, Short.MAX_VALUE)
                         .addComponent(lblIcon)
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBuscar)
+                            .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
 
@@ -208,8 +230,28 @@ public class frmRegistrarDocente extends javax.swing.JInternalFrame {
         txtNroEntidad.setText(id);
     }//GEN-LAST:event_tablaUsuariosMouseClicked
 
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        // TODO add your handling code here:
+        int encontrado=-1;
+        for(int i=0;i<tablaUsuarios.getRowCount();i++){
+            System.out.println(tablaUsuarios.getValueAt(i,1));
+            if(tablaUsuarios.getValueAt(i,1).equals(txtBusq.getText())){
+                encontrado=i;
+            }
+        }
+        if(encontrado==-1){
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+            return;
+        }
+        tablaUsuarios.setRowSelectionInterval(encontrado, encontrado);
+        int index = tablaUsuarios.getSelectedRow();
+        String id = (String) tablaUsuarios.getValueAt(index, 0);
+        txtNroEntidad.setText(id);
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox<String> cbEspecialidad;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel7;
@@ -219,6 +261,7 @@ public class frmRegistrarDocente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblIcon;
     private javax.swing.JPanel pnlFondo;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtBusq;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNroEntidad;
     // End of variables declaration//GEN-END:variables

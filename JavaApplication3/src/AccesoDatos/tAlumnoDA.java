@@ -69,18 +69,44 @@ public class tAlumnoDA {
         con.closeConexion();
     }
 
-    public void eliminarAlumno(String codigo) {
+    public void eliminarAlumno(String codigo,int id) {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN Alumno ON (Usuario.IdUsuario=Alumno.Usuario_IdUsuario)"+
                     "SET Habilitado = 0, IdCargo = -1 WHERE Codigo='" 
                     + codigo + "'";
-            sentencia.executeUpdate(instruccion);
-            con.closeConexion();
+            sentencia.executeUpdate(instruccion);            
+            
+            Statement sentencia2 = con.createStatement();
+            String instruccion2 = "DELETE FROM GrupoXUsuario WHERE Usuario_IdUsuario = "+id;
+            sentencia.executeUpdate(instruccion2);
+            
         } catch (Exception e) {
             System.out.println(e.toString());
         }
         con.closeConexion();
+    }
+    
+    public int getId(String codigo){
+        int id = -1;
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT a.Usuario_IdUsuario,a.Codigo FROM Alumno a "
+                    + "WHERE a.Codigo='"+codigo+"'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+            
+            rs.next();
+            
+            id = rs.getInt("Usuario_IdUsuario");
+                    
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+        return id;
     }
 }

@@ -25,7 +25,11 @@ public class tAdminBL {
         accesoAdminBD.registrarAdmin(id, cargo, codigo);
     }
     
-    public void eliminarAdmin(String codigo){
-        accesoAdminBD.eliminarAdmin(codigo);
+    public void eliminarAdmin(String codigo,int id){
+        accesoAdminBD.eliminarAdmin(codigo, id);
+    }
+    
+    public int getId(String codigo){
+        return accesoAdminBD.getId(codigo);
     }
 }

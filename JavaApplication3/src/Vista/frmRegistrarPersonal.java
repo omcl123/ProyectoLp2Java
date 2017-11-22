@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vista;
 
 import Controlador.CargoBL;
@@ -26,18 +25,18 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
      * Creates new form frmRegistrarPersonal
      */
     ArrayList<Cargo> listaCargo;
-    
+
     public frmRegistrarPersonal() {
         initComponents();
         txtNroEntidad.setEnabled(false);
-        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-        
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+
         DefaultTableModel modelo;
         UsuarioBL accesoUser = new UsuarioBL();
         modelo = accesoUser.modeloUsuario(tablaUsuarios);
 //        llenarCBCargo();
     }
-    
+
 //    private void llenarCBCargo(){
 //        CargoBL accesoCargo=new CargoBL();
 //        listaCargo=accesoCargo.listarCargos();
@@ -45,7 +44,6 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
 //            cbCargo.addItem(listaCargo.get(i).getNombre());
 //        };
 //    }
-    
     public int guardarPersonal() {
         tPersonalBL accesoPersonal = new tPersonalBL();
         UsuarioBL accesoUser = new UsuarioBL();
@@ -61,6 +59,9 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
         }
         String codigo = txtCodigo.getText().toString();
         accesoPersonal.registrarPersonal(id, 2, codigo);
+        String email = accesoUser.obtenerEmail(id);
+        String password = accesoUser.obtenerPassword(id);
+        accesoUser.enviarEmailNuevoReg(email, codigo, password);
         JOptionPane.showMessageDialog(null, "RegistroExitoso");
         return 1;
     }
@@ -83,6 +84,8 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
         lblIcon = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        txtBusq = new javax.swing.JTextField();
 
         pnlFondo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,31 +142,48 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
 
         lblIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/personal_logo.png"))); // NOI18N
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnlFondoLayout.createSequentialGroup()
+                            .addGap(37, 37, 37)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlFondoLayout.createSequentialGroup()
+                            .addGap(61, 61, 61)
+                            .addComponent(lblIcon)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(lblIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(50, 50, 50)
+                        .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnBuscar)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblIcon))
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
 
@@ -183,13 +203,33 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
 
     private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
         // TODO add your handling code here:
-        int index=tablaUsuarios.getSelectedRow();
-        String id=(String)tablaUsuarios.getValueAt(index,0);
+        int index = tablaUsuarios.getSelectedRow();
+        String id = (String) tablaUsuarios.getValueAt(index, 0);
         txtNroEntidad.setText(id);
     }//GEN-LAST:event_tablaUsuariosMouseClicked
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        int encontrado = -1;
+        for (int i = 0; i < tablaUsuarios.getRowCount(); i++) {
+            System.out.println(tablaUsuarios.getValueAt(i, 1));
+            if (tablaUsuarios.getValueAt(i, 1).equals(txtBusq.getText())) {
+                encontrado = i;
+            }
+        }
+        if (encontrado == -1) {
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+            return;
+        }
+        tablaUsuarios.setRowSelectionInterval(encontrado, encontrado);
+        int index = tablaUsuarios.getSelectedRow();
+        String id = (String) tablaUsuarios.getValueAt(index, 0);
+        txtNroEntidad.setText(id);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -197,6 +237,7 @@ public class frmRegistrarPersonal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblIcon;
     private javax.swing.JPanel pnlFondo;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtBusq;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNroEntidad;
     // End of variables declaration//GEN-END:variables

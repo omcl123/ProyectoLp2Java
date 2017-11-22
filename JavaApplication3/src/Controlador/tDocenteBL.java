@@ -23,7 +23,11 @@ public class tDocenteBL {
         accesoDocenteBD.registrarDocente(id, especialidad, codigo);
     }
 
-    public void eliminarDocente(String codigo) {
-        accesoDocenteBD.eliminarDocente(codigo);
+    public void eliminarDocente(String codigo,int id) {
+        accesoDocenteBD.eliminarDocente(codigo,id);
+    }
+    
+    public int getId(String codigo){
+        return accesoDocenteBD.getId(codigo);
     }
 }

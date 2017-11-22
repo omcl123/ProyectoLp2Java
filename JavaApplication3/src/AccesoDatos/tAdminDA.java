@@ -70,7 +70,7 @@ public class tAdminDA {
         con.closeConexion();
     }
 
-    public void eliminarAdmin(String codigo) {
+    public void eliminarAdmin(String codigo,int id) {
         con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
@@ -78,10 +78,36 @@ public class tAdminDA {
                     "SET Habilitado = 0, IdCargo = -1 WHERE Codigo='" 
                     + codigo + "'";
             sentencia.executeUpdate(instruccion);
-            con.closeConexion();
+            
+            Statement sentencia2 = con.createStatement();
+            String instruccion2 = "DELETE FROM GrupoXUsuario WHERE Usuario_IdUsuario = "+id;
+            sentencia.executeUpdate(instruccion2);
+            
         } catch (Exception e) {
             System.out.println(e.toString());
         }
         con.closeConexion();
+    }
+    
+    public int getId(String codigo){
+        int id = -1;
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT a.Usuario_IdUsuario FROM Admin_Sistema a "
+                    + "WHERE a.Codigo like '"+codigo+"'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+            
+            rs.next();
+            
+            id = rs.getInt("Usuario_IdUsuario");
+                    
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        con.closeConexion();
+        return id;
     }
 }

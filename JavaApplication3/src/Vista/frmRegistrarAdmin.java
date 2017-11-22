@@ -56,6 +56,9 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         }
         String codigo = txtCodigo.getText().toString();
         accesoAdmin.registrarAdmin(id, 3, codigo);
+        String email = accesoUser.obtenerEmail(id);
+        String password = accesoUser.obtenerPassword(id);
+        accesoUser.enviarEmailNuevoReg(email, codigo, password);
         JOptionPane.showMessageDialog(null, "RegistroExitoso");
         return 1;
     }
@@ -78,6 +81,8 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
         lblImagen = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        txtBusq = new javax.swing.JTextField();
 
         pnlFondo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -134,6 +139,13 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
 
         lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/admin_logo.png"))); // NOI18N
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
@@ -141,6 +153,10 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
             .addGroup(pnlFondoLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnBuscar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlFondoLayout.createSequentialGroup()
                         .addGap(54, 54, 54)
@@ -157,7 +173,11 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(lblImagen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(txtBusq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
             .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,8 +210,28 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
         txtNroEntidad.setText(id);
     }//GEN-LAST:event_tablaUsuariosMouseClicked
 
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        // TODO add your handling code here:
+        int encontrado=-1;
+        for(int i=0;i<tablaUsuarios.getRowCount();i++){
+            System.out.println(tablaUsuarios.getValueAt(i,1));
+            if(tablaUsuarios.getValueAt(i,1).equals(txtBusq.getText())){
+                encontrado=i;
+            }
+        }
+        if(encontrado==-1){
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+            return;
+        }
+        tablaUsuarios.setRowSelectionInterval(encontrado, encontrado);
+        int index = tablaUsuarios.getSelectedRow();
+        String id = (String) tablaUsuarios.getValueAt(index, 0);
+        txtNroEntidad.setText(id);
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -199,6 +239,7 @@ public class frmRegistrarAdmin extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblImagen;
     private javax.swing.JPanel pnlFondo;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtBusq;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNroEntidad;
     // End of variables declaration//GEN-END:variables

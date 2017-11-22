@@ -6,6 +6,8 @@
 package Vista;
 
 import Controlador.UsuarioBL;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -18,9 +20,12 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmRegUsuarioBase
      */
+    private UsuarioBL accesoUser;
+
     public frmRegUsuarioBase() {
         initComponents();
         setClosable(true);
+        accesoUser = new UsuarioBL();
         //setSize(730, 840);
     }
 
@@ -56,6 +61,7 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         lblIcon = new javax.swing.JLabel();
+        btnSubirArchivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -196,6 +202,13 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
 
         lblIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarioBase.png"))); // NOI18N
 
+        btnSubirArchivo.setText("Subir Archivo");
+        btnSubirArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSubirArchivoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -204,6 +217,8 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnSubirArchivo)
+                        .addGap(50, 50, 50)
                         .addComponent(btnGuardar)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -230,7 +245,9 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(pnlInfoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnGuardar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnSubirArchivo))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -250,7 +267,6 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
-        UsuarioBL accesoUser = new UsuarioBL();
         String email = new String();
         try {
             int id = accesoUser.generarID();
@@ -270,7 +286,18 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
             return;
         }
         JOptionPane.showMessageDialog(null, "Registro Exitoso");
+        this.dispose();
     }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void btnSubirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubirArchivoMouseClicked
+        // TODO add your handling code here:
+        JFileChooser file = new JFileChooser();
+        file.showOpenDialog(this);
+        /**
+         * abrimos el archivo seleccionado
+         */
+        File abre = file.getSelectedFile();
+    }//GEN-LAST:event_btnSubirArchivoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -309,6 +336,7 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnSubirArchivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

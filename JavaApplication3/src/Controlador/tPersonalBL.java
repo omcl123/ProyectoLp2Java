@@ -24,7 +24,11 @@ public class tPersonalBL {
         accesoPersonalBD.registrarPersonal(id, cargo, codigo);
     }
 
-    public void eliminarPersonal(String codigo) {
-        accesoPersonalBD.eliminarPersonal(codigo);
+    public void eliminarPersonal(String codigo,int id) {
+        accesoPersonalBD.eliminarPersonal(codigo,id);
+    }
+    
+    public int getId(String codigo){
+        return accesoPersonalBD.getId(codigo);
     }
 }
