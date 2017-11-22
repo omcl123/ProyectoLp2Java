@@ -13,10 +13,13 @@ import java.util.logging.Logger;
  * @author alulab14
  */
 public class frmPrincipal extends javax.swing.JFrame {
+
     private String UserName;
+    public static String password;
     public static int idUsuario;
     public static int cargo;
     public static String codUsuario;
+
     /**
      * @return the UserName
      */
@@ -40,14 +43,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setTitle("Gestor de documentos PUCP");
         System.out.println(cargo);
-        if(cargo==2){
+        if (cargo == 2) {
             jmUsuarios.setVisible(false);
             barrita2.setVisible(false);
         }
     }
-    
-    public void setNombreUsuario(){
-        nameLabel.setText(UserName);        
+
+    public void setNombreUsuario() {
+        nameLabel.setText(UserName);
     }
 
     /**
@@ -71,6 +74,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         jmGrupos = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jmUsuarios = new javax.swing.JMenu();
+        btnUDerivados = new javax.swing.JMenuItem();
+        btnRegUBase = new javax.swing.JMenuItem();
         barrita2 = new javax.swing.JMenu();
         MenuCarpetas = new javax.swing.JMenu();
 
@@ -167,11 +172,23 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jmUsuarios.setText("Manejo Usuarios");
-        jmUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jmUsuariosMouseClicked(evt);
+
+        btnUDerivados.setText("Usuarios derivados");
+        btnUDerivados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUDerivadosActionPerformed(evt);
             }
         });
+        jmUsuarios.add(btnUDerivados);
+
+        btnRegUBase.setText("Registro usuario base");
+        btnRegUBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegUBaseActionPerformed(evt);
+            }
+        });
+        jmUsuarios.add(btnRegUBase);
+
         jMenuBar1.add(jmUsuarios);
 
         barrita2.setForeground(new java.awt.Color(153, 153, 153));
@@ -225,13 +242,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         f.setVisible(true);
     }//GEN-LAST:event_jmGruposMouseClicked
 
-    private void jmUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmUsuariosMouseClicked
-        PrincDesktopPane.removeAll();
-        ManejoUsuarios f = new ManejoUsuarios();
-        PrincDesktopPane.add(f);
-        f.setVisible(true);
-    }//GEN-LAST:event_jmUsuariosMouseClicked
-
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         PrincDesktopPane.removeAll();
@@ -249,12 +259,29 @@ public class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         PrincDesktopPane.removeAll();
         ManejoCarpetas f;
-        try{
-            f= new ManejoCarpetas();
+        try {
+            f = new ManejoCarpetas();
             PrincDesktopPane.add(f);
             f.setVisible(true);
-        }catch (Exception ex){}
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_MenuCarpetasMouseClicked
+
+    private void btnUDerivadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUDerivadosActionPerformed
+        // TODO add your handling code here:
+        PrincDesktopPane.removeAll();
+        ManejoUsuarios f = new ManejoUsuarios();
+        PrincDesktopPane.add(f);
+        f.setVisible(true);
+    }//GEN-LAST:event_btnUDerivadosActionPerformed
+
+    private void btnRegUBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegUBaseActionPerformed
+        // TODO add your handling code here:
+        frmRegUsuarioBase f = new frmRegUsuarioBase();
+        PrincDesktopPane.removeAll();
+        PrincDesktopPane.add(f);
+        f.setVisible(true);
+    }//GEN-LAST:event_btnRegUBaseActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -295,6 +322,8 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuCarpetas;
     private javax.swing.JDesktopPane PrincDesktopPane;
     private javax.swing.JMenu barrita2;
+    private javax.swing.JMenuItem btnRegUBase;
+    private javax.swing.JMenuItem btnUDerivados;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

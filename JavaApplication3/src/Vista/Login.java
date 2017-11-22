@@ -20,7 +20,6 @@ public class Login extends javax.swing.JFrame {
 
     private int primLogin=0;
     private String nombre ;
-    private String password ;
     private Coneccion con;
     private int  userID=0;
     /**
@@ -343,6 +342,7 @@ public class Login extends javax.swing.JFrame {
                 frmPrincipal f = new frmPrincipal();
                 f.setUserName(nombre);
                 f.setNombreUsuario();
+                frmPrincipal.password=passString;
                 f.setVisible(true);
                 setVisible(false);
             }

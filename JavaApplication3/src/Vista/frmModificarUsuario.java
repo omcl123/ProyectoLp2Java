@@ -18,6 +18,20 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class frmModificarUsuario extends javax.swing.JInternalFrame {
 
     /**
+     * @return the fin
+     */
+    public int getFin() {
+        return fin;
+    }
+
+    /**
+     * @param fin the fin to set
+     */
+    public void setFin(int fin) {
+        this.fin = fin;
+    }
+
+    /**
      * @return the tipoTabla
      */
     public String getTipoTabla() {
@@ -46,6 +60,7 @@ public class frmModificarUsuario extends javax.swing.JInternalFrame {
     }
     private String codigo;
     private String tipoTabla;
+    private int fin=0;
 
     /**
      * Creates new form frmModificarUsuario
@@ -314,11 +329,6 @@ public class frmModificarUsuario extends javax.swing.JInternalFrame {
                     accesoUser.actualizarEmailAlt(nuevoEmailAlt, tipoTabla, codigo);
                     camposAct += "EmailAlt ";
                 }
-                if (!txtPassword.getText().equals("")) {
-                    String nuevaPsw = txtPassword.getText();
-                    accesoUser.actualizarPsw(nuevaPsw, tipoTabla, codigo);
-                    camposAct += "Password ";
-                }
                 if (!txtDireccion.getText().equals("")) {
                     String nuevaDir = txtDireccion.getText();
                     accesoUser.actualizarDireccion(nuevaDir, tipoTabla, codigo);
@@ -328,6 +338,7 @@ public class frmModificarUsuario extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Ingresar datos validos!");
             }
             JOptionPane.showMessageDialog(null, "Campos Actualizados: " + camposAct);
+            setFin(1);
             this.dispose();
         }
     }//GEN-LAST:event_btnActualizarMouseClicked

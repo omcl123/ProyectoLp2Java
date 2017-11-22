@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -75,6 +77,7 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         txtEmail2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         TxtTel = new javax.swing.JTextField();
+        btnCambiarContra = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -215,6 +218,13 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
+        btnCambiarContra.setText("Cambiar Contraseña");
+        btnCambiarContra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCambiarContraMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -225,7 +235,8 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
                     .addComponent(BtnEditUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFoto)
                     .addComponent(BtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCambiarContra, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -249,13 +260,15 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BtnGuardar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BtnCancelar))
+                                .addComponent(BtnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCambiarContra))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(35, 35, 35)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 79, Short.MAX_VALUE)))
+                        .addGap(0, 83, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -328,6 +341,13 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         BtnGuardar.setEnabled(false); 
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
+    private void btnCambiarContraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarContraMouseClicked
+        // TODO add your handling code here:
+        FrmCambiarPassword f = new FrmCambiarPassword((JFrame) SwingUtilities.getWindowAncestor(this),true);
+        f.setEmail(txtEmail.getText());
+        f.setVisible(true);
+    }//GEN-LAST:event_btnCambiarContraMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -373,6 +393,7 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JTextField TxtCodigo;
     private javax.swing.JTextField TxtTel;
+    private javax.swing.JButton btnCambiarContra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

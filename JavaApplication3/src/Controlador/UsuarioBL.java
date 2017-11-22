@@ -70,8 +70,8 @@ public class UsuarioBL {
         accesoUsuario.actualizarEmailAlt(nuevoEmailAlt, tipoTabla, codigo);
     }
 
-    public void actualizarPsw(String nuevaPsw, String tipoTabla, String codigo) {
-        accesoUsuario.actualizarPsw(nuevaPsw, tipoTabla, codigo);
+    public void actualizarPsw(String nuevaPsw, int id) {
+        accesoUsuario.actualizarPsw(nuevaPsw, id);
     }
 
     public void actualizarDireccion(String nuevaDir, String tipoTabla, String codigo) {
@@ -84,5 +84,9 @@ public class UsuarioBL {
     
     public void enviarEmail(String email){
         accesoUsuario.enviarEmail(email);
+    }
+    
+    public void enviarEmailNuevaPass(String email,String password){
+        accesoUsuario.enviarEmailNuevaPass(email, password);
     }
 }

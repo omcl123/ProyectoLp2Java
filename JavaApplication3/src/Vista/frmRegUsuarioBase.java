@@ -20,7 +20,7 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
      */
     public frmRegUsuarioBase() {
         initComponents();
-        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setClosable(true);
         //setSize(730, 840);
     }
 
@@ -34,7 +34,7 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         pnlDatosPersonales = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -61,10 +61,10 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("Guardar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                btnGuardarMouseClicked(evt);
             }
         });
 
@@ -160,9 +160,8 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
                         .addGroup(pnlInfoContactoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
                             .addComponent(txtEmailAlt)
-                            .addGroup(pnlInfoContactoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                            .addComponent(txtPassword)))
                     .addGroup(pnlInfoContactoLayout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(37, 37, 37)
@@ -205,7 +204,7 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnGuardar)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(pnlInfoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,7 +230,7 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(pnlInfoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(btnGuardar)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -249,16 +248,17 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+        UsuarioBL accesoUser = new UsuarioBL();
+        String email = new String();
         try {
-            UsuarioBL accesoUser = new UsuarioBL();
             int id = accesoUser.generarID();
             String nombre = (txtNombre.getText());
             String aPaterno = (txtAPaterno.getText());
             String aMaterno = (txtAMaterno.getText());
             int dni = Integer.parseInt(txtDNI.getText());
-            String email = (txtEmail.getText());
+            email = (txtEmail.getText());
             String emailAlt = (txtEmailAlt.getText());
             String password = (txtPassword.getText());
             int habilitado = 1;
@@ -269,8 +269,9 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "ingresar Datos validos");
             return;
         }
+        accesoUser.enviarEmail(email);
         JOptionPane.showMessageDialog(null, "Registro Exitoso");
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_btnGuardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -308,7 +309,7 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

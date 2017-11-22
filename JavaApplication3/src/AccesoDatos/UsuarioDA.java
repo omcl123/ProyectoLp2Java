@@ -252,12 +252,11 @@ public class UsuarioDA {
         }
     }
 
-    public void actualizarPsw(String nuevaPsw, String tipoTabla, String codigo) {
+    public void actualizarPsw(String nuevaPsw, int id) {
         try {
             Statement sentencia = con.createStatement();
-            String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
-                    + tipoTabla + ".Usuario_IdUsuario)" + "SET Password='" + nuevaPsw + "' WHERE Codigo='"
-                    + codigo + "'";
+            String instruccion = "UPDATE Usuario SET Password='" + nuevaPsw + "' WHERE IdUsuario='"
+                    + id + "'";
             sentencia.executeUpdate(instruccion);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -295,9 +294,49 @@ public class UsuarioDA {
             String user = "sistemalp2@gmail.com";
             String pass = "chistema2017";
             String to = email;
-            String from = "ruben.e.c.j.0796@gmail.com";
+            String from = "sistemalp2@gmail.com";
             String subject = "test";
             String messageText = "email test xd";
+            boolean sessionDebug = false;
+
+            Properties props = System.getProperties();
+
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.required", "true");
+
+            java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+            Session mailSession = Session.getDefaultInstance(props, null);
+            mailSession.setDebug(sessionDebug);
+            Message msg = new MimeMessage(mailSession);
+            msg.setFrom(new InternetAddress(from));
+            InternetAddress[] address = {new InternetAddress(to)};
+            msg.setRecipients(Message.RecipientType.TO, address);
+            msg.setSubject(subject);
+            msg.setSentDate(new Date());
+            msg.setText(messageText);
+
+            Transport transport = mailSession.getTransport("smtp");
+            transport.connect(host, user, pass);
+            transport.sendMessage(msg, msg.getAllRecipients());
+            transport.close();
+            System.out.println("message send successfully");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void enviarEmailNuevaPass(String email,String password) {
+        try {
+            String host = "smtp.gmail.com";
+            String user = "sistemalp2@gmail.com";
+            String pass = "chistema2017";
+            String to = email;
+            String from = "sistemalp2@gmail.com";
+            String subject = "Nueva Contraseña";
+            String messageText = "Su nueva contraseña es: "+password;
             boolean sessionDebug = false;
 
             Properties props = System.getProperties();

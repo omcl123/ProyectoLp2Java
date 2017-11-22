@@ -20,7 +20,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
 
     private String userTypeSel;
     private frmBusqueda fBusq;
-    private int modificando =0 ;
+    private int modificando = 0;
 
     /**
      * Creates new form ManejoUsuarios
@@ -31,9 +31,9 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         estadoIni();
 //        btnModificar.setVisible(false);
     }
-    
-    public void estadoModificar(){
-        estadoBuscar();        
+
+    public void estadoModificar() {
+        estadoBuscar();
         btnEliminar.setEnabled(false);
     }
 
@@ -45,7 +45,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(false);
         cbUsers.setEnabled(true);
-        btnNUB.setEnabled(true);
     }
 
     public void estadoNuevo() {
@@ -56,7 +55,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(true);
         cbUsers.setEnabled(false);
-        btnNUB.setEnabled(false);
     }
 
     public void estadoBuscar() {
@@ -67,7 +65,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
         btnCancelar.setEnabled(true);
         cbUsers.setEnabled(false);
-        btnNUB.setEnabled(false);
     }
 
     public void estadoUBase() {
@@ -78,7 +75,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(true);
         cbUsers.setEnabled(false);
-        btnNUB.setEnabled(true);
     }
 
     /**
@@ -100,7 +96,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnNUB = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -164,13 +159,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
-        btnNUB.setText("Nuevo Usuario Base");
-        btnNUB.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnNUBMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -182,14 +170,13 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(14, Short.MAX_VALUE))
                     .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNUB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,9 +197,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(btnEliminar)
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
-                .addComponent(btnNUB)
-                .addGap(24, 24, 24))
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -260,8 +245,8 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         repaint();
         jdpContenedor.removeAll();
         estadoIni();
-        if(modificando==1){
-            modificando=0;
+        if (modificando == 1) {
+            modificando = 0;
             btnBuscarActionPerformed(evt);
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -354,18 +339,9 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnNUBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNUBMouseClicked
-        // TODO add your handling code here:
-        estadoUBase();
-        frmRegUsuarioBase f = new frmRegUsuarioBase();
-        jdpContenedor.removeAll();
-        jdpContenedor.add(f);
-        f.setVisible(true);
-    }//GEN-LAST:event_btnNUBMouseClicked
-
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         // TODO add your handling code here:
-        modificando=1;
+        modificando = 1;
         estadoModificar();
         String userType = fBusq.getUserType();
         String codigo = fBusq.getCodigoSel();
@@ -391,6 +367,27 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 jdpContenedor.removeAll();
                 jdpContenedor.add(f);
             }
+            Thread one = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        System.out.println("si estoy iniciando pero soy imbecil XD");
+                        int a;
+                        while (true) {
+                            a = f.getFin();
+//                            System.out.print(a);
+                            if (a == 1) {
+                                estadoIni();
+                                System.out.println("acabo");
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            };
+            one.start();
             f.setVisible(true);
         }
     }//GEN-LAST:event_btnModificarMouseClicked
@@ -436,7 +433,6 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNUB;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox cbUsers;
     private javax.swing.JLabel jLabel1;
