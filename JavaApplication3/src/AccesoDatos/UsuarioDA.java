@@ -288,15 +288,45 @@ public class UsuarioDA {
         return rs;
     }
 
-    public void enviarEmail(String email) {
+    public void obtenerEmail(String Password) {
+//        try {
+//            Statement sentencia = con.createStatement();
+//
+//            String instruccion = "SELECT u.Email FROM Usuario u WHERE IdUsuario ="+;
+//
+//            ResultSet rs = sentencia.executeQuery(instruccion);
+//
+//            while (rs.next()) {
+//                fila[0] = rs.getString("IdUsuario");
+//                fila[1] = rs.getString("Nombre");
+//                fila[2] = rs.getString("APaterno");
+//                fila[3] = rs.getString("AMaterno");
+//                fila[4] = rs.getString("Email");
+//                int habilitado = rs.getInt("Habilitado");
+//                int cargo = rs.getInt("IdCargo");
+//                if (habilitado == 1 && cargo == -1) {
+//                    modelo.addRow(fila);
+//                }
+//            }
+//            con.closeConexion();
+//        } catch (Exception ex) {
+//            System.out.println(ex.getMessage());
+//        }
+    }
+
+    public void obtenerPassword() {
+
+    }
+
+    public void enviarEmailNuevoReg(String email, String codigo, String password) {
         try {
             String host = "smtp.gmail.com";
             String user = "sistemalp2@gmail.com";
             String pass = "chistema2017";
             String to = email;
             String from = "sistemalp2@gmail.com";
-            String subject = "test";
-            String messageText = "email test xd";
+            String subject = "Datos nuevo usuario";
+            String messageText = "Su usario es: " + codigo + " y su contraseña es: " + password + "\nPor favor cambiar su contraseña lo más pronto posible.";
             boolean sessionDebug = false;
 
             Properties props = System.getProperties();
@@ -327,8 +357,8 @@ public class UsuarioDA {
             System.out.println(ex.getMessage());
         }
     }
-    
-    public void enviarEmailNuevaPass(String email,String password) {
+
+    public void enviarEmailNuevaPass(String email, String password) {
         try {
             String host = "smtp.gmail.com";
             String user = "sistemalp2@gmail.com";
@@ -336,7 +366,7 @@ public class UsuarioDA {
             String to = email;
             String from = "sistemalp2@gmail.com";
             String subject = "Nueva Contraseña";
-            String messageText = "Su nueva contraseña es: "+password;
+            String messageText = "Su nueva contraseña es: " + password;
             boolean sessionDebug = false;
 
             Properties props = System.getProperties();

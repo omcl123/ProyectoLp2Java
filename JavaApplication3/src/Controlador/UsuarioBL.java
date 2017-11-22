@@ -82,8 +82,8 @@ public class UsuarioBL {
             return accesoUsuario.logeoUser(con, codUser);
     }
     
-    public void enviarEmail(String email){
-        accesoUsuario.enviarEmail(email);
+    public void enviarEmailNuevoReg(String email,String codigo, String password){
+        accesoUsuario.enviarEmailNuevoReg(email, codigo, password);
     }
     
     public void enviarEmailNuevaPass(String email,String password){

@@ -269,7 +269,6 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "ingresar Datos validos");
             return;
         }
-        accesoUser.enviarEmail(email);
         JOptionPane.showMessageDialog(null, "Registro Exitoso");
     }//GEN-LAST:event_btnGuardarMouseClicked
 
