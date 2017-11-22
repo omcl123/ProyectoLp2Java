@@ -12,7 +12,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -24,7 +29,7 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
     private int idUsuSel = -1;
     private GrupoBL accesoGrupo = new GrupoBL();
     private UsuarioBL accesoUser = new UsuarioBL();
-
+    private TableRowSorter<TableModel> rowSorter;
     public enum estado {
         Inicial, SelecGrupo, Guardar, Modificar, NuevoGrupo
     }
@@ -35,6 +40,38 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         DefaultTableModel modelo;
         modelo = accesoGrupo.listaTotalGrupo();
         tableGrupos.setModel(modelo);
+        TableRowSorter<TableModel> rowSorter= new TableRowSorter<>(tableGrupos.getModel());
+        tableGrupos.setRowSorter(rowSorter);
+        TxtNomGrupo.getDocument().addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = TxtNomGrupo.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = TxtNomGrupo.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
     }
 
     /**
