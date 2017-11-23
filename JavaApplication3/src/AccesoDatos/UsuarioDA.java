@@ -21,6 +21,7 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,10 +32,11 @@ public class UsuarioDA {
     private Coneccion con;
 
     public UsuarioDA() {
-        con = new Coneccion();
+//        con = new Coneccion();
     }
 
     public DefaultTableModel modeloUsuario(JTable tablaUsuarios) {
+        con = new Coneccion();
         DefaultTableModel modelo = (DefaultTableModel) tablaUsuarios.getModel();
         Object[] fila = new Object[5];
         try {
@@ -172,6 +174,7 @@ public class UsuarioDA {
     }
 
     public void actualizarNombre(String nuevoNombre, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -181,9 +184,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarAPaterno(String nuevoAP, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -193,9 +198,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarAMaterno(String nuevoAM, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -205,9 +212,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarDNI(int nuevoDNI, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -217,9 +226,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarTelefono(int nuevotelf, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -229,9 +240,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarEmail(String nuevoEmail, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -241,9 +254,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarEmailAlt(String nuevoEmailAlt, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -253,9 +268,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarPsw(String nuevaPsw, int id) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario SET Password='" + nuevaPsw + "' WHERE IdUsuario='"
@@ -264,9 +281,11 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public void actualizarDireccion(String nuevaDir, String tipoTabla, String codigo) {
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
             String instruccion = "UPDATE Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
@@ -276,6 +295,7 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        con.closeConexion();
     }
 
     public ResultSet logeoUser(Coneccion con, String codUser) throws Exception {
@@ -293,6 +313,7 @@ public class UsuarioDA {
 
     public String obtenerEmail(int idUser) {
         String email = new String();
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
 
@@ -313,6 +334,7 @@ public class UsuarioDA {
 
     public String obtenerPassword(int idUser) {
         String password = new String();
+        con = new Coneccion();
         try {
             Statement sentencia = con.createStatement();
 
@@ -416,12 +438,212 @@ public class UsuarioDA {
         try {
             FileReader fr = new FileReader(archivo);
             BufferedReader br = new BufferedReader(fr);
-            while(true){
+            while (true) {
                 String linea = br.readLine();
-                System.out.println(linea);
+                if (linea == null) {
+                    break;
+                }
+                String[] datos = linea.split("\\,");
+                int id = generarID();
+                int idCargo = -1;
+                String nombre = datos[0];
+                String aPaterno = datos[1];
+                String aMaterno = datos[2];
+                String email = datos[3];
+                int habilitado = 1;
+                String emailAlt = datos[4];
+                String password = datos[5];
+                int dni = Integer.parseInt(datos[6]);
+                String direccion = datos[7];
+                int telefono = Integer.parseInt(datos[8]);
+                registrarUser(id, idCargo, nombre, aPaterno, aMaterno, email, habilitado,
+                        emailAlt, password, dni, direccion, telefono);
             }
+            JOptionPane.showMessageDialog(null, "Carga de datos exitosa");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en la carga de datos: " + e.getMessage());
+        }
+    }
+
+    public String obtenerNombre(String tipoTabla, String codigo) {
+        String nombre = new String();
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT Nombre FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            nombre = rs.getString("Nombre");
+
+            con.closeConexion();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return nombre;
+    }
+
+    public String obtenerAPaterno(String tipoTabla, String codigo) {
+        String aPaterno = new String();
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT APaterno FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            aPaterno = rs.getString("APaterno");
+
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return aPaterno;
+    }
+
+    public String obtenerAMaterno(String tipoTabla, String codigo) {
+        String aMaterno = new String();
+        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT AMaterno FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            aMaterno = rs.getString("AMaterno");
+
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return aMaterno;
+    }
+
+    public int obtenerDNI(String tipoTabla, String codigo) {
+        int dni = 0;
+        con = new Coneccion();
+//        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT DNI FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            dni = rs.getInt("DNI");
+
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return dni;
+    }
+    
+    public String obtenerEmail(String tipoTabla, String codigo) {
+        String email =  new String();
+        con = new Coneccion();
+//        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT Email FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            email = rs.getString("Email");
+
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return email;
+    }
+    
+    public String obtenerEmailAlt(String tipoTabla, String codigo) {
+        String emailAlt =  new String();
+        con = new Coneccion();
+//        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT EmailAlternativo FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            emailAlt = rs.getString("EmailAlternativo");
+
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return emailAlt;
+    }
+    
+    public String obtenerDireccion(String tipoTabla, String codigo) {
+        String direccion =  new String();
+        con = new Coneccion();
+//        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT Direccion FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            direccion = rs.getString("Direccion");
+
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return direccion;
+    }
+    
+    public int obtenerTelefono(String tipoTabla, String codigo) {
+        int telefono = 0;
+        con = new Coneccion();
+//        con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT Telefono FROM Usuario INNER JOIN " + tipoTabla + " ON (Usuario.IdUsuario="
+                    + tipoTabla + ".Usuario_IdUsuario) WHERE Codigo ='" + codigo + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            telefono = rs.getInt("Telefono");
+
+            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return telefono;
     }
 }

@@ -18,31 +18,34 @@ import javax.swing.table.DefaultTableModel;
  * @author Ruben
  */
 public class UsuarioBL {
+
     private UsuarioDA accesoUsuario = new UsuarioDA();
-    
+
     public DefaultTableModel modeloUsuario(JTable tablaUsuarios) {
         return accesoUsuario.modeloUsuario(tablaUsuarios);
     }
-    
-    public Usuario buscarUsuarioXcodigo(int codigo){
+
+    public Usuario buscarUsuarioXcodigo(int codigo) {
         return accesoUsuario.buscarUsuarioXcodigo(codigo);
     }
-    
-    public void registrarUser(int id,int cargo,String nombre,String aPaterno,String aMaterno,String email,int habilitado,
-            String emailAlt,String password,int dni,String direccion,int telefono) {
-        accesoUsuario.registrarUser(id, cargo,nombre, aPaterno, aMaterno, email, habilitado, emailAlt, password, dni, direccion, telefono);
+
+    public void registrarUser(int id, int cargo, String nombre, String aPaterno, String aMaterno, String email, int habilitado,
+            String emailAlt, String password, int dni, String direccion, int telefono) {
+        accesoUsuario.registrarUser(id, cargo, nombre, aPaterno, aMaterno, email, habilitado, emailAlt, password, dni, direccion, telefono);
     }
-    
-    public int generarID(){
+
+    public int generarID() {
         return accesoUsuario.generarID();
     }
-    public void registrarCargo(int idUsuario, int idCargo){
+
+    public void registrarCargo(int idUsuario, int idCargo) {
         accesoUsuario.registrarCargo(idUsuario, idCargo);
     }
-    public int verificarUsuarioEnUso(int idUsuario){
+
+    public int verificarUsuarioEnUso(int idUsuario) {
         return accesoUsuario.verificarUsuarioEnUso(idUsuario);
     }
-    
+
     public void actualizarNombre(String nuevoNombre, String tipoTabla, String codigo) {
         accesoUsuario.actualizarNombre(nuevoNombre, tipoTabla, codigo);
     }
@@ -78,28 +81,60 @@ public class UsuarioBL {
     public void actualizarDireccion(String nuevaDir, String tipoTabla, String codigo) {
         accesoUsuario.actualizarDireccion(nuevaDir, tipoTabla, codigo);
     }
-    
-    public ResultSet logeoUser(Coneccion con,String codUser) throws Exception{
-            return accesoUsuario.logeoUser(con, codUser);
+
+    public ResultSet logeoUser(Coneccion con, String codUser) throws Exception {
+        return accesoUsuario.logeoUser(con, codUser);
     }
-    
-    public void enviarEmailNuevoReg(String email,String codigo, String password){
+
+    public void enviarEmailNuevoReg(String email, String codigo, String password) {
         accesoUsuario.enviarEmailNuevoReg(email, codigo, password);
     }
-    
-    public void enviarEmailNuevaPass(String email,String password){
+
+    public void enviarEmailNuevaPass(String email, String password) {
         accesoUsuario.enviarEmailNuevaPass(email, password);
     }
-    
+
     public String obtenerPassword(int idUser) {
         return accesoUsuario.obtenerPassword(idUser);
     }
-    
-    public String obtenerEmail(int idUser){
+
+    public String obtenerEmail(int idUser) {
         return accesoUsuario.obtenerEmail(idUser);
     }
-    
-    public void cargarArchivos(File archivo){
+
+    public void cargarArchivos(File archivo) {
         accesoUsuario.cargarArchivos(archivo);
+    }
+
+    public String obtenerNombre(String tipoTabla, String codigo) {
+        return accesoUsuario.obtenerNombre(tipoTabla, codigo);
+    }
+
+    public String obtenerAPaterno(String tipoTabla, String codigo) {
+        return accesoUsuario.obtenerAPaterno(tipoTabla, codigo);
+    }
+
+    public String obtenerAMaterno(String tipoTabla, String codigo) {
+        return accesoUsuario.obtenerAMaterno(tipoTabla, codigo);
+    }
+
+    public int obtenerDNI(String tipoTabla, String codigo) {
+        return accesoUsuario.obtenerDNI(tipoTabla, codigo);
+    }
+    
+    public String obtenerEmail(String tipoTabla, String codigo) {
+        return accesoUsuario.obtenerEmail(tipoTabla, codigo);
+    }
+    
+    public String obtenerEmailAlt(String tipoTabla, String codigo) {
+        return accesoUsuario.obtenerEmailAlt(tipoTabla, codigo);
+    }
+    
+    public String obtenerDireccion(String tipoTabla, String codigo) {
+        return accesoUsuario.obtenerDireccion(tipoTabla, codigo);
+    }
+    
+    public int obtenerTelefono(String tipoTabla, String codigo){
+        return accesoUsuario.obtenerTelefono(tipoTabla, codigo);
     }
 }

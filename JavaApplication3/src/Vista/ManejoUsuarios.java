@@ -35,6 +35,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
     public void estadoModificar() {
         estadoBuscar();
         btnEliminar.setEnabled(false);
+        btnModificar.setEnabled(false);
     }
 
     public void estadoIni() {
@@ -132,9 +133,9 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         });
 
         btnModificar.setText("Modificar");
-        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModificarMouseClicked(evt);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
             }
         });
 
@@ -285,7 +286,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 if (userType == "Administrador") {
                     tAdminBL accesoAdmin = new tAdminBL();
                     int id = accesoAdmin.getId(codigo);
-                    accesoAdmin.eliminarAdmin(codigo,id);
+                    accesoAdmin.eliminarAdmin(codigo, id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Administrador");
                     jdpContenedor.add(fBusq);
@@ -293,7 +294,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 } else if (userType == "Alumno") {
                     tAlumnoBL accesoAlumno = new tAlumnoBL();
                     int id = accesoAlumno.getId(codigo);
-                    accesoAlumno.eliminarAlumno(codigo,id);
+                    accesoAlumno.eliminarAlumno(codigo, id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Alumno");
                     jdpContenedor.add(fBusq);
@@ -301,7 +302,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 } else if (userType == "Docente") {
                     tDocenteBL accesoDocente = new tDocenteBL();
                     int id = accesoDocente.getId(codigo);
-                    accesoDocente.eliminarDocente(codigo,id);
+                    accesoDocente.eliminarDocente(codigo, id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Docente");
                     jdpContenedor.add(fBusq);
@@ -309,7 +310,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
                 } else if (userType == "Personal") {
                     tPersonalBL accesoPersonal = new tPersonalBL();
                     int id = accesoPersonal.getId(codigo);
-                    accesoPersonal.eliminarPersonal(codigo,id);
+                    accesoPersonal.eliminarPersonal(codigo, id);
                     jdpContenedor.removeAll();
                     fBusq = new frmBusqueda("Personal");
                     jdpContenedor.add(fBusq);
@@ -343,7 +344,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         modificando = 1;
         estadoModificar();
@@ -356,18 +357,22 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
         } else {
             if (userType == "Administrador") {
                 f.setTipoTabla("Admin_Sistema");
+                f.pintarDatos();
                 jdpContenedor.removeAll();
                 jdpContenedor.add(f);
             } else if (userType == "Alumno") {
                 f.setTipoTabla("Alumno");
+                f.pintarDatos();
                 jdpContenedor.removeAll();
                 jdpContenedor.add(f);
             } else if (userType == "Docente") {
                 f.setTipoTabla("Docente");
+                f.pintarDatos();
                 jdpContenedor.removeAll();
                 jdpContenedor.add(f);
             } else if (userType == "Personal") {
                 f.setTipoTabla("Personal");
+                f.pintarDatos();
                 jdpContenedor.removeAll();
                 jdpContenedor.add(f);
             }
@@ -393,7 +398,7 @@ public class ManejoUsuarios extends javax.swing.JInternalFrame {
             one.start();
             f.setVisible(true);
         }
-    }//GEN-LAST:event_btnModificarMouseClicked
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
