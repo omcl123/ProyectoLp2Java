@@ -291,12 +291,22 @@ public class frmRegUsuarioBase extends javax.swing.JInternalFrame {
 
     private void btnSubirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubirArchivoMouseClicked
         // TODO add your handling code here:
-        JFileChooser file = new JFileChooser();
-        file.showOpenDialog(this);
-        /**
-         * abrimos el archivo seleccionado
-         */
-        File abre = file.getSelectedFile();
+        try {
+            JFileChooser file = new JFileChooser();
+            file.showOpenDialog(this);
+            /**
+             * abrimos el archivo seleccionado
+             */
+            File archivo = file.getSelectedFile();
+            String nombre = archivo.getName();
+            String[] nombreSep = nombre.split("\\.");
+            if (!(nombreSep[1].equals("txt") || (nombreSep[1].equals("csv")))) {
+                JOptionPane.showMessageDialog(null, "Solo se pueden ingresar archivos con extensión txt o csv");
+            } else {
+                accesoUser.cargarArchivos(archivo);
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnSubirArchivoMouseClicked
 
     /**
