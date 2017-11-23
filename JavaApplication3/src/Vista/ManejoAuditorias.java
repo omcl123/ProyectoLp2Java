@@ -30,7 +30,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
      */
     public ManejoAuditorias() {
         initComponents();
-        //setSize(990,700);
+        setSize(975,700);
         setClosable(true);
         CursoBL cBL=new CursoBL();
         ArrayList<String>listaCurso=cBL.lecturaCurso();
@@ -63,6 +63,7 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         CBoxTipoReporte = new javax.swing.JComboBox<>();
         CBoxCursos = new javax.swing.JComboBox<>();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -159,7 +160,9 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();

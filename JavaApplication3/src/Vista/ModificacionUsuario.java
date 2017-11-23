@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vista;
+
+import Controlador.UsuarioBL;
 import Modelo.Coneccion;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,31 +22,32 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class ModificacionUsuario extends javax.swing.JInternalFrame {
 
     private Coneccion con;
+
     public ModificacionUsuario() throws Exception {
-        con = new Coneccion();
-        Statement s2= con.createStatement();
-        String i2 = "SELECT * from Usuario where idUsuario="+frmPrincipal.idUsuario;
-        ResultSet rs2=s2.executeQuery(i2);
-        rs2.next();
-        initComponents();
-        
-        //setSize(990, 700);
-        TxtCodigo.setEnabled(false);
-        TxtCodigo.setText(frmPrincipal.codUsuario);
-        TxtTel.setEnabled(false);
-        TxtTel.setText(rs2.getString("Telefono"));
-        txtDir.setEnabled(false);
-        txtDir.setText(rs2.getString("Direccion"));
-        txtEmail.setEnabled(false);
-        txtEmail.setText(rs2.getString("Email"));
-        txtEmail2.setEnabled(false);
-        txtEmail2.setText(rs2.getString("EmailAlternativo"));
-        txtNombre.setEnabled(false);
-        txtNombre.setText(rs2.getString("Nombre")+" "+rs2.getString("APaterno")+" "+rs2.getString("AMaterno"));
-        BtnCancelar.setEnabled(false);
-        BtnEditUsuario.setEnabled(true);
-        BtnGuardar.setEnabled(false);
-        con.closeConexion();
+        try {
+            UsuarioBL accesoUser = new UsuarioBL();
+            ResultSet rs2 = accesoUser.rsIdUsuario(frmPrincipal.idUsuario);
+            rs2.next();
+            initComponents();
+            //setSize(990, 700);
+            TxtCodigo.setEnabled(false);
+            TxtCodigo.setText(frmPrincipal.codUsuario);
+            TxtTel.setEnabled(false);
+            TxtTel.setText(rs2.getString("Telefono"));
+            txtDir.setEnabled(false);
+            txtDir.setText(rs2.getString("Direccion"));
+            txtEmail.setEnabled(false);
+            txtEmail.setText(rs2.getString("Email"));
+            txtEmail2.setEnabled(false);
+            txtEmail2.setText(rs2.getString("EmailAlternativo"));
+            txtNombre.setEnabled(false);
+            txtNombre.setText(rs2.getString("Nombre") + " " + rs2.getString("APaterno") + " " + rs2.getString("AMaterno"));
+            BtnCancelar.setEnabled(false);
+            BtnEditUsuario.setEnabled(true);
+            BtnGuardar.setEnabled(false);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -302,21 +304,17 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         BtnCancelar.setEnabled(true);
         BtnGuardar.setEnabled(true);
         BtnEditUsuario.setEnabled(false);
-        
+
     }//GEN-LAST:event_BtnEditUsuarioActionPerformed
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
         // TODO add your handling code here:
-        con = new Coneccion();
         try {
-            Statement s2= con.createStatement();
-            String i2 = "UPDATE Usuario SET EmailAlternativo='"+txtEmail2.getText()+"',Direccion='"+txtDir.getText()+"',Telefono="+TxtTel.getText()
-                    + " WHERE IdUsuario="+frmPrincipal.idUsuario;
-            s2.executeUpdate(i2);
-            con.closeConexion();
+            UsuarioBL accesoUser = new UsuarioBL();
+            accesoUser.actualizarUsuarioActual(txtEmail2.getText(), txtDir.getText(), TxtTel.getText(), frmPrincipal.idUsuario);
         } catch (Exception ex) {
             Logger.getLogger(ModificacionUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         TxtCodigo.setEnabled(false);
         TxtTel.setEnabled(false);
         txtDir.setEnabled(false);
@@ -330,7 +328,7 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
         // TODO add your handling code here:
-       TxtCodigo.setEnabled(false);
+        TxtCodigo.setEnabled(false);
         TxtTel.setEnabled(false);
         txtDir.setEnabled(false);
         txtEmail.setEnabled(false);
@@ -338,12 +336,12 @@ public class ModificacionUsuario extends javax.swing.JInternalFrame {
         txtNombre.setEnabled(false);
         BtnCancelar.setEnabled(false);
         BtnEditUsuario.setEnabled(true);
-        BtnGuardar.setEnabled(false); 
+        BtnGuardar.setEnabled(false);
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
     private void btnCambiarContraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarContraMouseClicked
         // TODO add your handling code here:
-        FrmCambiarPassword f = new FrmCambiarPassword((JFrame) SwingUtilities.getWindowAncestor(this),true);
+        FrmCambiarPassword f = new FrmCambiarPassword((JFrame) SwingUtilities.getWindowAncestor(this), true);
         f.setEmail(txtEmail.getText());
         f.setVisible(true);
     }//GEN-LAST:event_btnCambiarContraMouseClicked

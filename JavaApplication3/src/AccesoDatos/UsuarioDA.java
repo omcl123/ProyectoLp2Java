@@ -299,7 +299,7 @@ public class UsuarioDA {
     }
 
     public ResultSet logeoUser(Coneccion con, String codUser) throws Exception {
-
+        con = new Coneccion();
         Statement sentencia = con.createStatement();
         String instruccion = "Select us.id as id, us.nombre as nombre ,us.apellidoP as aP,apellidoM as aM,cargo,us.password as Password from "
                 + " ((Select u.IdUsuario as id,u.nombre as nombre,u.APaterno as apellidoP,u.AMaterno as apellidoM, u.IdCargo as cargo,u.Password as password "
@@ -703,5 +703,38 @@ public class UsuarioDA {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void logueoExito(int userID) throws Exception {
+        con = new Coneccion();
+        Statement s3 = con.createStatement();
+        String i2 = "select Max(idRegistroLogin) as next from RegistroLogin";
+        ResultSet rs2 = s3.executeQuery(i2);
+        rs2.next();
+        int nextLog = rs2.getInt("next") + 1;
+        System.out.println(nextLog);
+        con.closeConexion();
+        con = new Coneccion();
+        Statement s4 = con.createStatement();
+        String i4 = "INSERT INTO RegistroLogin VALUES (" + nextLog + "," + userID + ",sysdate())";
+        s4.executeUpdate(i4);
+        con.closeConexion();
+    }
+
+    public ResultSet rsIdUsuario(int idUsuario) throws Exception {
+        con = new Coneccion();
+        Statement s2 = con.createStatement();
+        String i2 = "SELECT * from Usuario where idUsuario=" + idUsuario;
+        ResultSet rs2 = s2.executeQuery(i2);
+        return rs2;
+    }
+
+    public void actualizarUsuarioActual(String email2, String direccion, String telefono, int idUsuario) throws Exception {
+        con = new Coneccion();
+        Statement s2 = con.createStatement();
+        String i2 = "UPDATE Usuario SET EmailAlternativo='" + email2 + "',Direccion='" + direccion + "',Telefono=" + telefono
+                + " WHERE IdUsuario=" + idUsuario;
+        s2.executeUpdate(i2);
+        con.closeConexion();
     }
 }

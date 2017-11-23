@@ -121,24 +121,36 @@ public class UsuarioBL {
     public int obtenerDNI(String tipoTabla, String codigo) {
         return accesoUsuario.obtenerDNI(tipoTabla, codigo);
     }
-    
+
     public String obtenerEmail(String tipoTabla, String codigo) {
         return accesoUsuario.obtenerEmail(tipoTabla, codigo);
     }
-    
+
     public String obtenerEmailAlt(String tipoTabla, String codigo) {
         return accesoUsuario.obtenerEmailAlt(tipoTabla, codigo);
     }
-    
+
     public String obtenerDireccion(String tipoTabla, String codigo) {
         return accesoUsuario.obtenerDireccion(tipoTabla, codigo);
     }
-    
-    public int obtenerTelefono(String tipoTabla, String codigo){
+
+    public int obtenerTelefono(String tipoTabla, String codigo) {
         return accesoUsuario.obtenerTelefono(tipoTabla, codigo);
     }
-    
-    public void enviarPassRecuperacion(String email){
+
+    public void enviarPassRecuperacion(String email) {
         accesoUsuario.enviarPassRecuperacion(email);
+    }
+
+    public void logueoExito(int userID) throws Exception {
+        accesoUsuario.logueoExito(userID);
+    }
+
+    public ResultSet rsIdUsuario(int idUsuario) throws Exception {
+        return accesoUsuario.rsIdUsuario(idUsuario);
+    }
+    
+    public void actualizarUsuarioActual(String email2, String direccion, String telefono, int idUsuario) throws Exception{
+        accesoUsuario.actualizarUsuarioActual(email2, direccion, telefono, idUsuario);
     }
 }

@@ -6,7 +6,6 @@
 package Vista;
 
 import Controlador.UsuarioBL;
-import Modelo.Coneccion;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;

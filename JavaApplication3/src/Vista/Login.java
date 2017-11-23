@@ -12,26 +12,30 @@ import javax.swing.JOptionPane;
 import Modelo.Coneccion;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
 /**
  *
  * @author alulab14
  */
 public class Login extends javax.swing.JFrame {
 
-    private int primLogin=0;
-    private String nombre ;
+    private int primLogin = 0;
+    private String nombre;
     private Coneccion con;
-    private int  userID=0;
+    private int userID = 0;
+    UsuarioBL accesoUser;
+
     /**
      * Creates new form Login
      */
     public Login() {
-        
+
         initComponents();
         this.login.setVisible(true);
         this.loader.setVisible(false);
         this.setLocationRelativeTo(null);
         this.lblMensaje.setVisible(false);
+        accesoUser = new UsuarioBL();
     }
 
     /**
@@ -54,8 +58,8 @@ public class Login extends javax.swing.JFrame {
         pswUsuario = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
         lblMensaje = new javax.swing.JLabel();
         txtForgotPsw = new javax.swing.JLabel();
         loader = new javax.swing.JPanel();
@@ -124,19 +128,19 @@ public class Login extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario2.png"))); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Vijaya", 0, 16)); // NOI18N
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setFont(new java.awt.Font("Vijaya", 0, 16)); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Vijaya", 0, 16)); // NOI18N
-        jButton2.setText("Cerrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrar.setFont(new java.awt.Font("Vijaya", 0, 16)); // NOI18N
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCerrarActionPerformed(evt);
             }
         });
 
@@ -159,9 +163,9 @@ public class Login extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(loginLayout.createSequentialGroup()
                 .addGap(77, 77, 77)
-                .addComponent(jButton1)
+                .addComponent(btnAceptar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
                 .addContainerGap()
@@ -211,8 +215,8 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(txtForgotPsw)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnAceptar)
+                    .addComponent(btnCerrar))
                 .addGap(19, 19, 19))
         );
 
@@ -302,88 +306,80 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMouseClicked
-        if(this.txtUsuario.getText().equals("Usuario")){
+        if (this.txtUsuario.getText().equals("Usuario")) {
             this.txtUsuario.setText("");
         }
     }//GEN-LAST:event_txtUsuarioMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         this.login.setVisible(false);
         this.loader.setVisible(true);
-        boolean exitoso=false;
+        boolean exitoso = false;
         char[] pass = pswUsuario.getPassword();
         String passString = new String(pass);
-        con= new Coneccion();
-        int i=0;
-        try{
+        con = new Coneccion();
+        int i = 0;
+        try {
             frmPrincipal.codUsuario = txtUsuario.getText();
             System.out.println(txtUsuario.getText());
-            UsuarioBL accesoUser = new UsuarioBL();
-            String codUser=txtUsuario.getText();
+            String codUser = txtUsuario.getText();
             ResultSet rs = accesoUser.logeoUser(con, codUser);
             rs.next();
             //System.out.println(rs.getString("Password"));i++;
-            String ps=rs.getString("Password");i++;
-            nombre=rs.getString("nombre")+" "+rs.getString("aP")+" "+rs.getString("aM");
-            userID=rs.getInt("id");
-            frmPrincipal.cargo=rs.getInt("cargo");
-            frmPrincipal.idUsuario=userID;
+            String ps = rs.getString("Password");
+            i++;
+            nombre = rs.getString("nombre") + " " + rs.getString("aP") + " " + rs.getString("aM");
+            userID = rs.getInt("id");
+            frmPrincipal.cargo = rs.getInt("cargo");
+            frmPrincipal.idUsuario = userID;
             con.closeConexion();
-            if(ps.equals(passString)){
-                con= new Coneccion();
-                exitoso=true;
-                Statement s3 = con.createStatement();
-                String i2= "select Max(idRegistroLogin) as next from RegistroLogin";
-                ResultSet rs2 = s3.executeQuery(i2);
-                rs2.next();  
-                int nextLog=rs2.getInt("next")+1;
-                System.out.println(nextLog);
-                 con.closeConexion();
-                con= new Coneccion();
-                Statement s4 = con.createStatement();
-                String i4= "INSERT INTO RegistroLogin VALUES ("+nextLog+","+userID+",sysdate())";
-                s4.executeUpdate(i4);
+            if (ps.equals(passString)) {
+                exitoso = true;
+                accesoUser.logueoExito(userID);
+            } else {
+                System.out.println("Contraseña equivocada");
             }
-            else{System.out.println("Contraseña equivocada");}
-        }catch (Exception e){System.out.println(e);}
-        if (exitoso) {
-            new java.util.Timer().schedule(new TimerTask(){
-            @Override
-            public void run(){
-                try{
-                  
-                }catch (Exception e){}
-                frmPrincipal f = new frmPrincipal();
-                f.setUserName(nombre);
-                f.setNombreUsuario();
-                frmPrincipal.password=passString;
-                f.setVisible(true);
-                setVisible(false);
-            }
-            },1000*2);
-            con.closeConexion();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        else{
-            new java.util.Timer().schedule(new TimerTask(){
-            @Override
-            public void run(){
-                login.setVisible(true);
-                loader.setVisible(false);
-                lblMensaje.setVisible(true);
-            }
-            },1000*3);
+        if (exitoso) {
+            new java.util.Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+
+                    } catch (Exception e) {
+                    }
+                    frmPrincipal f = new frmPrincipal();
+                    f.setUserName(nombre);
+                    f.setNombreUsuario();
+                    frmPrincipal.password = passString;
+                    f.setVisible(true);
+                    setVisible(false);
+                }
+            }, 1000 * 2);
+            con.closeConexion();
+        } else {
+            new java.util.Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    login.setVisible(true);
+                    loader.setVisible(false);
+                    lblMensaje.setVisible(true);
+                }
+            }, 1000 * 3);
             txtUsuario.setText("Usuario");
             this.pswUsuario.setText("******");
             primLogin = 0;
             con.closeConexion();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void pswUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pswUsuarioMouseClicked
         // TODO add your handling code here:
-        if(primLogin==0){
+        if (primLogin == 0) {
             this.pswUsuario.setText("");
-            primLogin=1;
+            primLogin = 1;
         }
     }//GEN-LAST:event_pswUsuarioMouseClicked
 
@@ -391,10 +387,10 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void txtForgotPswMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtForgotPswMouseClicked
         // TODO add your handling code here:
@@ -438,8 +434,8 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCerrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

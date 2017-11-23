@@ -30,6 +30,7 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
     private GrupoBL accesoGrupo = new GrupoBL();
     private UsuarioBL accesoUser = new UsuarioBL();
     private TableRowSorter<TableModel> rowSorter;
+
     public enum estado {
         Inicial, SelecGrupo, Guardar, Modificar, NuevoGrupo
     }
@@ -40,9 +41,9 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         DefaultTableModel modelo;
         modelo = accesoGrupo.listaTotalGrupo();
         tableGrupos.setModel(modelo);
-        TableRowSorter<TableModel> rowSorter= new TableRowSorter<>(tableGrupos.getModel());
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableGrupos.getModel());
         tableGrupos.setRowSorter(rowSorter);
-        TxtNomGrupo.getDocument().addDocumentListener(new DocumentListener(){
+        TxtNomGrupo.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -190,7 +191,7 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
                 .addComponent(TxtNomGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
             .addGroup(pnlGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlGrupoLayout.createSequentialGroup()
                     .addContainerGap()
@@ -205,7 +206,7 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
                     .addComponent(TxtNomGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnBuscar)
                     .addComponent(jLabel2))
-                .addContainerGap(456, Short.MAX_VALUE))
+                .addContainerGap(467, Short.MAX_VALUE))
             .addGroup(pnlGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlGrupoLayout.createSequentialGroup()
                     .addGap(66, 66, 66)
@@ -328,9 +329,10 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
 
     private void tableGruposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableGruposMouseClicked
         // TODO add your handling code here:
-        int index = tableGrupos.getSelectedRow();
-        idGrupoSel = (int) tableGrupos.getValueAt(index, 0);
+
         try {
+            int index = tableGrupos.getSelectedRow();
+            idGrupoSel = (int) tableGrupos.getValueAt(index, 0);
             DefaultTableModel modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
             tableUsuarios.setModel(modeloU);
         } catch (Exception e) {
@@ -347,8 +349,8 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
         int codigo = Integer.parseInt(txtCodigo.getText());
         Usuario u = accesoUser.buscarUsuarioXcodigo(codigo);
         if (u != null) {
-            txtNombre.setText(u.getNombre()+' '+u.getaPaterno()+' '+u.getaMaterno());
-            idUsuSel=u.getnEntidad();
+            txtNombre.setText(u.getNombre() + ' ' + u.getaPaterno() + ' ' + u.getaMaterno());
+            idUsuSel = u.getnEntidad();
             System.out.println(u.getnEntidad());
         } else {
             txtNombre.setText("NO ENCONTRADO");
@@ -362,11 +364,12 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
                 //int idUsu = Integer.parseInt(txtCodigo.getText());
                 System.out.println(idUsuSel);
                 accesoGrupo.asignarUsuario(idUsuSel, idGrupoSel);
-                try{
+                try {
                     DefaultTableModel modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
                     tableUsuarios.setModel(modeloU);
                     JOptionPane.showMessageDialog(null, "Usuario Seleccionado");
-                }catch(Exception e){}
+                } catch (Exception e) {
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccionar un grupo");
             }
@@ -379,21 +382,23 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
         int index = tableUsuarios.getSelectedRow();
-        
-        UsuarioBL uBL= new UsuarioBL();
-        Usuario u=uBL.buscarUsuarioXcodigo((int) tableUsuarios.getValueAt(index, 0));
-        idUsuSel=u.getnEntidad();
-        if(idGrupoSel==-1)
+
+        UsuarioBL uBL = new UsuarioBL();
+        Usuario u = uBL.buscarUsuarioXcodigo((int) tableUsuarios.getValueAt(index, 0));
+        idUsuSel = u.getnEntidad();
+        if (idGrupoSel == -1) {
             JOptionPane.showMessageDialog(null, "Seleccionar un grupo!");
-        if(idUsuSel==-1)
+        }
+        if (idUsuSel == -1) {
             JOptionPane.showMessageDialog(null, "Seleccionar un usuario!");
-        if(idUsuSel!=-1 && idGrupoSel!=-1){
+        }
+        if (idUsuSel != -1 && idGrupoSel != -1) {
             int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar este usuario del grupo?", "Aviso", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 System.out.println(idUsuSel);
                 System.out.println(idGrupoSel);
                 accesoGrupo.eliminarUsuarioGrupo(idUsuSel, idGrupoSel);
-                idUsuSel=-1;
+                idUsuSel = -1;
                 DefaultTableModel modeloU;
                 try {
                     modeloU = accesoGrupo.listaUsuariosXGrupo(idGrupoSel);
@@ -401,7 +406,9 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(ManejoGrupos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else return;
+            } else {
+                return;
+            }
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -417,14 +424,14 @@ public class ManejoGrupos extends javax.swing.JInternalFrame {
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
         // TODO add your handling code here:
-        int encontrado=-1;
-        for(int i=0;i<tableGrupos.getRowCount();i++){
-            System.out.println(tableGrupos.getValueAt(i,1));
-            if(tableGrupos.getValueAt(i,1).equals(TxtNomGrupo.getText())){
-                encontrado=i;
+        int encontrado = -1;
+        for (int i = 0; i < tableGrupos.getRowCount(); i++) {
+            System.out.println(tableGrupos.getValueAt(i, 1));
+            if (tableGrupos.getValueAt(i, 1).equals(TxtNomGrupo.getText())) {
+                encontrado = i;
             }
         }
-        if(encontrado==-1){
+        if (encontrado == -1) {
             JOptionPane.showMessageDialog(null, "Grupo no encontrado");
             return;
         }
