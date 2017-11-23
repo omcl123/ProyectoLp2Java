@@ -42,8 +42,6 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         (new String[] { "Lista de Documentos","Lista de Movimientos","Usuarios más activos"}));
         //CBoxCursos.setModel(new javax.swing.DefaultComboBoxModel<>
         //(new String[] { "Curso 1","Curso 2","Curso 3"}));
-        CBoxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>
-        (new String[] { "El dia anterior", "Semana pasada", "Mes Pasado","Comienzo del ciclo"}));
         
     }
 
@@ -58,14 +56,11 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
 
         Fondo = new javax.swing.JPanel();
         btnGeneraReporte = new javax.swing.JButton();
-        BtnExportar = new javax.swing.JButton();
         Imagen = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         CBoxTipoReporte = new javax.swing.JComboBox<>();
-        CBoxPeriodo = new javax.swing.JComboBox<>();
         CBoxCursos = new javax.swing.JComboBox<>();
 
         setClosable(true);
@@ -80,21 +75,12 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
             }
         });
 
-        BtnExportar.setText("Exportar");
-        BtnExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnExportarActionPerformed(evt);
-            }
-        });
-
         Imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/auditoria_logo.png"))); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle de Auditoria"));
 
         jLabel1.setText("Seleccionar el tipo de reporte:");
-
-        jLabel5.setText("Seleccionar el periodo a evaluar:");
 
         jLabel2.setText("Seleccionar el curso a auditar:");
 
@@ -105,8 +91,6 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
             }
         });
 
-        CBoxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         CBoxCursos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -114,16 +98,15 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CBoxTipoReporte, 0, 288, Short.MAX_VALUE)
+                            .addComponent(CBoxCursos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel2))
-                .addGap(55, 55, 55)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(CBoxTipoReporte, 0, 288, Short.MAX_VALUE)
-                    .addComponent(CBoxPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CBoxCursos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(99, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,46 +116,39 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(CBoxTipoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(CBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CBoxCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                .addGap(48, 48, 48))
         );
 
         javax.swing.GroupLayout FondoLayout = new javax.swing.GroupLayout(Fondo);
         Fondo.setLayout(FondoLayout);
         FondoLayout.setHorizontalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
+            .addGroup(FondoLayout.createSequentialGroup()
                 .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(FondoLayout.createSequentialGroup()
-                        .addComponent(BtnExportar)
-                        .addGap(76, 76, 76)
-                        .addComponent(btnGeneraReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(FondoLayout.createSequentialGroup()
+                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
                         .addComponent(Imagen)
                         .addGap(59, 59, 59)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
+                        .addComponent(btnGeneraReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65))))
         );
         FondoLayout.setVerticalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Imagen, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGeneraReporte)
-                    .addComponent(BtnExportar))
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addComponent(btnGeneraReporte)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,38 +159,11 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Fondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BtnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExportarActionPerformed
-        // TODO add your ha
-//        HSSFWorkbook wb = new HSSFWorkbook();
-//        if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
-//            HSSFSheet sheet = wb.createSheet("Excel Sheet");
-//            HSSFRow rowhead = sheet.createRow(0);
-//            rowhead.createCell(0).setCellValue("Tipo");
-//            rowhead.createCell(1).setCellValue("Nombre");
-//            rowhead.createCell(2).setCellValue("Fecha de Creación");
-//            for(int i=0;i<TableAudit.getRowCount();i++){
-//                HSSFRow row = sheet.createRow(i+1);
-//                row.createCell(0).setCellValue(TableAudit.getValueAt(i, 0).toString());
-//                row.createCell(1).setCellValue(TableAudit.getValueAt(i, 1).toString());
-//                row.createCell(2).setCellValue(TableAudit.getValueAt(i, 2).toString());
-//            }   
-//            try {
-//                FileOutputStream  fileOut = new FileOutputStream("Reportes/Lista_de_documentos.xls",false);
-//                wb.write(fileOut);
-//                fileOut.close();
-//            } catch (FileNotFoundException ex) {
-//                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (IOException ex) {
-//                Logger.getLogger(ManejoAuditorias.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-    }//GEN-LAST:event_BtnExportarActionPerformed
 
     private void CBoxTipoReporteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBoxTipoReporteItemStateChanged
         // TODO add your handling code here:
@@ -237,14 +186,14 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
         auditoriaBL aBL=new auditoriaBL();
         System.out.println(CBoxTipoReporte.getSelectedItem().toString());
          if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Documentos")){
-            aBL.listaDoc(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString());
+            aBL.listaDoc(CBoxCursos.getSelectedItem().toString(), "");
         }
         else if(CBoxTipoReporte.getSelectedItem().toString().equals("Lista de Movimientos")){
-            aBL.listaMov(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString());
+            aBL.listaMov(CBoxCursos.getSelectedItem().toString(), "");
         }
         else if(CBoxTipoReporte.getSelectedItem().toString().equals("Usuarios más activos")){
             System.out.println("Generando reporte");
-            aBL.usuariosMasActivos(CBoxCursos.getSelectedItem().toString(), CBoxPeriodo.getSelectedItem().toString());
+            aBL.usuariosMasActivos(CBoxCursos.getSelectedItem().toString(), "");
         }
     }//GEN-LAST:event_btnGeneraReporteActionPerformed
 
@@ -285,16 +234,13 @@ public class ManejoAuditorias extends javax.swing.JInternalFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnExportar;
     private javax.swing.JComboBox<String> CBoxCursos;
-    private javax.swing.JComboBox<String> CBoxPeriodo;
     private javax.swing.JComboBox<String> CBoxTipoReporte;
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Imagen;
     private javax.swing.JButton btnGeneraReporte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
