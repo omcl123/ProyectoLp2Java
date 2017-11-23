@@ -5,6 +5,8 @@
  */
 package Vista;
 
+import Controlador.UsuarioBL;
+
 /**
  *
  * @author Manfred
@@ -17,6 +19,7 @@ public class frmRecuperarContrasena extends javax.swing.JDialog {
     public frmRecuperarContrasena(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -98,6 +101,9 @@ public class frmRecuperarContrasena extends javax.swing.JDialog {
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         String email = txtCorreo.getText();
+        UsuarioBL accesoUser = new UsuarioBL();
+        accesoUser.enviarPassRecuperacion(email);
+        this.dispose();
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     /**

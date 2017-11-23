@@ -338,13 +338,13 @@ public class UsuarioDA {
         try {
             Statement sentencia = con.createStatement();
 
-            String instruccion = "SELECT u.Passsword FROM Usuario u WHERE IdUsuario ='" + idUser + "'";
+            String instruccion = "SELECT u.Password FROM Usuario u WHERE IdUsuario ='" + idUser + "'";
 
             ResultSet rs = sentencia.executeQuery(instruccion);
 
             rs.next();
 
-            password = rs.getString("Email");
+            password = rs.getString("Password");
 
             con.closeConexion();
         } catch (Exception ex) {
@@ -554,9 +554,9 @@ public class UsuarioDA {
         }
         return dni;
     }
-    
+
     public String obtenerEmail(String tipoTabla, String codigo) {
-        String email =  new String();
+        String email = new String();
         con = new Coneccion();
 //        con = new Coneccion();
         try {
@@ -577,9 +577,9 @@ public class UsuarioDA {
         }
         return email;
     }
-    
+
     public String obtenerEmailAlt(String tipoTabla, String codigo) {
-        String emailAlt =  new String();
+        String emailAlt = new String();
         con = new Coneccion();
 //        con = new Coneccion();
         try {
@@ -600,9 +600,9 @@ public class UsuarioDA {
         }
         return emailAlt;
     }
-    
+
     public String obtenerDireccion(String tipoTabla, String codigo) {
-        String direccion =  new String();
+        String direccion = new String();
         con = new Coneccion();
 //        con = new Coneccion();
         try {
@@ -623,7 +623,7 @@ public class UsuarioDA {
         }
         return direccion;
     }
-    
+
     public int obtenerTelefono(String tipoTabla, String codigo) {
         int telefono = 0;
         con = new Coneccion();
@@ -645,5 +645,63 @@ public class UsuarioDA {
             System.out.println(e.getMessage());
         }
         return telefono;
+    }
+
+    public void enviarPassRecuperacion(String email) {
+        String password = new String();
+        Coneccion con = new Coneccion();
+        try {
+            Statement sentencia = con.createStatement();
+
+            String instruccion = "SELECT Password FROM Usuario WHERE Email ='" + email + "'";
+
+            ResultSet rs = sentencia.executeQuery(instruccion);
+
+            rs.next();
+
+            password = rs.getString("Password");
+
+            con.closeConexion();
+
+            try {
+                String host = "smtp.gmail.com";
+                String user = "sistemalp2@gmail.com";
+                String pass = "chistema2017";
+                String to = email;
+                String from = "sistemalp2@gmail.com";
+                String subject = "Solicitud de contraseña";
+                String messageText = "Su contraseña es: " + password;
+                boolean sessionDebug = false;
+
+                Properties props = System.getProperties();
+
+                props.put("mail.smtp.starttls.enable", "true");
+                props.put("mail.smtp.host", host);
+                props.put("mail.smtp.port", "587");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.starttls.required", "true");
+
+                java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+                Session mailSession = Session.getDefaultInstance(props, null);
+                mailSession.setDebug(sessionDebug);
+                Message msg = new MimeMessage(mailSession);
+                msg.setFrom(new InternetAddress(from));
+                InternetAddress[] address = {new InternetAddress(to)};
+                msg.setRecipients(Message.RecipientType.TO, address);
+                msg.setSubject(subject);
+                msg.setSentDate(new Date());
+                msg.setText(messageText);
+
+                Transport transport = mailSession.getTransport("smtp");
+                transport.connect(host, user, pass);
+                transport.sendMessage(msg, msg.getAllRecipients());
+                transport.close();
+                System.out.println("message send successfully");
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -57,6 +57,7 @@ public class Login extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         lblMensaje = new javax.swing.JLabel();
+        txtForgotPsw = new javax.swing.JLabel();
         loader = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -144,6 +145,13 @@ public class Login extends javax.swing.JFrame {
         lblMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMensaje.setText("El Usuario o la contraseña no son validos. Porfavor ingrese nuevamente.");
 
+        txtForgotPsw.setText("¿Olvidó su contraseña?");
+        txtForgotPsw.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtForgotPswMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
         login.setLayout(loginLayout);
         loginLayout.setHorizontalGroup(
@@ -158,7 +166,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblMensaje, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                    .addComponent(lblMensaje, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 401, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, loginLayout.createSequentialGroup()
                         .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
@@ -172,6 +180,10 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(31, 31, 31))
+            .addGroup(loginLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtForgotPsw)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         loginLayout.setVerticalGroup(
             loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +207,9 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMensaje)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtForgotPsw)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -382,6 +396,12 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void txtForgotPswMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtForgotPswMouseClicked
+        // TODO add your handling code here:
+        frmRecuperarContrasena f = new frmRecuperarContrasena(this, true);
+        f.setVisible(true);
+    }//GEN-LAST:event_txtForgotPswMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -436,6 +456,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel login;
     private javax.swing.JPanel pnl_bg;
     private javax.swing.JPasswordField pswUsuario;
+    private javax.swing.JLabel txtForgotPsw;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

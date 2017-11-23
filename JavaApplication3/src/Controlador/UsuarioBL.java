@@ -137,4 +137,8 @@ public class UsuarioBL {
     public int obtenerTelefono(String tipoTabla, String codigo){
         return accesoUsuario.obtenerTelefono(tipoTabla, codigo);
     }
+    
+    public void enviarPassRecuperacion(String email){
+        accesoUsuario.enviarPassRecuperacion(email);
+    }
 }
