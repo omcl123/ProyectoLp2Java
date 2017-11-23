@@ -794,6 +794,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         if (reply == JOptionPane.YES_OPTION) {
             System.out.println("SI");
             CarpetaBL cBL=new CarpetaBL();
+            System.out.println(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()).getId());
             cBL.eliminarCarpeta(nivelCarpetaActual.get(TableCarpeta.getSelectedRow()));
             nivelCarpetaActual.remove(nivelCarpetaActual.size()-1);
             DefaultTableModel tableModel ;
@@ -863,6 +864,7 @@ public class ManejoCarpetas extends javax.swing.JInternalFrame {
         if(CheckBoxMaestro.isSelected())esMaestro=1;
         if(TxtNombre.getText().equals("")){
             JOptionPane.showMessageDialog(null, "No ha escrito un nombre para la carpeta","Error",DISPOSE_ON_CLOSE);
+            return;
         }else{
             Carpeta c=new Carpeta();
             CarpetaBL caBL=new CarpetaBL();
